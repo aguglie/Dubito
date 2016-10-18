@@ -19,7 +19,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -30,7 +30,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -38,7 +38,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
@@ -53,7 +53,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -64,7 +64,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -72,7 +72,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
@@ -87,7 +87,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -98,7 +98,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -106,7 +106,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
@@ -121,7 +121,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -132,7 +132,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -140,7 +140,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
@@ -155,7 +155,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -166,7 +166,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -174,7 +174,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
@@ -189,7 +189,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -200,7 +200,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -208,7 +208,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
@@ -223,7 +223,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -234,7 +234,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -242,7 +242,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
@@ -257,7 +257,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -268,7 +268,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -276,7 +276,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
@@ -291,7 +291,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -302,7 +302,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -310,7 +310,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
@@ -325,7 +325,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets />
@@ -336,7 +336,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/asso_bastoni.jpg" />
+                              <Image url="@./static/asso_bastoni.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="90.0" />
@@ -344,7 +344,7 @@
                         </ImageView>
                         <ImageView fitHeight="200.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../client/view/static/quattro_bastoni.jpg" />
+                              <Image url="@./static/quattro_bastoni.jpg" />
                            </image>
                            <viewport>
                               <Rectangle2D />
