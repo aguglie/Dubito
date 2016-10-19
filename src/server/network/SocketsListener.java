@@ -1,6 +1,6 @@
 package server.network;
 
-import server.model.User;
+import game.model.User;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -41,7 +41,6 @@ public class SocketsListener {
             try {
                 Socket socket = serverSocket.accept();
                 SocketListener socketListener = new SocketListener(socket);
-                socketListener.setUser(new User());//Associates a new user Object to socketListener
                 executor.submit(socketListener);//Starts a new thread to handle user's command on his socket
             } catch (IOException e) {
                 e.printStackTrace();

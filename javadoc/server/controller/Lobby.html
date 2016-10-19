@@ -98,7 +98,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>server.controller.Lobby</li>
+<li>server.controller.LobbyCtrl</li>
 </ul>
 </li>
 </ul>
@@ -109,7 +109,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">Lobby</span>
 extends java.lang.Object</pre>
-<div class="block">Lobby(room) where users have to join/create a room to play in</div>
+<div class="block">Lobby(roomCtrl) where users have to join/create a roomCtrl to play in</div>
 </li>
 </ul>
 </div>
@@ -132,19 +132,19 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../server/controller/Lobby.html#addSocketListener-server.network.SocketListener-">addSocketListener</a></span>(server.network.SocketListener&nbsp;socketListener)</code>
 <div class="block">Includes a new socketListener (user) in Lobby Room
- Every socketListener is a connected user looking forward to join a room</div>
+ Every socketListener is a connected user looking forward to join a roomCtrl</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../server/controller/Lobby.html#createRoom-java.lang.String-">createRoom</a></span>(java.lang.String&nbsp;title)</code>
-<div class="block">Creates a new game room</div>
+<div class="block">Creates a new game roomCtrl</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../server/controller/Lobby.html#deleteRoom-server.controller.Room-">deleteRoom</a></span>(<a href="../../server/controller/Room.html" title="class in server.controller">Room</a>&nbsp;room)</code>
-<div class="block">(Safely) deletes a game room</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../server/controller/Lobby.html#deleteRoom-server.controller.Room-">deleteRoom</a></span>(<a href="../../server/controller/Room.html" title="class in server.controller">Room</a>&nbsp;roomCtrl)</code>
+<div class="block">(Safely) deletes a game roomCtrl</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -208,7 +208,7 @@ extends java.lang.Object</pre>
 <h4>addSocketListener</h4>
 <pre>public&nbsp;void&nbsp;addSocketListener(server.network.SocketListener&nbsp;socketListener)</pre>
 <div class="block">Includes a new socketListener (user) in Lobby Room
- Every socketListener is a connected user looking forward to join a room</div>
+ Every socketListener is a connected user looking forward to join a roomCtrl</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>socketListener</code> - </dd>
@@ -235,7 +235,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>createRoom</h4>
 <pre>public&nbsp;void&nbsp;createRoom(java.lang.String&nbsp;title)</pre>
-<div class="block">Creates a new game room</div>
+<div class="block">Creates a new game roomCtrl</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>title</code> - </dd>
@@ -248,11 +248,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>deleteRoom</h4>
-<pre>public&nbsp;void&nbsp;deleteRoom(<a href="../../server/controller/Room.html" title="class in server.controller">Room</a>&nbsp;room)</pre>
-<div class="block">(Safely) deletes a game room</div>
+<pre>public&nbsp;void&nbsp;deleteRoom(<a href="../../server/controller/Room.html" title="class in server.controller">Room</a>&nbsp;roomCtrl)</pre>
+<div class="block">(Safely) deletes a game roomCtrl</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>room</code> - </dd>
+<dd><code>roomCtrl</code> - </dd>
 </dl>
 </li>
 </ul>

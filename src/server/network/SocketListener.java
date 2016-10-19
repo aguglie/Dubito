@@ -1,9 +1,11 @@
 package server.network;
 
-import server.controller.Lobby;
-import server.controller.Room;
-import server.model.User;
-import utils.Logga;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import game.action.Action;
+import game.action.SyncRooms;
+import server.controller.ArcadeCtrl;
+import utils.MySerializer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,29 +17,22 @@ import java.util.Scanner;
  */
 public class SocketListener implements Runnable {
     private Socket socket;
-    private User user;
-    private Lobby lobby;
+    private ArcadeCtrl arcadeCtrl;
 
     public SocketListener(Socket socket) {
         this.socket = socket;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public void run() {
         try {
             Scanner in = new Scanner(socket.getInputStream());
             PrintWriter out = new PrintWriter(socket.getOutputStream());
+            Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new MySerializer<Action>())
+                    .create();
 
-            //We have just joined the game, we have report ourselves to the lobby
-            lobby = Lobby.getInstance();
-            lobby.addSocketListener(this);//Registers this socket to lobby room
+            //We have just joined the game, we have report ourselves to the arcadeCtrl
+            arcadeCtrl = ArcadeCtrl.getInstance();
+            arcadeCtrl.addSocketListener(this);//Registers this socket to arcadeCtrl room
 
             while (true) {
                 String line = in.nextLine();
@@ -45,38 +40,11 @@ public class SocketListener implements Runnable {
                 if (line.equals("exit")) {
                     break;
                 } else if (line.equals("get rooms")) {
-                    out.print("Le stanze sono: ");
-                    lobby.getRoomsList().forEach((room) -> out.print(room.toString() + ", "));
-                    out.println();
-                    out.flush();
-                } else if (line.equals("add room")) {
-                    lobby.createRoom("Odio");
-                    out.println("Room created");
-                    out.flush();
-                } else if (line.equals("join room")) {
-                    if (!lobby.getRoomsList().isEmpty()) {
-                        Room room = (Room) lobby.getRoomsList().get(0);
-                        room.join(this);
-                        out.println("Now you are in " + room.toString());
-                    } else {
-                        out.println("No rooms in here");
-                    }
-                    out.flush();
-                } else if (line.equals("leave room")) {
-                    if (!lobby.getRoomsList().isEmpty()) {
-                        Room room = (Room) lobby.getRoomsList().get(0);
-                        if (room.isMyRoom(this)) {
-                            room.leave(this);
-                            out.println("You just left " + room.toString());
-                        } else {
-                            out.println("You are not in " + room.toString());
-                        }
-                    } else {
-                        out.println("No rooms to leave");
-                    }
-                    out.flush();
-                } else if (line.equals("info")) {
-                    out.println("You are logged as " + user.toString() + ", there are " + lobby.getSocketsList().size() + " users in lobby");
+                    SyncRooms payload = new SyncRooms();
+                    payload.setRooms(arcadeCtrl.getRooms());
+                    String json = gson.toJson(payload, Action.class);
+                    System.out.println(json);
+                    out.println(json);
                     out.flush();
                 } else {
                     out.println("what does '" + line + "' mean?");
@@ -85,7 +53,7 @@ public class SocketListener implements Runnable {
             }
 
             try {
-                lobby.getSocketsList().remove(this);
+                arcadeCtrl.getSocketsList().remove(this);
             } catch (Exception e) {
                 //Amen
             }

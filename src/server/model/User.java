@@ -1,12 +1,10 @@
 package server.model;
 
-/**
- * Created by andrea on 18/10/16.
- */
-public class User {
+import server.network.SocketListener;
 
-    @Override
-    public String toString() {
-        return "" + this.hashCode();
-    }
+/**
+ * Created by andrea on 19/10/16.
+ */
+public class User extends game.model.User {
+    private SocketListener socketListener;//Riferimento alla socket utente
 }
