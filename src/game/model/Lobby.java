@@ -7,10 +7,11 @@ import java.util.List;
  * Created by andrea on 20/10/16.
  */
 public class Lobby {
-    private List rooms = new ArrayList<Room>(4);
+
+    private List rooms;
 
     public void setRooms(List rooms) {
-        this.rooms = rooms;
+        this.rooms = new ArrayList<Room>(rooms);
     }
 
     public List getRooms() {

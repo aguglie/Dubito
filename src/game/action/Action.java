@@ -1,10 +1,7 @@
 package game.action;
 
-import game.exception.ActionException;
-import game.model.Game;
-import game.model.Lobby;
-import game.model.Room;
-import game.model.User;
+import game.exception.*;
+import game.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +11,8 @@ import java.util.List;
  * Actions MUST alter only client or server model
  * Created by andrea on 18/10/16.
  */
-public class Action{
-    private List rooms;
-    private Game game;
-
-    public void setRooms (List<Room> rooms){
-        this.rooms = new ArrayList<Room>(rooms);
-    }
-
-    public List getRooms() {
-        return rooms;
-    }
-
+public abstract class Action{
     public void doAction(Lobby lobby, Game game, User user) throws ActionException{}
+    public void prepareAction(Lobby lobby, Game game, User user) throws ActionException{}
+
 }

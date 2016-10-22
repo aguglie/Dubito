@@ -13,14 +13,14 @@ import java.util.List;
  * Created by andrea on 19/10/16.
  */
 public class SyncRooms extends Action {
+    protected List rooms = new ArrayList<Room>(4);
     @Override
-    public void doAction(Lobby lobby, Game game, User user)  throws ActionException {
-        if (getRooms().isEmpty()){
-            throw new ActionException("No rooms in here!");
-        }else if (lobby==null){
-            throw new ActionException("No lobby object");
-        }else{
-            lobby.setRooms(getRooms());
-        }
+    public void doAction(Lobby lobby, Game game, User user) throws ActionException {
+        lobby.setRooms(rooms);
+    }
+
+    @Override
+    public void prepareAction(Lobby lobby, Game game, User user) throws ActionException {
+        rooms = new ArrayList<>(lobby.getRooms());
     }
 }

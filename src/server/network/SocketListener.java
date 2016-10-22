@@ -41,7 +41,7 @@ public class SocketListener implements Runnable {
                     break;
                 } else if (line.equals("get rooms")) {
                     SyncRooms payload = new SyncRooms();
-                    payload.setRooms(arcadeCtrl.getRooms());
+                    //payload.prepareAction();
                     String json = gson.toJson(payload, Action.class);
                     System.out.println(json);
                     out.println(json);

@@ -3,7 +3,7 @@ package debugClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import game.action.Action;
-import game.model.Lobby;
+import game.model.*;
 import utils.MySerializer;
 
 import java.net.Socket;
@@ -27,7 +27,7 @@ public class Reader implements Runnable {
         }
     }
 
-    public void setLobby(Lobby lobby) {
+    public void setLobby(Lobby lobby){
         this.lobby = lobby;
     }
 
