@@ -17,6 +17,7 @@ public class Reader implements Runnable {
     private Socket socket;
     private Scanner in;
     private User user;
+    private Match match;
 
 
     public Reader(Socket socket) {
@@ -32,6 +33,8 @@ public class Reader implements Runnable {
         this.user = user;
     }
 
+    public void setMatch(Match match) { this.match = match; }
+
     @Override
     public void run() {
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new MySerializer<Action>())
@@ -43,8 +46,6 @@ public class Reader implements Runnable {
                 MyLogger.println("Ricevuto "+socketLine);
                 Action obj = gson.fromJson(socketLine, Action.class);
                 obj.doAction(user);
-                System.out.println("User status:");
-                System.out.println(user.toString());
             } catch (Exception e){
                 System.out.println("Bah boh beh errore");
                 e.printStackTrace(System.err);

@@ -1,19 +1,14 @@
 package game.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by andrea on 19/10/16.
  */
 public class Match {
     private String name;
-    private static List matches = new ArrayList<server.model.Match>();//All active matches
     private MatchState matchState = MatchState.WAITING;
 
     public Match(String name) {
         this.name = name;
-        matches.add(this);//Add created match to list of matches
     }
 
     public Match() {
@@ -38,15 +33,6 @@ public class Match {
     }
 
     /**
-     * List all matches
-     *
-     * @return
-     */
-    public static List getMatches() {
-        return matches;
-    }
-
-    /**
      * Sets matchState
      * @param matchState
      */
@@ -60,5 +46,14 @@ public class Match {
      */
     public MatchState getMatchState() {
         return matchState;
+    }
+
+    /**
+     * Updates the object's properties with donor's ones
+     * @param match donor
+     */
+    public void updateFrom(Match match){
+        this.name = match.name;
+        this.matchState = match.matchState;
     }
 }

@@ -6,7 +6,6 @@ import server.network.SocketHandler;
  * Created by andrea on 19/10/16.
  */
 public class User extends game.model.User {
-    public int test = 57;
     private transient SocketHandler socketHandler;//Riferimento alla socket utente
 
     public void setSocketHandler(SocketHandler socketHandler){

@@ -3,7 +3,9 @@ package debugClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import game.action.Action;
+import game.action.JoinMatch;
 import game.action.JoinServer;
+import game.model.Match;
 import game.model.User;
 import utils.MySerializer;
 
@@ -40,11 +42,13 @@ public class LineClient {
         Scanner stdin = new Scanner(System.in);
 
         User user = new User();
+        Match match = new Match();
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new MySerializer<Action>())
                 .create();//Gson Builder to serialize communication
 
         Reader reader = new Reader(socket);
         reader.setUser(user);
+        reader.setMatch(match);
         Thread reader_thread = new Thread(reader);
         reader_thread.start();
         try {
@@ -52,11 +56,15 @@ public class LineClient {
 
                 String inputLine = stdin.nextLine();
 
-                if (inputLine.equals("join")) {
+                if (inputLine.equals("join s")) {
                     Action action = new JoinServer("Guglio");
                     String json = gson.toJson(action, Action.class);
                     socketOut.println(json);
-                }else{
+                } else if (inputLine.equals("join m")) {
+                    Action action = new JoinMatch((int)0);
+                    String json = gson.toJson(action, Action.class);
+                    socketOut.println(json);
+                } else {
                     System.out.println("Wrong");
                     break;
                 }

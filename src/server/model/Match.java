@@ -9,10 +9,21 @@ import java.util.List;
  * Created by andrea on 19/10/16.
  */
 public class Match extends game.model.Match {
-    private transient List users = new ArrayList<User>();//Users in this match
+    private List users = new ArrayList<User>();//Users in this match
+    private transient static List matches = new ArrayList<Match>();//All active matches
 
     public Match(String string){
         super(string);
+        matches.add(this);//Add created match to list of matches
+    }
+
+    /**
+     * List all matches
+     *
+     * @return
+     */
+    public static List getMatches() {
+        return matches;
     }
 
     /**
