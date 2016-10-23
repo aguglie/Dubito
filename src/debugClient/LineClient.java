@@ -1,5 +1,14 @@
 package debugClient;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import game.action.Action;
+import game.action.JoinMatch;
+import game.action.JoinServer;
+import game.model.Match;
+import game.model.User;
+import utils.MySerializer;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -29,23 +38,42 @@ public class LineClient {
 
     public void startClient() throws IOException {
         Socket socket = new Socket(ip, port);
-        System.out.println("Connection established");
-        Scanner socketIn = new Scanner(socket.getInputStream());
-        PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
+        PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true);
         Scanner stdin = new Scanner(System.in);
+
+        User user = new User();
+        Match match = new Match();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new MySerializer<Action>())
+                .create();//Gson Builder to serialize communication
+
+        Reader reader = new Reader(socket);
+        reader.setUser(user);
+        reader.setMatch(match);
+        Thread reader_thread = new Thread(reader);
+        reader_thread.start();
         try {
             while (true) {
+
                 String inputLine = stdin.nextLine();
-                socketOut.println(inputLine);
-                socketOut.flush();
-                String socketLine = socketIn.nextLine();
-                System.out.println(socketLine);
+
+                if (inputLine.equals("join s")) {
+                    Action action = new JoinServer("Guglio");
+                    String json = gson.toJson(action, Action.class);
+                    socketOut.println(json);
+                } else if (inputLine.equals("join m")) {
+                    Action action = new JoinMatch((int)0);
+                    String json = gson.toJson(action, Action.class);
+                    socketOut.println(json);
+                } else {
+                    System.out.println("Wrong");
+                    break;
+                }
             }
         } catch (NoSuchElementException e) {
             System.out.println("Connection closed");
         } finally {
+            //join reader thread
             stdin.close();
-            socketIn.close();
             socketOut.close();
             socket.close();
         }

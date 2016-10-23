@@ -1,12 +1,18 @@
 package server.model;
 
-/**
- * Created by andrea on 18/10/16.
- */
-public class User {
+import server.network.SocketHandler;
 
-    @Override
-    public String toString() {
-        return "" + this.hashCode();
+/**
+ * Created by andrea on 19/10/16.
+ */
+public class User extends game.model.User {
+    private transient SocketHandler socketHandler;//Riferimento alla socket utente
+
+    public void setSocketHandler(SocketHandler socketHandler){
+        this.socketHandler = socketHandler;
+    }
+
+    public SocketHandler getSocketHandler() {
+        return socketHandler;
     }
 }

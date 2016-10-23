@@ -1,6 +1,5 @@
 package server;
 
-import server.controller.Lobby;
 import server.network.SocketsListener;
 
 /**

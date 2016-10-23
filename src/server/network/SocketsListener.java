@@ -1,7 +1,5 @@
 package server.network;
 
-import server.model.User;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -36,13 +34,12 @@ public class SocketsListener {
             System.err.println(e.getMessage());
             return;
         }
-        System.out.println("Server started");
+        System.out.println("Server is up");
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                SocketListener socketListener = new SocketListener(socket);
-                socketListener.setUser(new User());//Associates a new user Object to socketListener
-                executor.submit(socketListener);//Starts a new thread to handle user's command on his socket
+                SocketHandler socketHandler = new SocketHandler(socket);
+                executor.submit(socketHandler);//Starts a new thread to handle user's command on his socket
             } catch (IOException e) {
                 e.printStackTrace();
             }

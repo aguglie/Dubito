@@ -1,4 +1,4 @@
-package testing;
+package utils;
 
 import com.google.gson.*;
 
@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 
 
 /**
+ * This is a support class for gson-library for serialize/deserialize objects keeping dynamic type unmodified.
  * Created by Andrea on 10/19/2016.
  */
 public class MySerializer<T> implements JsonSerializer<T>, JsonDeserializer<T> {
@@ -22,6 +23,7 @@ public class MySerializer<T> implements JsonSerializer<T>, JsonDeserializer<T> {
 
     @Override
     public T deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
+        // based on: http://www.javacreed.com/gson-deserialiser-example/
         final JsonObject jsonObject = json.getAsJsonObject();
         final String type = jsonObject.get("type").getAsString();
         try {
