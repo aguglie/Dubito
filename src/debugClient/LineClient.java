@@ -1,6 +1,11 @@
 package debugClient;
 
-import game.model.Lobby;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import game.action.Action;
+import game.action.JoinServer;
+import game.model.User;
+import utils.MySerializer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,28 +36,30 @@ public class LineClient {
 
     public void startClient() throws IOException {
         Socket socket = new Socket(ip, port);
-        System.out.println("Connection established");
-        PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
+        PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true);
         Scanner stdin = new Scanner(System.in);
-        Lobby lobby = new Lobby();
+
+        User user = new User();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new MySerializer<Action>())
+                .create();//Gson Builder to serialize communication
+
         Reader reader = new Reader(socket);
-        reader.setLobby(lobby);
+        reader.setUser(user);
         Thread reader_thread = new Thread(reader);
         reader_thread.start();
         try {
             while (true) {
 
                 String inputLine = stdin.nextLine();
-                /*
-                if (inputLine.equals("get rooms")) {
-                    Action action = new SyncRooms();
+
+                if (inputLine.equals("join")) {
+                    Action action = new JoinServer("Guglio");
                     String json = gson.toJson(action, Action.class);
+                    socketOut.println(json);
                 }else{
                     System.out.println("Wrong");
                     break;
-                }*/
-                socketOut.println(inputLine);
-                socketOut.flush();
+                }
             }
         } catch (NoSuchElementException e) {
             System.out.println("Connection closed");

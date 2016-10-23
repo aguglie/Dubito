@@ -11,18 +11,18 @@ public class Lobby {
     private List rooms;
 
     public void setRooms(List rooms) {
-        this.rooms = new ArrayList<Room>(rooms);
+        this.rooms = new ArrayList<Match>(rooms);
     }
 
     public List getRooms() {
         return rooms;
     }
 
-    public void addRoom(Room room){
-        this.rooms.add(room);
+    public void addRoom(Match match){
+        this.rooms.add(match);
     }
 
-    public void removeRoom(Room room){
-        this.rooms.remove(room);
+    public void removeRoom(Match match){
+        this.rooms.remove(match);
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import game.action.Action;
 import game.model.*;
+import utils.MyLogger;
 import utils.MySerializer;
 
 import java.net.Socket;
@@ -14,35 +15,41 @@ import java.util.Scanner;
  */
 public class Reader implements Runnable {
     private Socket socket;
-    private Scanner socketIn;
-    private Lobby lobby;
+    private Scanner in;
+    private User user;
 
 
     public Reader(Socket socket) {
         this.socket = socket;
         try {
-            this.socketIn = new Scanner(socket.getInputStream());
+            in = new Scanner(socket.getInputStream());
         } catch (Exception e) {
-            //@todo sistemare questo schifo
+            e.printStackTrace(System.err);
         }
     }
 
-    public void setLobby(Lobby lobby){
-        this.lobby = lobby;
+    public void setUser(User user){
+        this.user = user;
     }
 
     @Override
     public void run() {
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new MySerializer<Action>())
                 .create();
-        System.out.println("Reader is up");
+        MyLogger.println("Reader is UP");
         while (true) {
-            String socketLine = socketIn.nextLine();
-            System.out.println(socketLine);
-            Action oggetto = gson.fromJson(socketLine, Action.class);
-            System.out.println("Recived from server: " + socketLine);
-            oggetto.doAction(lobby, null, null);
-            System.out.println(lobby.getRooms().toString());
+            try {
+                String socketLine = in.nextLine();
+                MyLogger.println("Ricevuto "+socketLine);
+                Action obj = gson.fromJson(socketLine, Action.class);
+                obj.doAction(user);
+                System.out.println("User status:");
+                System.out.println(user.toString());
+            } catch (Exception e){
+                System.out.println("Bah boh beh errore");
+                e.printStackTrace(System.err);
+                break;
+            }
         }
         //socketIn.close();
     }

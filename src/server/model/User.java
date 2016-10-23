@@ -1,10 +1,19 @@
 package server.model;
 
-import server.network.SocketListener;
+import server.network.SocketHandler;
 
 /**
  * Created by andrea on 19/10/16.
  */
 public class User extends game.model.User {
-    private SocketListener socketListener;//Riferimento alla socket utente
+    public int test = 57;
+    private transient SocketHandler socketHandler;//Riferimento alla socket utente
+
+    public void setSocketHandler(SocketHandler socketHandler){
+        this.socketHandler = socketHandler;
+    }
+
+    public SocketHandler getSocketHandler() {
+        return socketHandler;
+    }
 }

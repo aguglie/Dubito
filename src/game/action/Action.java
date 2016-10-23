@@ -12,7 +12,5 @@ import java.util.List;
  * Created by andrea on 18/10/16.
  */
 public abstract class Action{
-    public void doAction(Lobby lobby, Game game, User user) throws ActionException{}
-    public void prepareAction(Lobby lobby, Game game, User user) throws ActionException{}
-
+    public void doAction(User user) throws ActionException{}
 }
