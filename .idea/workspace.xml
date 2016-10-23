@@ -5,53 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game/action/JoinServer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game/action/UpdateMatchList.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game/action/UpdateUser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game/model/Match.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game/model/MatchState.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game/model/UserState.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/server/network/SocketHandler.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/game/action/SyncRooms.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/game/model/Game.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/game/model/Room.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/server/model/Game.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/server/network/SocketListener.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/server/controller/ArcadeCtrl.java" afterPath="$PROJECT_DIR$/src/server/controller/GameLogic.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/server/model/Room.java" afterPath="$PROJECT_DIR$/src/server/model/Match.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/utils/Logga.java" afterPath="$PROJECT_DIR$/src/utils/MyLogger.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Dubito/debugClient/LineClient.class" afterPath="$PROJECT_DIR$/out/production/Dubito/debugClient/LineClient.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-frame.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/constant-values.html" afterPath="$PROJECT_DIR$/javadoc/constant-values.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/deprecated-list.html" afterPath="$PROJECT_DIR$/javadoc/deprecated-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/help-doc.html" afterPath="$PROJECT_DIR$/javadoc/help-doc.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-1.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-1.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-10.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-10.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-11.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-11.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-2.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-2.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-3.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-3.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-4.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-4.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-5.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-5.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-6.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-6.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-7.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-7.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-8.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-8.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-9.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-9.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index.html" afterPath="$PROJECT_DIR$/javadoc/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-tree.html" afterPath="$PROJECT_DIR$/javadoc/overview-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/server/controller/Lobby.html" afterPath="$PROJECT_DIR$/javadoc/server/controller/Lobby.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/server/controller/Room.html" afterPath="$PROJECT_DIR$/javadoc/server/controller/Room.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/server/controller/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/server/controller/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/server/controller/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/server/controller/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/server/controller/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/server/controller/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/debugClient/LineClient.java" afterPath="$PROJECT_DIR$/src/debugClient/LineClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/debugClient/Reader.java" afterPath="$PROJECT_DIR$/src/debugClient/Reader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/Action.java" afterPath="$PROJECT_DIR$/src/game/action/Action.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/model/Lobby.java" afterPath="$PROJECT_DIR$/src/game/model/Lobby.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/model/User.java" afterPath="$PROJECT_DIR$/src/game/model/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/model/User.java" afterPath="$PROJECT_DIR$/src/server/model/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/network/SocketsListener.java" afterPath="$PROJECT_DIR$/src/server/network/SocketsListener.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1190,7 +1145,7 @@
       <workItem from="1476901499800" duration="11905000" />
       <workItem from="1477148121637" duration="1736000" />
       <workItem from="1477223314114" duration="2170000" />
-      <workItem from="1477225821638" duration="15645000" />
+      <workItem from="1477225821638" duration="15701000" />
     </task>
     <task id="LOCAL-00001" summary="README commit">
       <created>1476726633760</created>
@@ -1220,11 +1175,18 @@
       <option name="project" value="LOCAL" />
       <updated>1477149848824</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Implemented JoinServer, UpdateUser and partially UpdateMatchList">
+      <created>1477241694323</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1477241694323</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71261000" />
+    <option name="totallyTimeSpent" value="71317000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1305,7 +1267,8 @@
     <MESSAGE value="+jFoenix Lib" />
     <MESSAGE value="Testing unified models communication" />
     <MESSAGE value="Partial commit: @TODO SocketListenere line 44" />
-    <option name="LAST_COMMIT_MESSAGE" value="Partial commit: @TODO SocketListenere line 44" />
+    <MESSAGE value="Implemented JoinServer, UpdateUser and partially UpdateMatchList" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented JoinServer, UpdateUser and partially UpdateMatchList" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
