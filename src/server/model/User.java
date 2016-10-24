@@ -7,8 +7,17 @@ import server.network.SocketHandler;
  */
 public class User extends game.model.User {
     private transient SocketHandler socketHandler;//Riferimento alla socket utente
+    private transient Match match;
 
-    public void setSocketHandler(SocketHandler socketHandler){
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setSocketHandler(SocketHandler socketHandler) {
         this.socketHandler = socketHandler;
     }
 

@@ -38,4 +38,8 @@ public class Match extends game.model.Match {
             users.add(user);
         }
     }
+
+    public List getUsers() {
+        return users;
+    }
 }

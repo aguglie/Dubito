@@ -1,10 +1,13 @@
 package server.controller;
 
 import game.action.Ack;
+import game.action.UpdateMatch;
 import game.action.UpdateMatchList;
 import game.action.UpdateUser;
 import server.model.Match;
 import server.model.User;
+
+import java.util.List;
 
 /**
  * GameLogic(room) where users have to join/create a room to play in
@@ -61,5 +64,15 @@ public class GameLogic {
     public void sendUpdateUserTo(User user) {
         UpdateUser updateUser = new UpdateUser(user);
         user.getSocketHandler().sendAction(updateUser);//Sync client's user data with server's
+    }
+
+    public void sendUpdateMatchTo(User user){
+        UpdateMatch updateUser = new UpdateMatch(user.getMatch());
+        user.getSocketHandler().sendAction(updateUser);//Sync client's user data with server's
+    }
+
+    public void sendUpdateMatchTo(Match match){
+        List<User> userList = match.getUsers();
+        userList.forEach(u -> sendUpdateMatchTo(u));
     }
 }
