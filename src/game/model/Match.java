@@ -26,6 +26,7 @@ public class Match {
 
     /**
      * Sets enemies list (only used in client)
+     *
      * @param enemies
      */
     public void setEnemies(List enemies) {
@@ -34,6 +35,7 @@ public class Match {
 
     /**
      * Retrives match name
+     *
      * @return
      */
     public String getName() {
@@ -42,6 +44,7 @@ public class Match {
 
     /**
      * Sets match name
+     *
      * @param name
      */
     public void setName(String name) {
@@ -50,6 +53,7 @@ public class Match {
 
     /**
      * Sets matchState
+     *
      * @param matchState
      */
     public void setMatchState(MatchState matchState) {
@@ -58,6 +62,7 @@ public class Match {
 
     /**
      * Gets matchState
+     *
      * @return
      */
     public MatchState getMatchState() {
@@ -66,22 +71,24 @@ public class Match {
 
     /**
      * Updates the object's properties with donor's ones
+     *
      * @param match donor
      */
-    public void updateFrom(Match match){
+    public void updateFrom(Match match) {
         this.name = match.name;
         this.matchState = match.matchState;
     }
 
     /**
      * debug...
+     *
      * @return
      */
     @Override
-    public String toString(){
-        if (enemies!=null) {
+    public String toString() {
+        if (enemies != null) {
             return "[name=" + name + ", matchState=" + matchState.toString() + ", enemiesList=" + enemies.toString() + "]";
-        }else{
+        } else {
             return "[name=" + name + ", matchState=" + matchState.toString() + "]";
         }
     }

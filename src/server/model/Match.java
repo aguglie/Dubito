@@ -12,7 +12,7 @@ public class Match extends game.model.Match {
     private transient List users = new ArrayList<User>();//Users in this match
     private transient static List matches = new ArrayList<Match>();//All active matches
 
-    public Match(String string){
+    public Match(String string) {
         super(string);
         matches.add(this);//Add created match to list of matches
     }
@@ -28,19 +28,21 @@ public class Match extends game.model.Match {
 
     /**
      * Adds user to this match
+     *
      * @param user
      * @throws UserException
      */
-    public void addUser(User user) throws UserException{
-        if (users.contains(user)){
+    public void addUser(User user) throws UserException {
+        if (users.contains(user)) {
             throw new UserException("Already in this match");
-        }else{
+        } else {
             users.add(user);
         }
     }
 
     /**
      * Retrives all users who joined this match
+     *
      * @return
      */
     public List getUsers() {

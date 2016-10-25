@@ -17,6 +17,7 @@ public class ClientObjs {
 
     /**
      * Get the match showed by client
+     *
      * @return
      */
     public static Match getMatch() {
@@ -28,6 +29,7 @@ public class ClientObjs {
 
     /**
      * Get user's instance
+     *
      * @return
      */
     public static User getUser() {
@@ -37,7 +39,7 @@ public class ClientObjs {
         return user;
     }
 
-    public static void debug(){
+    public static void debug() {
         MyLogger.println(getUser().toString());
         MyLogger.println(getMatch().toString());
     }

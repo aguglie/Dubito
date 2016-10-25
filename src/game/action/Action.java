@@ -11,6 +11,7 @@ import java.util.List;
  * Actions MUST alter only client or server model
  * Created by andrea on 18/10/16.
  */
-public abstract class Action{
-    public void doAction(User user) throws ActionException{}
+public abstract class Action {
+    public void doAction(User user) throws ActionException {
+    }
 }

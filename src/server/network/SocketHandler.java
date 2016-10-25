@@ -39,13 +39,13 @@ public class SocketHandler implements Runnable {
         }
     }
 
-    public void sendAction(Action action){
+    public void sendAction(Action action) {
         try {
             String json = gson.toJson(action, Action.class);
-            MyLogger.println("Sending "+json);
+            MyLogger.println("Sending " + json);
             out.println(json);
-        }catch (Exception e){
-            MyLogger.println("Error sending message to user "+user.toString());
+        } catch (Exception e) {
+            MyLogger.println("Error sending message to user " + user.toString());
         }
     }
 

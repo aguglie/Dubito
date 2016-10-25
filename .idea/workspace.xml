@@ -4,20 +4,25 @@
     <option name="SCOPE_TYPE" value="2" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/debugClient/ClientObjs.java" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="UpdateMatch and JoinMatch now working..">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Dubito/debugClient/LineClient.class" afterPath="$PROJECT_DIR$/out/production/Dubito/debugClient/LineClient.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/debugClient/ClientObjs.java" afterPath="$PROJECT_DIR$/src/debugClient/ClientObjs.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/debugClient/LineClient.java" afterPath="$PROJECT_DIR$/src/debugClient/LineClient.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/debugClient/Reader.java" afterPath="$PROJECT_DIR$/src/debugClient/Reader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/Ack.java" afterPath="$PROJECT_DIR$/src/game/action/Ack.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/Action.java" afterPath="$PROJECT_DIR$/src/game/action/Action.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/JoinMatch.java" afterPath="$PROJECT_DIR$/src/game/action/JoinMatch.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/JoinServer.java" afterPath="$PROJECT_DIR$/src/game/action/JoinServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/UpdateMatch.java" afterPath="$PROJECT_DIR$/src/game/action/UpdateMatch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/UpdateUser.java" afterPath="$PROJECT_DIR$/src/game/action/UpdateUser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/UpdateMatchList.java" afterPath="$PROJECT_DIR$/src/game/action/UpdateMatchList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/model/Lobby.java" afterPath="$PROJECT_DIR$/src/game/model/Lobby.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/model/Match.java" afterPath="$PROJECT_DIR$/src/game/model/Match.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/model/User.java" afterPath="$PROJECT_DIR$/src/game/model/User.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/controller/GameLogic.java" afterPath="$PROJECT_DIR$/src/server/controller/GameLogic.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/model/Match.java" afterPath="$PROJECT_DIR$/src/server/model/Match.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/model/User.java" afterPath="$PROJECT_DIR$/src/server/model/User.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/network/SocketHandler.java" afterPath="$PROJECT_DIR$/src/server/network/SocketHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/MyLogger.java" afterPath="$PROJECT_DIR$/src/utils/MyLogger.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/MySerializer.java" afterPath="$PROJECT_DIR$/src/utils/MySerializer.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -94,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/src/game/action/UpdateMatch.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="714">
-              <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
+              <caret line="44" column="50" selection-start-line="44" selection-start-column="50" selection-end-line="44" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -116,9 +121,9 @@
         <entry file="file://$PROJECT_DIR$/src/game/model/Match.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="768">
-              <caret line="84" column="80" selection-start-line="84" selection-start-column="80" selection-end-line="84" selection-end-column="80" />
+              <caret line="91" column="80" selection-start-line="91" selection-start-column="80" selection-end-line="91" selection-end-column="80" />
               <folding>
-                <marker date="1477432690662" expanded="true" signature="1331:1338" ph="{...}" />
+                <marker date="1477434527677" expanded="true" signature="1374:1381" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -128,7 +133,7 @@
         <entry file="file://$PROJECT_DIR$/src/game/action/JoinServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
-              <caret line="37" column="141" selection-start-line="37" selection-start-column="141" selection-end-line="37" selection-end-column="141" />
+              <caret line="39" column="142" selection-start-line="39" selection-start-column="142" selection-end-line="39" selection-end-column="142" />
               <folding />
             </state>
           </provider>
@@ -160,8 +165,8 @@
       <file leaf-file-name="ClientObjs.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/debugClient/ClientObjs.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+            <state relative-caret-position="432">
+              <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -248,10 +253,10 @@
         <option value="$PROJECT_DIR$/src/game/action/UpdateMatch.java" />
         <option value="$PROJECT_DIR$/src/game/action/UpdateUser.java" />
         <option value="$PROJECT_DIR$/src/debugClient/Reader.java" />
-        <option value="$PROJECT_DIR$/src/debugClient/ClientObjs.java" />
         <option value="$PROJECT_DIR$/src/game/model/Match.java" />
         <option value="$PROJECT_DIR$/src/game/action/JoinServer.java" />
         <option value="$PROJECT_DIR$/src/game/model/User.java" />
+        <option value="$PROJECT_DIR$/src/debugClient/ClientObjs.java" />
       </list>
     </option>
   </component>
@@ -553,7 +558,7 @@
       <recent name="C:\Users\Andrea\IdeaProjects\Dubito\src\client\view\" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Serben">
+  <component name="RunManager" selected="Application.DebugClient">
     <configuration default="false" name="jfoenix.jar" type="JarApplication" factoryName="JAR Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="JAR_PATH" value="$PROJECT_DIR$/lib/jfoenix.jar" />
@@ -1069,7 +1074,7 @@
       <workItem from="1477248888799" duration="3902000" />
       <workItem from="1477308872544" duration="1885000" />
       <workItem from="1477412855711" duration="2868000" />
-      <workItem from="1477417094295" duration="15955000" />
+      <workItem from="1477417094295" duration="16137000" />
     </task>
     <task id="LOCAL-00001" summary="README commit">
       <created>1476726633760</created>
@@ -1113,11 +1118,18 @@
       <option name="project" value="LOCAL" />
       <updated>1477241700966</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="UpdateMatch and JoinMatch now working..">
+      <created>1477434437088</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1477434437088</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="96118000" />
+    <option name="totallyTimeSpent" value="96300000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1130,7 +1142,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1440" y="27" width="1920" height="1053" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289941" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1140,12 +1152,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32781065" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289941" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.2314578" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="5" y="106" width="1435" height="422" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.2314578" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="0" y="118" width="1440" height="415" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289941" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16875" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16875" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32834226" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24972972" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1161,7 +1174,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32834226" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1199,7 +1211,8 @@
     <MESSAGE value="Testing unified models communication" />
     <MESSAGE value="Partial commit: @TODO SocketListenere line 44" />
     <MESSAGE value="Implemented JoinServer, UpdateUser and partially UpdateMatchList" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented JoinServer, UpdateUser and partially UpdateMatchList" />
+    <MESSAGE value="UpdateMatch and JoinMatch now working.." />
+    <option name="LAST_COMMIT_MESSAGE" value="UpdateMatch and JoinMatch now working.." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1408,7 +1421,7 @@
     <entry file="file://$PROJECT_DIR$/src/game/action/UpdateMatch.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
-          <caret line="42" column="50" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="50" />
+          <caret line="44" column="50" selection-start-line="44" selection-start-column="50" selection-end-line="44" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1426,9 +1439,9 @@
     <entry file="file://$PROJECT_DIR$/src/game/model/Match.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="768">
-          <caret line="84" column="80" selection-start-line="84" selection-start-column="80" selection-end-line="84" selection-end-column="80" />
+          <caret line="91" column="80" selection-start-line="91" selection-start-column="80" selection-end-line="91" selection-end-column="80" />
           <folding>
-            <marker date="1477432690662" expanded="true" signature="1331:1338" ph="{...}" />
+            <marker date="1477434527677" expanded="true" signature="1374:1381" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1436,7 +1449,7 @@
     <entry file="file://$PROJECT_DIR$/src/game/action/JoinServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
-          <caret line="37" column="141" selection-start-line="37" selection-start-column="141" selection-end-line="37" selection-end-column="141" />
+          <caret line="39" column="142" selection-start-line="39" selection-start-column="142" selection-end-line="39" selection-end-column="142" />
           <folding />
         </state>
       </provider>
@@ -1462,8 +1475,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/debugClient/ClientObjs.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+        <state relative-caret-position="432">
+          <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

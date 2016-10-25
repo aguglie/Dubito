@@ -29,8 +29,8 @@ public class MySerializer<T> implements JsonSerializer<T>, JsonDeserializer<T> {
         try {
             final Type casting = Class.forName(type);
             return context.deserialize(jsonObject.get("data"), casting);
-        }catch (ClassNotFoundException e){
-            throw new JsonParseException("Cannot find class "+type);
+        } catch (ClassNotFoundException e) {
+            throw new JsonParseException("Cannot find class " + type);
         }
     }
 }

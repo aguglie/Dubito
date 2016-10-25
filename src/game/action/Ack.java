@@ -6,7 +6,7 @@ import game.model.User;
 /**
  * Created by andrea on 23/10/16.
  */
-public class Ack extends Action{
+public class Ack extends Action {
     public enum MessageType {
         INFO,
         WARNING,
@@ -23,6 +23,6 @@ public class Ack extends Action{
 
     @Override
     public void doAction(User user) throws ActionException {
-        System.out.println("||"+messageType.toString() + "|||| "+message+"||");
+        System.out.println("||" + messageType.toString() + "|||| " + message + "||");
     }
 }

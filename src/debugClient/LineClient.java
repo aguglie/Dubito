@@ -54,11 +54,11 @@ public class LineClient {
                 String inputLine = stdin.nextLine();
 
                 if (inputLine.equals("join s")) {
-                    Action action = new JoinServer("Guglio"+ new Random().nextInt(100));
+                    Action action = new JoinServer("Guglio" + new Random().nextInt(100));
                     String json = gson.toJson(action, Action.class);
                     socketOut.println(json);
                 } else if (inputLine.equals("join m")) {
-                    Action action = new JoinMatch((int)0);
+                    Action action = new JoinMatch((int) 0);
                     String json = gson.toJson(action, Action.class);
                     socketOut.println(json);
                 } else {

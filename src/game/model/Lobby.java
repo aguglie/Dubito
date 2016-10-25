@@ -18,11 +18,11 @@ public class Lobby {
         return rooms;
     }
 
-    public void addRoom(Match match){
+    public void addRoom(Match match) {
         this.rooms.add(match);
     }
 
-    public void removeRoom(Match match){
+    public void removeRoom(Match match) {
         this.rooms.remove(match);
     }
 }

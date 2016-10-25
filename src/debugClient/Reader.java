@@ -37,11 +37,11 @@ public class Reader implements Runnable {
         while (true) {
             try {
                 String socketLine = in.nextLine();
-                MyLogger.println("Ricevuto "+socketLine);
+                MyLogger.println("Ricevuto " + socketLine);
                 Action obj = gson.fromJson(socketLine, Action.class);
                 obj.doAction(user);
                 ClientObjs.debug();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace(System.err);
                 break;
             }

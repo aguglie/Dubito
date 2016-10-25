@@ -22,15 +22,17 @@ public class UpdateMatch extends Action {
 
     /**
      * Prepares payload
+     *
      * @param match
      */
-    public UpdateMatch(server.model.Match match){
+    public UpdateMatch(server.model.Match match) {
         this.match = match;
         this.enemies = new ArrayList<User>(match.getUsers());
     }
 
     /**
      * Updates client Match object with user's enemies, match status etc..
+     *
      * @param user
      * @throws ActionException
      */

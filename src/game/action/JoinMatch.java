@@ -27,6 +27,7 @@ public class JoinMatch extends Action {
 
     /**
      * Tries to add user to specified Match Room.
+     *
      * @param user
      * @throws ActionException
      */
