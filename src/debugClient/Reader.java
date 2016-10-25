@@ -17,23 +17,17 @@ public class Reader implements Runnable {
     private Socket socket;
     private Scanner in;
     private User user;
-    private Match match;
 
 
     public Reader(Socket socket) {
         this.socket = socket;
+        this.user = ClientObjs.getUser();
         try {
             in = new Scanner(socket.getInputStream());
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
     }
-
-    public void setUser(User user){
-        this.user = user;
-    }
-
-    public void setMatch(Match match) { this.match = match; }
 
     @Override
     public void run() {
@@ -46,12 +40,11 @@ public class Reader implements Runnable {
                 MyLogger.println("Ricevuto "+socketLine);
                 Action obj = gson.fromJson(socketLine, Action.class);
                 obj.doAction(user);
+                ClientObjs.debug();
             } catch (Exception e){
-                System.out.println("Bah boh beh errore");
                 e.printStackTrace(System.err);
                 break;
             }
         }
-        //socketIn.close();
     }
 }

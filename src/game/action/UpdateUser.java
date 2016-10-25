@@ -17,6 +17,5 @@ public class UpdateUser extends Action {
     @Override
     public void doAction(User user) throws ActionException {//doAction called on client
         user.updateFrom(serverUser);//Updates client's user properties with server's
-        MyLogger.println("User snapshot received from server");
     }
 }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -41,14 +42,10 @@ public class LineClient {
         PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true);
         Scanner stdin = new Scanner(System.in);
 
-        User user = new User();
-        Match match = new Match();
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new MySerializer<Action>())
                 .create();//Gson Builder to serialize communication
 
         Reader reader = new Reader(socket);
-        reader.setUser(user);
-        reader.setMatch(match);
         Thread reader_thread = new Thread(reader);
         reader_thread.start();
         try {
@@ -57,7 +54,7 @@ public class LineClient {
                 String inputLine = stdin.nextLine();
 
                 if (inputLine.equals("join s")) {
-                    Action action = new JoinServer("Guglio");
+                    Action action = new JoinServer("Guglio"+ new Random().nextInt(100));
                     String json = gson.toJson(action, Action.class);
                     socketOut.println(json);
                 } else if (inputLine.equals("join m")) {

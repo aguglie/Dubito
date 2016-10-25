@@ -1,11 +1,19 @@
 package game.model;
 
+import java.util.List;
+
 /**
  * Created by andrea on 19/10/16.
+ */
+
+/**
+ * Every match is a possible dubito play.
  */
 public class Match {
     private String name;
     private MatchState matchState = MatchState.WAITING;
+    private transient List enemies;
+
 
     public Match(String name) {
         this.name = name;
@@ -14,6 +22,14 @@ public class Match {
     public Match() {
         this("Untitled");//Default name
 
+    }
+
+    /**
+     * Sets enemies list (only used in client)
+     * @param enemies
+     */
+    public void setEnemies(List enemies) {
+        this.enemies = enemies;
     }
 
     /**
@@ -55,5 +71,18 @@ public class Match {
     public void updateFrom(Match match){
         this.name = match.name;
         this.matchState = match.matchState;
+    }
+
+    /**
+     * debug...
+     * @return
+     */
+    @Override
+    public String toString(){
+        if (enemies!=null) {
+            return "[name=" + name + ", matchState=" + matchState.toString() + ", enemiesList=" + enemies.toString() + "]";
+        }else{
+            return "[name=" + name + ", matchState=" + matchState.toString() + "]";
+        }
     }
 }

@@ -5,6 +5,10 @@ import server.network.SocketHandler;
 /**
  * Created by andrea on 19/10/16.
  */
+
+/**
+ * User abstraction
+ */
 public class User extends game.model.User {
     private transient SocketHandler socketHandler;//Riferimento alla socket utente
     private transient Match match;
