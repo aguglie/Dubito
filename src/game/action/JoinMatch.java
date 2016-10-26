@@ -43,6 +43,7 @@ public class JoinMatch extends Action {
             ((server.model.User) user).setMatch(match);//Connect user to his match
             user.setUserState(UserState.WAITING_START);//Set user state as waiting (to start play Dubito)
 
+            GameLogic.getInstance().sendUpdateUserTo((server.model.User)user);
             GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "You joined " + match.getName());//Send him an alert
             GameLogic.getInstance().sendUpdateMatchTo(match);//Send every user an updated snapshot of the match
 
