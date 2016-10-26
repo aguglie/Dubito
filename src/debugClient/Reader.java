@@ -42,7 +42,7 @@ public class Reader implements Runnable {
                 obj.doAction(user);
                 ClientObjs.debug();
             } catch (Exception e) {
-                e.printStackTrace(System.err);
+                System.out.println("Connection lost");
                 break;
             }
         }

@@ -1,5 +1,6 @@
 package server.model;
 
+import game.model.UserState;
 import server.network.SocketHandler;
 
 /**
@@ -12,7 +13,6 @@ import server.network.SocketHandler;
 public class User extends game.model.User {
     private transient SocketHandler socketHandler;//Riferimento alla socket utente
     private transient Match match;
-    private transient long lastHeartBeat;
 
     /**
      * Returns true if user is in a match
@@ -21,6 +21,14 @@ public class User extends game.model.User {
     public boolean hasMatch() {
         if (match != null) return true;
         else return false;
+    }
+
+    /**
+     * Called wher an user is disconnected
+     */
+    public void destroyReferences() {
+        socketHandler = null;
+        match = null;//when destroyReference is called this should already be null...
     }
 
     public void setMatch(Match match) {

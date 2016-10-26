@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Match {
     private String name;
-    private MatchState matchState = MatchState.WAITING;
+    private MatchState matchState = MatchState.WAITING_START;
     private transient List enemies;
 
 

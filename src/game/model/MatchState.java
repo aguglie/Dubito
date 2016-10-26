@@ -8,6 +8,6 @@ package game.model;
  * All possible status of an active match
  */
 public enum MatchState {
-    WAITING,
-    PLAYING;
+    WAITING_START,//Match is waiting for users
+    PLAYING;//Match started
 }

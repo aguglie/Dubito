@@ -1,6 +1,7 @@
 package server.model;
 
 import game.exception.UserException;
+import utils.MyLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,24 @@ public class Match extends game.model.Match {
             throw new UserException("Already in this match");
         } else {
             users.add(user);
+        }
+    }
+
+    /**
+     * Removes user from this match
+     *
+     * @param user
+     * @throws UserException
+     */
+    public void removeUser(User user) throws UserException {
+        if (users.contains(user)) {
+            users.remove(user);//remove user from match
+            if (users.isEmpty()) {//if match is empty, remove match too!
+                matches.remove(this);
+                MyLogger.println(this.getName() + " deleted");
+            }
+        } else {
+            throw new UserException("User is not in this match");
         }
     }
 

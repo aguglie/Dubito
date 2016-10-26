@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import game.action.Action;
 import game.action.JoinMatch;
 import game.action.JoinServer;
+import game.action.StartGame;
 import game.model.Match;
 import game.model.User;
 import utils.MySerializer;
@@ -59,6 +60,10 @@ public class LineClient {
                     socketOut.println(json);
                 } else if (inputLine.equals("join m")) {
                     Action action = new JoinMatch((int) 0);
+                    String json = gson.toJson(action, Action.class);
+                    socketOut.println(json);
+                } else if (inputLine.equals("start")) {
+                    Action action = new StartGame();
                     String json = gson.toJson(action, Action.class);
                     socketOut.println(json);
                 } else {

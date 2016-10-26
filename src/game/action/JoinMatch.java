@@ -1,6 +1,7 @@
 package game.action;
 
 import game.exception.ActionException;
+import game.model.MatchState;
 import game.model.User;
 import game.model.UserState;
 import server.controller.GameLogic;
@@ -39,6 +40,10 @@ public class JoinMatch extends Action {
         }
         try {
             Match match = (Match) Match.getMatches().get(match_index);//Search the match
+            if (match.getMatchState() != MatchState.WAITING_START) {
+                GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "You can't join an already started match");//Match already started :(
+                return;
+            }
             match.addUser((server.model.User) user);//Add user to that match
             ((server.model.User) user).setMatch(match);//Connect user to his match
             user.setUserState(UserState.WAITING_START);//Set user state as waiting (to start play Dubito)

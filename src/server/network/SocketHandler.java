@@ -65,13 +65,17 @@ public class SocketHandler implements Runnable {
                     MyLogger.println("Invalid JSON: " + line);
                 }
             }
-
-            // close all streams
-            in.close();
-            out.close();
-            socket.close();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+        } catch (Exception e) {
+            GameLogic.getInstance().disconnectUser(this.user);
+        } finally {
+            //Close all open streams
+            if (in != null) in.close();
+            if (out != null) out.close();
+            if (socket != null) try {
+                socket.close();
+            } catch (Exception e) {
+                //prosit
+            }
         }
     }
 }
