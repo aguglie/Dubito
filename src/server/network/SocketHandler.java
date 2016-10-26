@@ -39,6 +39,11 @@ public class SocketHandler implements Runnable {
         }
     }
 
+    /**
+     * Serialize and send an Action object to this socket
+     *
+     * @param action
+     */
     public void sendAction(Action action) {
         try {
             String json = gson.toJson(action, Action.class);
@@ -49,6 +54,9 @@ public class SocketHandler implements Runnable {
         }
     }
 
+    /**
+     * Waits for data on socket and handles it
+     */
     public void run() {
         try {
             while (true) {
