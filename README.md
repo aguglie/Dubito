@@ -1,4 +1,4 @@
 # Dubito
-_Progetto Software Politecnico Milano 2016___
-Gioco di carte "Dubito" realizzato in Java__
-https://it.wikipedia.org/wiki/Dubito__
+_Progetto Software Politecnico Milano 2016_
+Gioco di carte "Dubito" realizzato in Java
+https://it.wikipedia.org/wiki/Dubito
