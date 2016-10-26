@@ -7,6 +7,10 @@ import utils.MyLogger;
 /**
  * Created by andrea on 23/10/16.
  */
+
+/**
+ * This syncs server User model with client's one
+ */
 public class UpdateUser extends Action {
     private User serverUser;
 

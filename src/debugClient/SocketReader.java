@@ -13,13 +13,13 @@ import java.util.Scanner;
 /**
  * Created by andrea on 20/10/16.
  */
-public class Reader implements Runnable {
+public class SocketReader implements Runnable {
     private Socket socket;
     private Scanner in;
     private User user;
 
 
-    public Reader(Socket socket) {
+    public SocketReader(Socket socket) {
         this.socket = socket;
         this.user = ClientObjs.getUser();
         try {
@@ -33,7 +33,7 @@ public class Reader implements Runnable {
     public void run() {
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new MySerializer<Action>())
                 .create();
-        MyLogger.println("Reader is UP");
+        MyLogger.println("SocketReader is UP");
         while (true) {
             try {
                 String socketLine = in.nextLine();

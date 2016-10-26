@@ -6,6 +6,10 @@ import game.model.User;
 /**
  * Created by andrea on 23/10/16.
  */
+
+/**
+ * Shows modal on client
+ */
 public class Ack extends Action {
     public enum MessageType {
         INFO,
@@ -23,6 +27,7 @@ public class Ack extends Action {
 
     @Override
     public void doAction(User user) throws ActionException {
+        //// TODO: 27/10/16 implements modal instead of this shitty sout
         System.out.println("||" + messageType.toString() + "|||| " + message + "||");
     }
 }

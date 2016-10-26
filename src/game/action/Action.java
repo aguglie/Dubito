@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Base action which is parent of every single action
- * Actions MUST alter only client or server model
+ * Actions MUST alter only client or server model or call GameLogic
  * Created by andrea on 18/10/16.
  */
 public abstract class Action {

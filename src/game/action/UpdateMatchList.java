@@ -21,7 +21,7 @@ public class UpdateMatchList extends Action {
 
     @Override
     public void doAction(User user) throws ActionException {//Runs on client.
-        //// TODO: 23/10/16 directly fill GUI with Rooms
+        //// TODO: 23/10/16 directly fill GUI with Matches
         System.out.println("Stanze disponibili:");
         for (int i = 0; i < match.size(); i++) {
             System.out.println(i + ") " + match.get(i).getName());

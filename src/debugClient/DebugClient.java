@@ -6,8 +6,6 @@ import game.action.Action;
 import game.action.JoinMatch;
 import game.action.JoinServer;
 import game.action.StartGame;
-import game.model.Match;
-import game.model.User;
 import utils.MySerializer;
 
 import java.io.IOException;
@@ -20,17 +18,17 @@ import java.util.Scanner;
 /**
  * Created by Andrea on 10/18/2016.
  */
-public class LineClient {
+public class DebugClient {
     private String ip;
     private int port;
 
-    public LineClient(String ip, int port) {
+    public DebugClient(String ip, int port) {
         this.ip = ip;
         this.port = port;
     }
 
     public static void main(String[] args) {
-        LineClient client = new LineClient("127.0.0.1", 1337);
+        DebugClient client = new DebugClient("127.0.0.1", 1337);
         try {
             client.startClient();
         } catch (IOException e) {
@@ -46,8 +44,8 @@ public class LineClient {
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new MySerializer<Action>())
                 .create();//Gson Builder to serialize communication
 
-        Reader reader = new Reader(socket);
-        Thread reader_thread = new Thread(reader);
+        SocketReader socketReader = new SocketReader(socket);
+        Thread reader_thread = new Thread(socketReader);
         reader_thread.start();
         try {
             while (true) {
@@ -74,7 +72,7 @@ public class LineClient {
         } catch (NoSuchElementException e) {
             System.out.println("Connection closed");
         } finally {
-            //join reader thread
+            //join socketReader thread
             stdin.close();
             socketOut.close();
             socket.close();
