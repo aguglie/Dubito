@@ -1,17 +1,30 @@
 package game.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by andrea on 18/10/16.
  */
 public class User {
     private String username = "undefined";
     private UserState userState = UserState.LOGIN;
+    private List<Card> cards = new ArrayList<>(40);
 
     public User(String username) {
         this.username = username;
     }
 
     public User() {
+    }
+
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
     }
 
     public String getUsername() {
@@ -38,6 +51,9 @@ public class User {
     public void updateFrom(User user) {
         this.username = user.username;
         this.userState = user.userState;
+        if (!user.cards.isEmpty()) {
+            this.cards = new ArrayList<>(user.cards);
+        }
     }
 
     /**
@@ -47,7 +63,9 @@ public class User {
      */
     @Override
     public String toString() {
-        return "[username=" + username + ", userState=" + userState.toString() + "]";
+        String cardString = "";
+        cards.forEach(card -> cardString.concat(", " + card.toString()));
+        return "[username=" + username + ", userState=" + userState.toString() + ", cards=" + cardString + "]";
     }
 
     /**
