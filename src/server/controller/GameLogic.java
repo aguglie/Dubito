@@ -141,11 +141,13 @@ public class GameLogic {
         if (match == null) throw new ActionException("Game dosn't exist");
         if (match.getUsers().size() < 2)
             throw new ActionException("You need at least two users to start a match");//A user can't play alone... it's sad!
-        Deck deck = new Deck();
+
         match.setMatchState(MatchState.PLAYING);//Set match as started
         match.getUsers().forEach((user) -> ((User) user).setUserState(UserState.PLAYING));//set each user as playing
-        match.getUsers().forEach((user) -> ((User) user).getCards().add(deck.getCard()));//set each user as playing
-        //// TODO: 26/10/16 create deck, split cards, etc..
+
+        Deck deck = new Deck();//Creates a new deck.
+        deck.giveCards(match.getUsers());//divides cards
+
         this.sendUpdateUserTo(match);//Send every match user the updated objects
         this.sendUpdateMatchTo(match);//Send every match user the updated objects
         MyLogger.println("Match started");

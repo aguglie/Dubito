@@ -12,7 +12,8 @@ import java.util.List;
 public class Match {
     private String name;
     private MatchState matchState = MatchState.WAITING_START;
-    private transient List enemies;
+    private transient List enemies;//this variable is used when match in sent to client
+    protected User whoseTurn = null;
 
 
     public Match(String name) {

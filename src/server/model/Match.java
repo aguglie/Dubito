@@ -13,6 +13,7 @@ public class Match extends game.model.Match {
     private transient List users = new ArrayList<User>();//Users in this match
     private transient static List matches = new ArrayList<Match>();//All active matches
 
+
     public Match(String string) {
         super(string);
         matches.add(this);//Add created match to list of matches
@@ -66,5 +67,17 @@ public class Match extends game.model.Match {
      */
     public List getUsers() {
         return users;
+    }
+
+    /**
+     * Ends current user turn and starts next one.
+     */
+    public void nextTurn() {
+        if (whoseTurn == null) {
+            whoseTurn = (User) users.get(0);//If this is the first round, we start from the first who joined the match
+            //// TODO: 02/11/16 send chat message
+            return;
+        }
+        //Implement with iterators...
     }
 }

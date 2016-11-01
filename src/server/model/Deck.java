@@ -8,6 +8,7 @@ import game.exception.ActionException;
 import game.model.Card;
 import game.model.CardSuit;
 import game.model.CardType;
+import utils.MyLogger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +37,25 @@ public class Deck {
             return card;
         } else {
             throw new ActionException("No more cards left");
+        }
+    }
+
+    /**
+     * Gives every user 40/#users cards
+     *
+     * @param users
+     * @throws ActionException
+     */
+    public void giveCards(List<User> users) throws ActionException {
+        if (cards.isEmpty()) throw new ActionException("No more cards left");
+        if (users.isEmpty()) throw new ActionException("No users passed");
+        int card_to_user = cards.size() / users.size();//numbers of cards per user
+
+        for (User user : users) {
+            MyLogger.println("Giving card to " + user.toString());
+            for (int i = 1; i <= card_to_user; i++) {
+                user.getCards().add(this.getCard());//gives a card to selected user.
+            }
         }
     }
 }

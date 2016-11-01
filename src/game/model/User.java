@@ -1,5 +1,7 @@
 package game.model;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
 public class User {
     private String username = "undefined";
     private UserState userState = UserState.LOGIN;
-    private List<Card> cards = new ArrayList<>(40);
+    private transient List<Card> cards = new ArrayList<>();// user's cards
 
     public User(String username) {
         this.username = username;
@@ -52,7 +54,7 @@ public class User {
         this.username = user.username;
         this.userState = user.userState;
         if (!user.cards.isEmpty()) {
-            this.cards = new ArrayList<>(user.cards);
+            this.cards = new ArrayList<Card>(user.cards);
         }
     }
 
@@ -64,7 +66,11 @@ public class User {
     @Override
     public String toString() {
         String cardString = "";
-        cards.forEach(card -> cardString.concat(", " + card.toString()));
+        if (!cards.isEmpty()) {
+            for (Object card :
+                    cards.toArray())
+                cardString = cardString.concat("," + card.toString());
+        }
         return "[username=" + username + ", userState=" + userState.toString() + ", cards=" + cardString + "]";
     }
 
