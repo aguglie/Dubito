@@ -2,18 +2,16 @@ package debugClient;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import game.action.Action;
-import game.action.JoinMatch;
-import game.action.JoinServer;
-import game.action.StartGame;
+import game.action.*;
+import game.model.Card;
+import game.model.CardSuit;
+import game.model.CardType;
 import utils.MySerializer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.NoSuchElementException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Andrea on 10/18/2016.
@@ -62,6 +60,19 @@ public class DebugClient {
                     socketOut.println(json);
                 } else if (inputLine.equals("start")) {
                     Action action = new StartGame();
+                    String json = gson.toJson(action, Action.class);
+                    socketOut.println(json);
+                } else if (inputLine.equals("dubito")) {
+                    Action action = new UserPlay(UserPlay.PlayType.DUBITO);
+                    String json = gson.toJson(action, Action.class);
+                    socketOut.println(json);
+                } else if (inputLine.equals("play")) {
+                    ArrayList<Card> playCard = new ArrayList<>(5);
+                    playCard.add(ClientObjs.getUser().getCards().get(0));
+                    playCard.add(ClientObjs.getUser().getCards().get(1));
+                    playCard.add(ClientObjs.getUser().getCards().get(2));
+
+                    Action action = new UserPlay(UserPlay.PlayType.PLAYCARD, playCard, CardType.ASSO);
                     String json = gson.toJson(action, Action.class);
                     socketOut.println(json);
                 } else {

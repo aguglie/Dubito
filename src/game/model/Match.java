@@ -78,6 +78,16 @@ public class Match {
     public void updateFrom(Match match) {
         this.name = match.name;
         this.matchState = match.matchState;
+        this.whoseTurn = match.whoseTurn;
+    }
+
+    /**
+     * As name says...
+     *
+     * @return
+     */
+    public User getWhoseTurn() {
+        return whoseTurn;
     }
 
     /**

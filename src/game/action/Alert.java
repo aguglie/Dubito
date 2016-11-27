@@ -10,7 +10,7 @@ import game.model.User;
 /**
  * Shows modal on client
  */
-public class Ack extends Action {
+public class Alert extends Action {
     public enum MessageType {
         INFO,
         WARNING,
@@ -20,7 +20,7 @@ public class Ack extends Action {
     private String message;
     private MessageType messageType;
 
-    public Ack(String message, MessageType messageType) {
+    public Alert(String message, MessageType messageType) {
         this.message = message;
         this.messageType = messageType;
     }
