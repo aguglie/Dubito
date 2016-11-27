@@ -12,7 +12,8 @@ import java.util.List;
 public class Match {
     private String name;
     private MatchState matchState = MatchState.WAITING_START;
-    private transient List enemies;
+    private transient List enemies;//this variable is used when match in sent to client
+    protected User whoseTurn = null;
 
 
     public Match(String name) {
@@ -77,6 +78,16 @@ public class Match {
     public void updateFrom(Match match) {
         this.name = match.name;
         this.matchState = match.matchState;
+        this.whoseTurn = match.whoseTurn;
+    }
+
+    /**
+     * As name says...
+     *
+     * @return
+     */
+    public User getWhoseTurn() {
+        return whoseTurn;
     }
 
     /**

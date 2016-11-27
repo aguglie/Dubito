@@ -1,12 +1,9 @@
 package server.controller;
 
-import game.action.Ack;
-import game.action.UpdateMatch;
-import game.action.UpdateMatchList;
-import game.action.UpdateUser;
+import game.action.*;
 import game.exception.ActionException;
-import game.model.MatchState;
-import game.model.UserState;
+import game.model.*;
+import server.model.Deck;
 import server.model.Match;
 import server.model.User;
 import utils.MyLogger;
@@ -43,8 +40,8 @@ public class GameLogic {
      * @param message
      */
     public void sendWarningMessageTo(User user, String message) {
-        Ack ack = new Ack(message, Ack.MessageType.WARNING);
-        user.getSocketHandler().sendAction(ack);
+        Alert alert = new Alert(message, Alert.MessageType.WARNING);
+        user.getSocketHandler().sendAction(alert);
     }
 
     /**
@@ -54,8 +51,8 @@ public class GameLogic {
      * @param message
      */
     public void sendDangerMessageTo(User user, String message) {
-        Ack ack = new Ack(message, Ack.MessageType.DANGER);
-        user.getSocketHandler().sendAction(ack);
+        Alert alert = new Alert(message, Alert.MessageType.DANGER);
+        user.getSocketHandler().sendAction(alert);
     }
 
     /**
@@ -65,8 +62,8 @@ public class GameLogic {
      * @param message
      */
     public void sendInfoMessageTo(User user, String message) {
-        Ack ack = new Ack(message, Ack.MessageType.INFO);
-        user.getSocketHandler().sendAction(ack);
+        Alert alert = new Alert(message, Alert.MessageType.INFO);
+        user.getSocketHandler().sendAction(alert);
     }
 
     /**
@@ -140,13 +137,77 @@ public class GameLogic {
         if (match == null) throw new ActionException("Game dosn't exist");
         if (match.getUsers().size() < 2)
             throw new ActionException("You need at least two users to start a match");//A user can't play alone... it's sad!
+        if (match.getMatchState() == MatchState.PLAYING)
+            throw new ActionException("Match already started");//A user can't play alone... it's sad!
+
         match.setMatchState(MatchState.PLAYING);//Set match as started
         match.getUsers().forEach((user) -> ((User) user).setUserState(UserState.PLAYING));//set each user as playing
-        //// TODO: 26/10/16 create deck, split cards, etc..
+
+        Deck deck = new Deck();//Creates a new deck.
+        deck.giveCards(match.getUsers());//divides cards
+
+        match.nextTurn();//Starts turnments chain
+
         this.sendUpdateUserTo(match);//Send every match user the updated objects
         this.sendUpdateMatchTo(match);//Send every match user the updated objects
+
         MyLogger.println("Match started");
     }
+
+    /**
+     * This establishes the loser when a 'DUBITO' move is played
+     *
+     * @param actualPlayer
+     * @param lastMove
+     */
+    public void executeDubitoPlay(User actualPlayer, UserPlay lastMove) {
+        //If last move's cards have card.Suit != pretendedType, actualPlayer wins, oldPlayer loses.
+        User oldPlayer = lastMove.getPerformer();
+        CardType pretendedType = lastMove.getCardsType();
+        List<Card> cards = lastMove.getCards();//Cards played by oldPlayer
+
+        User loser = actualPlayer;
+        for (int i = 0; i < cards.size(); i++) {
+            if (!cards.get(i).getCardType().equals(pretendedType)) {
+                loser = oldPlayer;
+                break;
+            }
+        }
+
+        MyLogger.println(loser.getUsername() + " lost");
+        if (actualPlayer.getMatch().getTableCardsList().size() > 0) {
+            Match userMatch = actualPlayer.getMatch();
+            this.moveCardsToUser(loser);//Give all table covered cards to loser
+            userMatch.getTableCardsList().clear();//Clears table cards
+            userMatch.setLastMove(null);//Clears last action, we are starting new round.
+        }
+    }
+
+    /**
+     * Moves cards from table to user's deck
+     *
+     * @param target Target user
+     * @throws ActionException
+     */
+    public void moveCardsToUser(User target) {
+        target.getCards().addAll(target.getMatch().getTableCardsList());
+        target.getMatch().getTableCardsList().clear();
+    }
+
+    /**
+     * Moves cards from source deck to table
+     *
+     * @param cards
+     * @param source
+     * @throws ActionException
+     */
+    public void moveCardsToTable(List<Card> cards, User source) throws ActionException {
+        if (!source.getCards().containsAll(cards))
+            throw new ActionException("Stai provando a giocare carte che non hai");
+        source.getCards().removeAll(cards);
+        source.getMatch().getTableCardsList().addAll(cards);
+    }
+
 
     /**
      * Remove every reference to this user

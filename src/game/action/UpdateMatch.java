@@ -43,5 +43,8 @@ public class UpdateMatch extends Action {
         //creates the enemies list
         enemies.remove(user);//User is not enemy of himself!
         ClientObjs.getMatch().setEnemies(enemies);
+        if (user.equals(match.getWhoseTurn())) {
+            MyLogger.println("It's mine turn!");
+        }
     }
 }
