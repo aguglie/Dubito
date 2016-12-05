@@ -43,7 +43,7 @@ public class UserPlay extends Action {
      *
      * @param playType must be PLAYCARD
      * @param cards    cards you want to play
-     * @param cardSuit pretended suit
+     * @param cardsType pretended suit
      */
     public UserPlay(PlayType playType, ArrayList<Card> cards, CardType cardsType) {
         this.playType = playType;
