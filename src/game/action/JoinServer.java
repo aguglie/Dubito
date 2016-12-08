@@ -39,6 +39,7 @@ public class JoinServer extends Action {
         }else {
             user.setUsername(this.username);//Set username
             user.setUserState(UserState.LOBBY);//Set user state to (in)LOBBY, this will also update client GUI view
+            GameLogic.getInstance().changeView((server.model.User)user, ChangeView.GoTo.SELECT_ROOM);//Changes user's view to SELECT_ROOM
             GameLogic.getInstance().sendUpdateUserTo((server.model.User) user);//Sends user an updated snapshot of himself, including new username
             GameLogic.getInstance().sendMatchesListTo((server.model.User) user);//Sends user a list of all active matches
         }

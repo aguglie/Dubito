@@ -36,6 +36,5 @@ public class LoginController implements Initializable{
         // Prepare login Action
         Action action = new JoinServer(usernameField.textProperty().getValue());
         ClientObjs.getSocketWriter().sendAction(action);
-        SceneController.getInstance().showSelectRoom();
     }
 }

@@ -34,6 +34,17 @@ public class GameLogic {
         return gameLogic;
     }
 
+
+    /**
+     * Remotely changes user's GUI view
+     * @param user user affected
+     * @param goTo view to go to
+     */
+    public void changeView(User user, ChangeView.GoTo goTo) {
+        Action action = new ChangeView(goTo);
+        user.getSocketHandler().sendAction(action);
+    }
+
     /**
      * shows Warning Modal on client
      *

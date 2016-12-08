@@ -49,8 +49,9 @@ public class JoinMatch extends Action {
             user.setUserState(UserState.WAITING_START);//Set user state as waiting (to start play Dubito)
 
             GameLogic.getInstance().sendUpdateUserTo((server.model.User)user);
-            GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "You joined " + match.getName());//Send him an alert
             GameLogic.getInstance().sendUpdateMatchTo(match);//Send every user an updated snapshot of the match
+            GameLogic.getInstance().changeView((server.model.User)user, ChangeView.GoTo.SELECT_ROOM);//Send user to GAME_ROOM // TODO: 08/12/16 correct this!
+            GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "You joined " + match.getName());//Send him an alert
 
         } catch (Exception e) {
             GameLogic.getInstance().sendDangerMessageTo((server.model.User) user, e.getMessage());//Smth bad happened here...

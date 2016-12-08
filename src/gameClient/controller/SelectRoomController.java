@@ -78,7 +78,6 @@ public class SelectRoomController implements Initializable {
             if(mouseEvent.getClickCount() == 2)
             {
                 TreeItem<ObservableMatch> item = treeView.getSelectionModel().getSelectedItem();
-                System.out.println("Selected: " + item.getValue().nameProperty().getValue());
                 Action action = new JoinMatch(item.getValue().getId());
                 ClientObjs.getSocketWriter().sendAction(action);
             }

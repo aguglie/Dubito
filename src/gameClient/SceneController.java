@@ -66,6 +66,10 @@ public class SceneController {
      * @param h     New page height
      */
     private void changeScene(String title, String fxml, int w, int h) {
+        if (!Platform.isFxApplicationThread()){
+            Platform.runLater(()-> changeScene(title, fxml, w, h));
+            return;
+        }
         try {
             primaryStage.setTitle(title);
             Parent root = FXMLLoader.load(getClass().getResource(fxml));
