@@ -16,9 +16,10 @@ import java.util.List;
  */
 public class GameLogic {
     private static GameLogic gameLogic;
+    private static List<User> connectedUsers = new ArrayList<>(10);//List containing all connected users
 
     private GameLogic() {
-        new Match("Merda Room");
+        new Match("Default Room");
     }
 
     /**
@@ -214,12 +215,30 @@ public class GameLogic {
      *
      * @param user
      */
-    public void disconnectUser(User user) {
+    public void onUserDisconnect(User user) {
         try {
             this.leaveMatch(user);
+            connectedUsers.remove(user);
         } catch (Exception e) {
         }
         user.destroyReferences();//Destroys user reference to game objs
         MyLogger.println(user.getUsername() + " left");
+    }
+
+    /**
+     * method called when user connects to server
+     * @param user
+     */
+    public void onUserConnect(User user){
+        connectedUsers.add(user);
+    }
+
+    /**
+     * Returns if this username exists in server
+     * @param username username to check
+     * @return
+     */
+    public boolean usernameExists(String username){
+        return connectedUsers.contains(new User(username));
     }
 }

@@ -37,6 +37,8 @@ public class SocketHandler implements Runnable {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+
+        GameLogic.getInstance().onUserConnect(user);//Notify to GameLogic user connection
     }
 
     /**
@@ -50,7 +52,7 @@ public class SocketHandler implements Runnable {
             MyLogger.println("Sending " + json);
             out.println(json);
         } catch (Exception e) {
-            MyLogger.println("Error sending message to user " + user.toString());
+            MyLogger.println("Error sending message");
         }
     }
 
@@ -61,10 +63,6 @@ public class SocketHandler implements Runnable {
         try {
             while (true) {
                 String line = in.nextLine();
-
-                if (line.equals("exit")) {
-                    break;
-                }
                 try {
                     //Execute action recived
                     Action oggetto = gson.fromJson(line, Action.class);
@@ -74,7 +72,7 @@ public class SocketHandler implements Runnable {
                 }
             }
         } catch (Exception e) {
-            GameLogic.getInstance().disconnectUser(this.user);
+            GameLogic.getInstance().onUserDisconnect(this.user);
         } finally {
             //Close all open streams
             if (in != null) in.close();

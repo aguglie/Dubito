@@ -23,6 +23,13 @@ public class User extends game.model.User {
         else return false;
     }
 
+    public User(String username) {
+        super(username);
+    }
+
+    public User() {
+    }
+
     /**
      * Called wher an user is disconnected
      */
