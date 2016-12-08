@@ -69,6 +69,7 @@ public class SocketHandler implements Runnable {
                     oggetto.doAction(this.user);
                 } catch (Exception e) {
                     MyLogger.println("Invalid JSON: " + line);
+                    e.printStackTrace();
                 }
             }
         } catch (Exception e) {

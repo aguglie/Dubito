@@ -27,8 +27,7 @@ public class UpdateMatchList extends Action {
 
     @Override
     public void doAction(User user) throws ActionException {//Runs on client.
-        ClientObjs.getMatchList().add(new Match("Porcoddio"));
-        //ClientObjs.getMatchList().clear();
-        //ClientObjs.getMatchList().addAll(match);
+        ClientObjs.getMatchList().clear();
+        ClientObjs.getMatchList().addAll(match);
     }
 }

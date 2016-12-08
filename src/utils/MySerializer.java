@@ -18,12 +18,17 @@ public class MySerializer<T> implements JsonSerializer<T>, JsonDeserializer<T> {
         final JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("type", o.getClass().getName());
         JsonObject dataJsonObject = context.serialize(o, o.getClass()).getAsJsonObject();
+        /*
         try {
             //Used to serialize Match :(
             dataJsonObject.get("match").getAsJsonArray().forEach(e -> e.getAsJsonObject().remove("children"));
             dataJsonObject.get("match").getAsJsonArray().forEach(e -> e.getAsJsonObject().remove("groupedColumn"));
             dataJsonObject.get("match").getAsJsonArray().forEach(e -> e.getAsJsonObject().remove("groupedValue"));
+            dataJsonObject.get("match").getAsJsonObject().remove("children");
+            dataJsonObject.get("match").getAsJsonObject().remove("groupedColumn");
+            dataJsonObject.get("match").getAsJsonObject().remove("groupedValue");
         }catch (Exception e){}
+        */
         jsonObject.add("data", dataJsonObject);
         return jsonObject;
     }

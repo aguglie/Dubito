@@ -58,6 +58,10 @@ public class DebugClient {
                     Action action = new JoinMatch((int) 0);
                     String json = gson.toJson(action, Action.class);
                     socketOut.println(json);
+                } else if (inputLine.equals("create m")) {
+                    Action action = new CreateMatch("Test Match");
+                    String json = gson.toJson(action, Action.class);
+                    socketOut.println(json);
                 } else if (inputLine.equals("start")) {
                     Action action = new StartGame();
                     String json = gson.toJson(action, Action.class);

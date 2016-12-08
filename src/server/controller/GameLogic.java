@@ -241,4 +241,8 @@ public class GameLogic {
     public boolean usernameExists(String username){
         return connectedUsers.contains(new User(username));
     }
+
+    public static List<User> getConnectedUsers() {
+        return connectedUsers;
+    }
 }
