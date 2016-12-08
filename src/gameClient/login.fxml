@@ -10,7 +10,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
            prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="gameClient.Login">
+           fx:controller="gameClient.controller.LoginController">
     <children>
         <VBox alignment="CENTER" StackPane.alignment="CENTER">
             <children>

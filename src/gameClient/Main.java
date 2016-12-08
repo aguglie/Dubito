@@ -11,8 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         ClientObjs.getSceneController().setPrimaryStage(primaryStage);//What happens on stage is directed by SceneController
-        //ClientObjs.getSceneController().showLogin();//Shows login page
-        ClientObjs.getSceneController().showSelectRoom();//Shows login page
+        ClientObjs.getSceneController().showLogin();//Shows login page
     }
 
     public static void main(String[] args) {

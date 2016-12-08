@@ -1,5 +1,9 @@
 package game.model;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.List;
 
 /**
@@ -9,12 +13,12 @@ import java.util.List;
 /**
  * Every match is a possible dubito play.
  */
-public class Match {
+public class Match extends RecursiveTreeObject<Match> {
     private String name;
     private MatchState matchState = MatchState.WAITING_START;
     private transient List enemies;//this variable is used when match in sent to client
     protected User whoseTurn = null;
-
+    private transient SimpleStringProperty pName = new SimpleStringProperty("");//name but as property
 
     public Match(String name) {
         this.name = name;
@@ -102,5 +106,16 @@ public class Match {
         } else {
             return "[name=" + name + ", matchState=" + matchState.toString() + "]";
         }
+    }
+
+    /**
+     * Get name as string property
+     * @return
+     */
+    public SimpleStringProperty pNameProperty() {
+        if (name != pName.get()){
+            pName = new SimpleStringProperty(name);
+        }
+        return pName;
     }
 }

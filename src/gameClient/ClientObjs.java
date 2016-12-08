@@ -20,7 +20,7 @@ public class ClientObjs {
     private static User user;
     private static SocketWriter socketWriter;
     private static SceneController sceneController;
-    private static ObservableList<TreeTableRowObj> rows = FXCollections.observableArrayList();
+    private static ObservableList<Match> matchList = FXCollections.observableArrayList();
 
     /**
      * Get the match showed by client
@@ -66,11 +66,11 @@ public class ClientObjs {
         return sceneController;
     }
 
-    public static ObservableList<TreeTableRowObj> getRows() {
-        return rows;
+    public static ObservableList<Match> getMatchList() {
+        return matchList;
     }
 
-    public static void setRows(ObservableList<TreeTableRowObj> rows) {
-        ClientObjs.rows = rows;
+    public static void setMatchList(ObservableList<Match> matchList) {
+        ClientObjs.matchList = matchList;
     }
 }

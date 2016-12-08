@@ -17,7 +17,14 @@ public class MySerializer<T> implements JsonSerializer<T>, JsonDeserializer<T> {
         // based on: http://www.javacreed.com/gson-serialiser-example/
         final JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("type", o.getClass().getName());
-        jsonObject.add("data", context.serialize(o, o.getClass()));
+        JsonObject dataJsonObject = context.serialize(o, o.getClass()).getAsJsonObject();
+        try {
+            //Used to serialize Match :(
+            dataJsonObject.get("match").getAsJsonArray().forEach(e -> e.getAsJsonObject().remove("children"));
+            dataJsonObject.get("match").getAsJsonArray().forEach(e -> e.getAsJsonObject().remove("groupedColumn"));
+            dataJsonObject.get("match").getAsJsonArray().forEach(e -> e.getAsJsonObject().remove("groupedValue"));
+        }catch (Exception e){}
+        jsonObject.add("data", dataJsonObject);
         return jsonObject;
     }
 

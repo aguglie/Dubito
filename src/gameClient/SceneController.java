@@ -22,7 +22,7 @@ public class SceneController {
      * Shows login scene
      */
     public void showLogin(){
-        changeScene("Login", "login.fxml",300,275);
+        changeScene("LoginController", "login.fxml",300,275);
     }
 
     /**

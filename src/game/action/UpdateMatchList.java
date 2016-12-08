@@ -1,7 +1,10 @@
 package game.action;
 
+import com.sun.org.apache.bcel.internal.generic.InstructionConstants;
 import game.exception.ActionException;
+import game.model.Match;
 import game.model.User;
+import gameClient.ClientObjs;
 import gameClient.utils.TreeTableRowObj;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,17 +27,8 @@ public class UpdateMatchList extends Action {
 
     @Override
     public void doAction(User user) throws ActionException {//Runs on client.
-        //ObservableList<TreeTableRowObj> rows = FXCollections.observableArrayList();
-        //match.forEach(match1 -> {
-        //    rows.add(new TreeTableRowObj())
-        //});
-
-        //// TODO: 23/10/16 directly fill GUI with Matches
-        /*
-        System.out.println("Stanze disponibili:");
-        for (int i = 0; i < match.size(); i++) {
-            System.out.println(i + ") " + match.get(i).getName());
-        }
-        */
+        ClientObjs.getMatchList().add(new Match("Porcoddio"));
+        //ClientObjs.getMatchList().clear();
+        //ClientObjs.getMatchList().addAll(match);
     }
 }
