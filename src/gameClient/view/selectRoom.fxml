@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gameClient.controller.SelectRoomController">
+    <children>
+        <VBox alignment="CENTER" StackPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Dubito" textAlignment="CENTER">
+                    <font>
+                        <Font size="65.0" />
+                    </font>
+                </Label>
+            <Label text="Scegli la stanza nella quale giocare" />
+            <JFXTreeTableView fx:id="treeView" prefHeight="220.0" prefWidth="100.0">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXTreeTableView>
+            <Label text="Crea il tuo match">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox>
+               <children>
+                  <JFXTextField fx:id="roomName" onAction="#addButtonPressed" promptText="Nome Stanza">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </JFXTextField>
+                  <JFXButton fx:id="addButton" onAction="#addButtonPressed" text="Aggiungi">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+            </children>
+        </VBox>
+    </children>
+</StackPane>

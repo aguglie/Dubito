@@ -22,14 +22,14 @@ public class SceneController {
      * Shows login scene
      */
     public void showLogin(){
-        changeScene("LoginController", "login.fxml",300,275);
+        changeScene("LoginController", "view/login.fxml",300,275);
     }
 
     /**
      * Shows select room page
      */
     public void showSelectRoom(){
-        changeScene("Seleziona Stanza", "selectRoom.fxml",300,275);
+        changeScene("Seleziona Stanza", "view/selectRoom.fxml",300,440);
     }
 
 
