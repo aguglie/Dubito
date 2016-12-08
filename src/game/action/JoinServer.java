@@ -34,10 +34,13 @@ public class JoinServer extends Action {
      */
     @Override
     public void doAction(User user) throws ActionException {//Called on server when we login to it.
-        //// TODO: 25/10/16 find a way to check if username is already taken
-        user.setUsername(this.username);//Set username
-        user.setUserState(UserState.LOBBY);//Set user state to (in)LOBBY, this will also update client GUI view
-        GameLogic.getInstance().sendUpdateUserTo((server.model.User) user);//Sends user an updated snapshot of himself, including new username
-        GameLogic.getInstance().sendMatchesListTo((server.model.User) user);//Sends user a list of all active matches
+        if (GameLogic.getInstance().usernameExists(this.username)){
+            GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "This username is already taken");//Username already taken
+        }else {
+            user.setUsername(this.username);//Set username
+            user.setUserState(UserState.LOBBY);//Set user state to (in)LOBBY, this will also update client GUI view
+            GameLogic.getInstance().sendUpdateUserTo((server.model.User) user);//Sends user an updated snapshot of himself, including new username
+            GameLogic.getInstance().sendMatchesListTo((server.model.User) user);//Sends user a list of all active matches
+        }
     }
 }

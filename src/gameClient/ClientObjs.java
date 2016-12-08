@@ -19,7 +19,6 @@ public class ClientObjs {
     private static Match match;
     private static User user;
     private static SocketWriter socketWriter;
-    private static SceneController sceneController;
     private static ObservableList<Match> matchList = FXCollections.observableArrayList();
 
     /**
@@ -57,13 +56,6 @@ public class ClientObjs {
     public static void debug() {
         MyLogger.println(getUser().toString());
         MyLogger.println(getMatch().toString());
-    }
-
-    public static SceneController getSceneController() {
-        if (sceneController == null){
-            sceneController = new SceneController();
-        }
-        return sceneController;
     }
 
     public static ObservableList<Match> getMatchList() {

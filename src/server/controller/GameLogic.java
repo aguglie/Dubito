@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class GameLogic {
     private static GameLogic gameLogic;
-    private static List<User> connectedUsers = new ArrayList<>(10);//List containing all connected users
+    private static ArrayList<User> connectedUsers = new ArrayList<User>(10);//List containing all connected users
 
     private GameLogic() {
         new Match("Default Room");
@@ -218,10 +218,10 @@ public class GameLogic {
     public void onUserDisconnect(User user) {
         try {
             this.leaveMatch(user);
-            connectedUsers.remove(user);
         } catch (Exception e) {
+            //e.printStackTrace();//Replies that user is not in a match...
         }
-        user.destroyReferences();//Destroys user reference to game objs
+        connectedUsers.remove(user);
         MyLogger.println(user.getUsername() + " left");
     }
 

@@ -30,14 +30,6 @@ public class User extends game.model.User {
     public User() {
     }
 
-    /**
-     * Called wher an user is disconnected
-     */
-    public void destroyReferences() {
-        socketHandler = null;
-        match = null;//when destroyReference is called this should already be null...
-    }
-
     public void setMatch(Match match) {
         this.match = match;
     }
@@ -53,4 +45,15 @@ public class User extends game.model.User {
     public SocketHandler getSocketHandler() {
         return socketHandler;
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return super.equals(object);
+    }
+
 }

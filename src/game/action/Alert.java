@@ -2,6 +2,7 @@ package game.action;
 
 import game.exception.ActionException;
 import game.model.User;
+import gameClient.SceneController;
 
 /**
  * Created by andrea on 23/10/16.
@@ -27,7 +28,6 @@ public class Alert extends Action {
 
     @Override
     public void doAction(User user) throws ActionException {
-        //// TODO: 27/10/16 implements modal instead of this shitty sout
-        System.out.println("||" + messageType.toString() + "|||| " + message + "||");
+        SceneController.showModal(messageType.toString(),message);
     }
 }

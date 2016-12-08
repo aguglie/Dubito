@@ -7,6 +7,7 @@ import game.action.CreateMatch;
 import game.action.JoinMatch;
 import game.model.Match;
 import gameClient.ClientObjs;
+import gameClient.SceneController;
 import gameClient.model.ObservableMatch;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -19,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import server.controller.GameLogic;
 
@@ -30,6 +32,9 @@ import java.util.ResourceBundle;
  */
 public class SelectRoomController implements Initializable {
     @FXML
+    private StackPane root;
+
+    @FXML
     private JFXTreeTableView<ObservableMatch> treeView;//Box where matches are listed
 
     @FXML
@@ -40,6 +45,8 @@ public class SelectRoomController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        SceneController.getInstance().setRoot(root);//update root element.
+
         JFXTreeTableColumn<ObservableMatch, String> firstColumn = new JFXTreeTableColumn<>("Nome Stanza");
         firstColumn.setPrefWidth(350);
         firstColumn.setCellValueFactory(param -> {

@@ -10,8 +10,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ClientObjs.getSceneController().setPrimaryStage(primaryStage);//What happens on stage is directed by SceneController
-        ClientObjs.getSceneController().showLogin();//Shows login page
+        SceneController.getInstance().setPrimaryStage(primaryStage);//What happens on stage is directed by SceneController
+        SceneController.getInstance().showLogin();//Shows login page
     }
 
     public static void main(String[] args) {
