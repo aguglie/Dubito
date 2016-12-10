@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 import game.action.Action;
 import game.action.JoinServer;
 import gameClient.ClientObjs;
-import gameClient.SceneController;
+import gameClient.SceneDirector;
 import gameClient.network.Connection;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +28,7 @@ public class LoginController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        SceneController.getInstance().setRoot(root);//update root element.
+        SceneDirector.getInstance().setRoot(root);//update root element.
     }
 
     public void loginButtonPressed() {

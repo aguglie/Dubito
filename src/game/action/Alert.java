@@ -2,7 +2,7 @@ package game.action;
 
 import game.exception.ActionException;
 import game.model.User;
-import gameClient.SceneController;
+import gameClient.SceneDirector;
 
 /**
  * Created by andrea on 23/10/16.
@@ -28,6 +28,6 @@ public class Alert extends Action {
 
     @Override
     public void doAction(User user) throws ActionException {
-        SceneController.showModal(messageType.toString(),message);
+        SceneDirector.showModal(messageType.toString(),message);
     }
 }

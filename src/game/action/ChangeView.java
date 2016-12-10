@@ -2,7 +2,7 @@ package game.action;
 
 import game.exception.ActionException;
 import game.model.User;
-import gameClient.SceneController;
+import gameClient.SceneDirector;
 
 /**
  * Used by server to change client's view
@@ -23,10 +23,10 @@ public class ChangeView extends Action {
     public void doAction(User user) throws ActionException {
         switch (goTo){
             case LOGIN:
-                SceneController.getInstance().showLogin();
+                SceneDirector.getInstance().showLogin();
                 break;
             case SELECT_ROOM:
-                SceneController.getInstance().showSelectRoom();
+                SceneDirector.getInstance().showSelectRoom();
                 break;
         }
     }

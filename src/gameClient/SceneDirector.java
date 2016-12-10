@@ -14,19 +14,19 @@ import javafx.stage.Stage;
 /**
  * Created by andrea on 08/12/16.
  */
-public class SceneController {
+public class SceneDirector {
     private static Stage primaryStage;
     private static StackPane root;
-    private static SceneController sceneController;
+    private static SceneDirector sceneDirector;
 
-    private SceneController() {
+    private SceneDirector() {
     }
 
-    public static SceneController getInstance() {
-        if (sceneController == null) {
-            sceneController = new SceneController();
+    public static SceneDirector getInstance() {
+        if (sceneDirector == null) {
+            sceneDirector = new SceneDirector();
         }
-        return sceneController;
+        return sceneDirector;
     }
 
     /**
@@ -56,6 +56,13 @@ public class SceneController {
         changeScene("Seleziona Stanza", "view/selectRoom.fxml", 500, 500);
     }
 
+
+    /**
+     * Shows game page
+     */
+    public void showGame() {
+        changeScene("Dubito", "view/game.fxml", 500, 500);
+    }
 
     /**
      * Changes scene

@@ -7,22 +7,16 @@ import game.action.CreateMatch;
 import game.action.JoinMatch;
 import game.model.Match;
 import gameClient.ClientObjs;
-import gameClient.SceneController;
+import gameClient.SceneDirector;
 import gameClient.model.ObservableMatch;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.util.Callback;
-import server.controller.GameLogic;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,7 +39,7 @@ public class SelectRoomController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        SceneController.getInstance().setRoot(root);//update root element.
+        SceneDirector.getInstance().setRoot(root);//update root element.
 
         JFXTreeTableColumn<ObservableMatch, String> firstColumn = new JFXTreeTableColumn<>("Nome Stanza");
         firstColumn.setPrefWidth(350);
