@@ -62,8 +62,8 @@ public class GameController implements Initializable {
                 test.add(new Card(type, suit));
             }
         }
-        Collections.shuffle(test);
-        updateDeck(test);
+        Collections.shuffle(test);////Debug debug debug
+        updateDeck(test);//// Debug debug debug
     }
 
     public void updateDeck(List<Card> deck) {
@@ -71,13 +71,13 @@ public class GameController implements Initializable {
             Platform.runLater(() -> updateDeck(deck));
         }
 
+        //Debug debug debug starts here
          for (int i=0; i<20; i++){
              deck.remove(i);
          }
+         //Debug debug debug ends here
 
-        //deck.clear();
-        //deck.add(new Card(CardType.FANTE, CardSuit.BASTONI));
-        //deck.add(new Card(CardType.SEI, CardSuit.COPPE));
+
         //Orders cards first by type then suit
         Collections.sort(deck, (o1, o2) -> {
             int hasho1 = o1.getCardType().getAsArrayKey() * 4 + o1.getCardSuit().getValue();
@@ -114,36 +114,23 @@ public class GameController implements Initializable {
                 //ITALIAN: Se il tipo è già stato piazzato significa che questa carta va messa dietro ad una già esistente
                 depth = depth + 0.35;
             } else {
-                //ITALIAN: Se il tipo è sconosciuto iniziamo a piazzare carte da profondità 1
                 depth = 0.5;
                 placedTypes.add(card.getCardType());
             }
 
-            //Move each card to designed x,y positions
+            //Calculates x,y positions and rotat.
             int x = (int) (-35d * cardinOfTypes + (placedTypes.size() - 1) * cardinOfTypes * 70d / (cardinOfTypes - 1d));
             int y = (int) (Math.sqrt(1d - Math.pow(x, 2) / (250000d)) * (300d * Math.sqrt(depth)));
             double angle = 30d * (x / 350d);
 
 
+            //!?!?!?! corrections
             if (depth > 0.5 && x < 0)
                 x = (int) (x - depth * 15);
             if (depth > 0.5 && x > 0)
                 x = (int) (x + depth * 15);
-            /*
 
-            Line line = new Line();
-            line.setStartX(x+400);
-            line.setStartY(500-y);
-            line.setEndX(0);
-            line.setEndY(0);
-            guiCards.get(card).getImage().setOnMouseClicked((event)->
-            {
-                System.out.println("orcoddio");
-                line.setStartX(guiCards.get(card).getImage().getX());
-                line.setStartY(guiCards.get(card).getImage().getY());
-            });
-            pane.getChildren().add(line);
-            */
+            //moves image
             moveImageView(timeline, guiCards.get(card).getImage(), x + 400, 500 - y, angle);
         }
 
