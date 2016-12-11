@@ -4,6 +4,8 @@ package game.model;
  * Created by andrea on 27/10/16.
  */
 
+import gameClient.Main;
+
 /**
  * Card object
  */
@@ -30,6 +32,24 @@ public class Card {
     @Override
     public String toString() {
         return cardType.toString() + " di " + cardSuit.toString();
+    }
+
+
+    /**
+     * Returns URL of image resource
+     *
+     * @return
+     */
+    public String getResourceURL() {
+        if (cardSuit == null || cardType == null) return "";
+
+        String n;
+        if ((this.getCardType().getNameAsInt()) < 10) {
+            n = "0" + this.getCardType().getNameAsInt();
+        } else {
+            n = "" + this.getCardType().getNameAsInt();
+        }
+        return String.valueOf(Main.class.getResource("resources/napoli/" + n + "_" + this.getCardSuit().getResource() + ".png"));
     }
 
     /**

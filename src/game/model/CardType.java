@@ -8,14 +8,28 @@ package game.model;
  * Card type
  */
 public enum CardType {
-    ASSO,
-    DUE,
-    TRE,
-    QUATTRO,
-    CINQUE,
-    SEI,
-    SETTE,
-    FANTE,
-    CAVALLO,
-    RE;
+    ASSO(0),
+    DUE(1),
+    TRE(2),
+    QUATTRO(3),
+    CINQUE(4),
+    SEI(5),
+    SETTE(6),
+    FANTE(7),
+    CAVALLO(8),
+    RE(9);
+
+    public int value;
+
+    CardType(int value) {
+        this.value = value;
+    }
+
+    public int getNameAsInt() {
+        return value+1;
+    }
+
+    public int getAsArrayKey() {
+        return value;
+    }
 }
