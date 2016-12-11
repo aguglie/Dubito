@@ -6,8 +6,8 @@ package game.model;
 public enum CardSuit {
     BASTONI(0, "basto"),
     COPPE(1, "coppe"),
-    SPADE(2, "denar"),
-    DENARI(3, "spade");
+    SPADE(2, "spade"),
+    DENARI(3, "denar");
 
     private int value;
     private String resource;
