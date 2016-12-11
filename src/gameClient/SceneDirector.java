@@ -61,7 +61,7 @@ public class SceneDirector {
      * Shows game page
      */
     public void showGame() {
-        changeScene("Dubito", "view/game.fxml", 500, 500);
+        changeScene("Dubito", "view/game.fxml", 900, 500);
     }
 
     /**
