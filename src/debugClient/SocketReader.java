@@ -3,6 +3,7 @@ package debugClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import game.action.Action;
+import game.action.ChangeView;
 import game.model.*;
 import utils.MyLogger;
 import utils.MySerializer;
@@ -39,7 +40,11 @@ public class SocketReader implements Runnable {
                 String socketLine = in.nextLine();
                 MyLogger.println("Ricevuto " + socketLine);
                 Action obj = gson.fromJson(socketLine, Action.class);
-                obj.doAction(user);
+                try {
+                    obj.doAction(user);
+                }catch (Exception e){
+                    System.out.println("Errore nell' elaborare la risposta del serben");
+                }
                 ClientObjs.debug();
             } catch (Exception e) {
                 System.out.println("Connection lost");
