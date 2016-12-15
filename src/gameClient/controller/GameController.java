@@ -1,29 +1,23 @@
 package gameClient.controller;
 
-import com.sun.deploy.util.ArrayUtil;
 import game.model.Card;
 import game.model.CardSuit;
 import game.model.CardType;
-import gameClient.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.sql.Time;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by andrea on 10/12/16.
@@ -40,7 +34,14 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-       // final String background =
+        //Sets page background
+        final String background = String.valueOf(GameController.class.getResource("../../game/resources/table.png"));
+        System.out.println(background);
+        pane.setStyle("-fx-background-image: url('"+background+"');");
+
+
+
+        //Creates deck on GUI
         for (int b = CardSuit.values().length - 1; b >= 0; b--) {//Reversed foreach CardSuit
             CardSuit cardSuit = CardSuit.values()[b];
             for (CardType cardType : CardType.values()) {//Foreach CardType
@@ -52,11 +53,14 @@ public class GameController implements Initializable {
 
                 //appends every card to stage
                 pane.getChildren().add(guiCard.getImage());
-                guiCard.getImage().setX(50);
-                guiCard.getImage().setY(50);
+                guiCard.getImage().setX(-100);
+                guiCard.getImage().setY(-100);
+                guiCard.getImage().addEventHandler(MouseEvent.MOUSE_ENTERED, event -> highlight(card));
             }
         }
 
+
+        //DEBUG
         ArrayList test = new ArrayList(40);
         for (CardType type : CardType.values()) {
             for (CardSuit suit : CardSuit.values()) {
@@ -67,6 +71,22 @@ public class GameController implements Initializable {
         updateDeck(test);//// Debug debug debug
     }
 
+    public void highlight(Card card){
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> highlight(card));
+        }
+        /*
+        //Creates new timeline Object
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+
+
+
+        timeline.play();
+        */
+
+    }
     public void updateDeck(List<Card> deck) {
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> updateDeck(deck));
@@ -119,27 +139,26 @@ public class GameController implements Initializable {
                 placedTypes.add(card.getCardType());
             }
 
+
             //Calculates x,y positions and rotat.
             int x = (int) (-35d * cardinOfTypes + (placedTypes.size() - 1) * cardinOfTypes * 70d / (cardinOfTypes - 1d));
+
+            //Correction
+            if (x < 0){
+                x = (int)(x - depth * 20);
+            }
             int y = (int) (Math.sqrt(1d - Math.pow(x, 2) / (250000d)) * (300d * Math.sqrt(depth)));
-            double angle = 30d * (x / 350d);
-
-
-            //!?!?!?! corrections
-
-            if (depth > 0.5 && x < 0)
-                x = (int) (x - depth * 15);
-            if (depth > 0.5 && x > 0)
-                x = (int) (x + depth * 15);
+            double angle = 25d * (x / 350d);
 
             //moves image
-            moveImageView(timeline, guiCards.get(card).getImage(), x + 400, 500 - y, angle);
+            moveImageView(timeline, guiCards.get(card).getImage(), x + 500, 400 - y, angle);
         }
 
-        for (int b = deck.size() - 1; b >= 0 ; b--) {//Reversed foreach deck
+        for (int b = 0; b < deck.size() ; b++) {//foreach deck
             Card card = deck.get(b);
-            guiCards.get(card).getImage().toFront();
+            guiCards.get(card).getImage().toBack();
         }
+
         timeline.play();
     }
 

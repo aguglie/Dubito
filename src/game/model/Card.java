@@ -4,7 +4,6 @@ package game.model;
  * Created by andrea on 27/10/16.
  */
 
-import gameClient.Main;
 
 /**
  * Card object
