@@ -49,7 +49,7 @@ public class Card {
         } else {
             n = "" + this.getCardType().getNameAsInt();
         }
-        return String.valueOf(Main.class.getResource("resources/napoli/" + n + "_" + this.getCardSuit().getResource() + ".png"));
+        return String.valueOf(Card.class.getResource("../resources/napoli/" + n + "_" + this.getCardSuit().getResource() + ".png"));
     }
 
     /**

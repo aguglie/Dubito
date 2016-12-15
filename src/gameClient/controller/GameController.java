@@ -40,6 +40,7 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+       // final String background =
         for (int b = CardSuit.values().length - 1; b >= 0; b--) {//Reversed foreach CardSuit
             CardSuit cardSuit = CardSuit.values()[b];
             for (CardType cardType : CardType.values()) {//Foreach CardType
@@ -125,6 +126,7 @@ public class GameController implements Initializable {
 
 
             //!?!?!?! corrections
+
             if (depth > 0.5 && x < 0)
                 x = (int) (x - depth * 15);
             if (depth > 0.5 && x > 0)
@@ -134,6 +136,10 @@ public class GameController implements Initializable {
             moveImageView(timeline, guiCards.get(card).getImage(), x + 400, 500 - y, angle);
         }
 
+        for (int b = deck.size() - 1; b >= 0 ; b--) {//Reversed foreach deck
+            Card card = deck.get(b);
+            guiCards.get(card).getImage().toFront();
+        }
         timeline.play();
     }
 
