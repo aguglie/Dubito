@@ -5,6 +5,7 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import game.action.Action;
 import game.action.CreateMatch;
 import game.action.JoinMatch;
+import game.action.StartGame;
 import game.model.Match;
 import gameClient.ClientObjs;
 import gameClient.SceneDirector;
@@ -36,6 +37,10 @@ public class SelectRoomController implements Initializable {
 
     @FXML
     private JFXButton addButton;//Add button
+
+    @FXML
+    private JFXButton startButton;//Inizia a giocare button
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,6 +79,13 @@ public class SelectRoomController implements Initializable {
                 TreeItem<ObservableMatch> item = treeView.getSelectionModel().getSelectedItem();
                 Action action = new JoinMatch(item.getValue().getId());
                 ClientObjs.getSocketWriter().sendAction(action);
+                treeView.setDisable(true);
+                startButton.setDisable(false);
+
+                startButton.setOnAction((e) -> {
+                    Action startAction = new StartGame();
+                    ClientObjs.getSocketWriter().sendAction(startAction);
+                });
             }
         });
 

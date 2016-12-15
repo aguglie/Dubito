@@ -5,7 +5,6 @@ import game.model.Card;
 import game.model.User;
 import gameClient.ClientObjs;
 import gameClient.controller.GameController;
-import utils.MyLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,9 @@ public class UpdateUser extends Action {
         ClientObjs.getUser().updateFrom(serverUser);//Updates client's user properties with server's
         ClientObjs.getUser().setCards(cards);
         if (GameController.getGameController() != null){
-            GameController.getGameController().updateDeck(ClientObjs.getUser().getCards());
+            GameController.getGameController().clearSelectedCards();//Reset selected cards //TODO check this perhaps not best location
+            GameController.getGameController().uncoverCards((ArrayList<Card>)cards);//Make sure cards belonging to user are uncovered
+            GameController.getGameController().displayUserHand(ClientObjs.getUser().getCards());//Display all cards in GUI
         }
     }
 }

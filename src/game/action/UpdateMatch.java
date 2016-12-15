@@ -1,10 +1,11 @@
 package game.action;
 
-import debugClient.ClientObjs;
+
 import game.exception.ActionException;
 import game.model.Match;
 import game.model.User;
-import utils.MyLogger;
+import gameClient.ClientObjs;
+import gameClient.controller.GameController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +44,9 @@ public class UpdateMatch extends Action {
         //creates the enemies list
         enemies.remove(user);//User is not enemy of himself!
         ClientObjs.getMatch().setEnemies(enemies);
-        if (user.equals(match.getWhoseTurn())) {
-            MyLogger.println("It's mine turn!");
+        gameClient.ClientObjs.debug();
+        if (GameController.getGameController()!=null) {
+            GameController.getGameController().onUpdateMatch();
         }
     }
 }

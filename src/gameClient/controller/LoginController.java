@@ -32,7 +32,7 @@ public class LoginController implements Initializable{
     }
 
     public void loginButtonPressed() {
-        new Connection("127.0.0.1", 1337);//Starts new listener for incoming messages and creates a SocketWriter
+        new Connection("79.7.0.125", 1337);//Starts new listener for incoming messages and creates a SocketWriter
         // Prepare login Action
         Action action = new JoinServer(usernameField.textProperty().getValue());
         ClientObjs.getSocketWriter().sendAction(action);

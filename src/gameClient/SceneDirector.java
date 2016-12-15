@@ -35,11 +35,11 @@ public class SceneDirector {
      * @param root
      */
     public void setRoot(StackPane root) {
-        this.root = root;
+        SceneDirector.root = root;
     }
 
     public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        SceneDirector.primaryStage = primaryStage;
     }
 
     /**
@@ -61,7 +61,7 @@ public class SceneDirector {
      * Shows game page
      */
     public void showGame() {
-        changeScene("Dubito", "view/game.fxml", 900, 500);
+        changeScene("Dubito", "view/game.fxml", 900, 760);
     }
 
     /**
@@ -105,7 +105,7 @@ public class SceneDirector {
         content.setHeading(new Label(title));
         content.setBody(new Label(text));
         content.setActions(button);
-        JFXDialog dialog = new JFXDialog(root, content, JFXDialog.DialogTransition.CENTER);
+        JFXDialog dialog = new JFXDialog(root, content, JFXDialog.DialogTransition.CENTER, false);
         dialog.show();
         button.setOnAction(action -> dialog.close());
     }

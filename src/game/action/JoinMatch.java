@@ -50,7 +50,7 @@ public class JoinMatch extends Action {
 
             GameLogic.getInstance().sendUpdateUserTo((server.model.User)user);
             GameLogic.getInstance().sendUpdateMatchTo(match);//Send every user an updated snapshot of the match
-            GameLogic.getInstance().changeView((server.model.User)user, ChangeView.GoTo.SELECT_ROOM);//Send user to GAME_ROOM // TODO: 08/12/16 correct this!
+            //GameLogic.getInstance().changeView((server.model.User)user, ChangeView.GoTo.SELECT_ROOM);//Send user to GAME_ROOM // TODO: 08/12/16 correct this!
             GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "You joined " + match.getName());//Send him an alert
 
         } catch (Exception e) {

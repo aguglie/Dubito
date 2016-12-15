@@ -8,6 +8,7 @@ import server.model.Match;
 import server.model.User;
 import utils.MyLogger;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +104,25 @@ public class GameLogic {
         userList.forEach(u -> sendUpdateUserTo(u));
     }
 
+    public void sendPickCardsTo(Match match, User cardsPicker) {
+        List<User> userList = match.getUsers();
+        userList.forEach(u -> sendPickCardsTo(u, cardsPicker));
+    }
+
+    public void sendPickCardsTo(User user, User cardsPicker) {
+        Croupier croupier = new Croupier(Croupier.ActionType.PICK_CARDS, cardsPicker);
+        user.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
+    }
+
+    public void sendPutCards(User userWhoPuts, int howMany, CardType cardType) {
+        ArrayList<User> users = new ArrayList<>(userWhoPuts.getMatch().getUsers());
+        users.remove(userWhoPuts);
+        users.forEach((u) -> {
+            Croupier croupier = new Croupier(Croupier.ActionType.PUT_CARDS, userWhoPuts, howMany, cardType);
+            u.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
+        });
+    }
+
     /**
      * Sends to specified user a personalized copy of server's match obj (with his enemies etc..)
      *
@@ -154,7 +174,7 @@ public class GameLogic {
 
         match.setMatchState(MatchState.PLAYING);//Set match as started
         match.getUsers().forEach((user) -> ((User) user).setUserState(UserState.PLAYING));//set each user as playing
-        match.getUsers().forEach((user) -> changeView((User)user, ChangeView.GoTo.GAME));//set each user as playing
+
 
         Deck deck = new Deck();//Creates a new deck.
         deck.giveCards(match.getUsers());//divides cards
@@ -163,7 +183,7 @@ public class GameLogic {
 
         this.sendUpdateUserTo(match);//Send every match user the updated objects
         this.sendUpdateMatchTo(match);//Send every match user the updated objects
-
+        match.getUsers().forEach((user) -> changeView((User)user, ChangeView.GoTo.GAME));//set each user as playing
         MyLogger.println("Match started");
     }
 
@@ -188,11 +208,16 @@ public class GameLogic {
         }
 
         MyLogger.println(loser.getUsername() + " lost");
+        sendPickCardsTo(actualPlayer.getMatch(), loser);//Syncs everyone GUI moving card to loser
+
         if (actualPlayer.getMatch().getTableCardsList().size() > 0) {
             Match userMatch = actualPlayer.getMatch();
             this.moveCardsToUser(loser);//Give all table covered cards to loser
             userMatch.getTableCardsList().clear();//Clears table cards
             userMatch.setLastMove(null);//Clears last action, we are starting new round.
+        }
+        if (actualPlayer.equals(loser)){
+            actualPlayer.getMatch().nextTurn();//If actual player loses his turn is over
         }
     }
 

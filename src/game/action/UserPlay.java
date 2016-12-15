@@ -3,6 +3,7 @@ package game.action;
 import game.exception.ActionException;
 import game.model.*;
 import game.model.User;
+import gameClient.controller.GameController;
 import server.controller.GameLogic;
 import server.model.*;
 import server.model.Match;
@@ -86,15 +87,20 @@ public class UserPlay extends Action {
             try {
                 gameLogic.moveCardsToTable(cards, this.performer);//Move selected cards from user deck to table
             } catch (Exception e) {
+                //ReSync client data
+                MyLogger.println("Data error, trying to resync");
+                gameLogic.sendUpdateMatchTo((server.model.User)user);
+                gameLogic.sendUpdateUserTo((server.model.User)user);
                 gameLogic.sendDangerMessageTo((server.model.User) user, e.getMessage());
                 return;
             }
             userMatch.setLastMove(this);//If everything is ok save this move as last happened
+            GameLogic.getInstance().sendPutCards((server.model.User)user, cards.size(), cardsType);
+            userMatch.nextTurn();
         }
 
 
         //Anyway turn ends and we send updated data back...
-        userMatch.nextTurn();
         gameLogic.sendUpdateMatchTo(userMatch);
         gameLogic.sendUpdateUserTo(userMatch);
     }

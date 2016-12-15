@@ -1,6 +1,7 @@
 package game.model;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -101,10 +102,16 @@ public class Match {
      */
     @Override
     public String toString() {
+        String out = "";
         if (enemies != null) {
-            return "[name=" + name + ", matchState=" + matchState.toString() + ", enemiesList=" + enemies.toString() + "]";
+            out = out + "[name=" + name + ", matchState=" + matchState.toString() + ", enemiesList=" + enemies.toString();
         } else {
-            return "[name=" + name + ", matchState=" + matchState.toString() + "]";
+            out = out + "[name=" + name + ", matchState=" + matchState.toString();
         }
+        if (this.whoseTurn!=null){
+            out = out + " whoseturn = "+whoseTurn.toString();
+        }
+        return out+"]";
+
     }
 }

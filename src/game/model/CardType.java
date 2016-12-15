@@ -32,4 +32,17 @@ public enum CardType {
     public int getAsArrayKey() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    public String toStringPlurals(int i){
+        if (this!=CardType.ASSO){
+            return this.toString().toLowerCase();
+        }
+        if (i>1) return "assi";
+        return "asso";
+    }
 }

@@ -1,1 +1,0 @@
-Debug client **is shit shit shit shit shit**, it's only for test purpose

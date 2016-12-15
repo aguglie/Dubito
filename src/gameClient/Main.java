@@ -9,7 +9,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         SceneDirector.getInstance().setPrimaryStage(primaryStage);//What happens on stage is directed by SceneDirector
         SceneDirector.getInstance().showLogin();//Shows login page
-        //SceneDirector.getInstance().showGame();//Shows login page
+        //SceneDirector.getInstance().showGame();//Shows game page
     }
 
     public static void main(String[] args) {
