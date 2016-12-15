@@ -10,7 +10,8 @@ import gameClient.SceneDirector;
 public class ChangeView extends Action {
     public enum GoTo {
         LOGIN,
-        SELECT_ROOM
+        SELECT_ROOM,
+        GAME
     }
 
     private GoTo goTo;
@@ -27,6 +28,9 @@ public class ChangeView extends Action {
                 break;
             case SELECT_ROOM:
                 SceneDirector.getInstance().showSelectRoom();
+                break;
+            case GAME:
+                SceneDirector.getInstance().showGame();
                 break;
         }
     }

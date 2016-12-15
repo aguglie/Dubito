@@ -3,6 +3,8 @@ package game.action;
 import game.exception.ActionException;
 import game.model.Card;
 import game.model.User;
+import gameClient.ClientObjs;
+import gameClient.controller.GameController;
 import utils.MyLogger;
 
 import java.util.ArrayList;
@@ -26,7 +28,10 @@ public class UpdateUser extends Action {
 
     @Override
     public void doAction(User user) throws ActionException {//doAction called on client
-        user.updateFrom(serverUser);//Updates client's user properties with server's
-        user.setCards(cards);
+        ClientObjs.getUser().updateFrom(serverUser);//Updates client's user properties with server's
+        ClientObjs.getUser().setCards(cards);
+        if (GameController.getGameController() != null){
+            GameController.getGameController().updateDeck(ClientObjs.getUser().getCards());
+        }
     }
 }

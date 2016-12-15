@@ -3,6 +3,7 @@ package gameClient.controller;
 import game.model.Card;
 import game.model.CardSuit;
 import game.model.CardType;
+import gameClient.ClientObjs;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -23,6 +24,9 @@ import java.util.*;
  * Created by andrea on 10/12/16.
  */
 public class GameController implements Initializable {
+    private static GameController gameController;
+
+
     @FXML
     private StackPane root;
 
@@ -33,6 +37,7 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.gameController = this;
 
         //Sets page background
         final String background = String.valueOf(GameController.class.getResource("../../game/resources/table.png"));
@@ -60,6 +65,7 @@ public class GameController implements Initializable {
         }
 
 
+        /*
         //DEBUG
         ArrayList test = new ArrayList(40);
         for (CardType type : CardType.values()) {
@@ -69,13 +75,14 @@ public class GameController implements Initializable {
         }
         Collections.shuffle(test);////Debug debug debug
         updateDeck(test);//// Debug debug debug
+        */
+        //ClientObjs.getUser().getCards()
     }
 
     public void highlight(Card card){
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> highlight(card));
         }
-        /*
         //Creates new timeline Object
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
@@ -84,20 +91,11 @@ public class GameController implements Initializable {
 
 
         timeline.play();
-        */
-
     }
     public void updateDeck(List<Card> deck) {
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> updateDeck(deck));
         }
-
-        //Debug debug debug starts here
-         for (int i=0; i<20; i++){
-             deck.remove(i);
-         }
-         //Debug debug debug ends here
-
 
         //Orders cards first by type then suit
         Collections.sort(deck, (o1, o2) -> {
@@ -151,7 +149,7 @@ public class GameController implements Initializable {
             double angle = 25d * (x / 350d);
 
             //moves image
-            moveImageView(timeline, guiCards.get(card).getImage(), x + 500, 400 - y, angle);
+            moveImageView(timeline, guiCards.get(card).getImage(), x + 410, 450 - y, angle);
         }
 
         for (int b = 0; b < deck.size() ; b++) {//foreach deck
@@ -202,5 +200,9 @@ public class GameController implements Initializable {
         public Card getCardObject() {
             return cardObject;
         }
+    }
+
+    public static GameController getGameController() {
+        return gameController;
     }
 }

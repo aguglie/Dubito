@@ -5,6 +5,7 @@ import game.exception.ActionException;
 import game.model.Match;
 import game.model.User;
 import gameClient.ClientObjs;
+import gameClient.controller.GameController;
 import gameClient.utils.TreeTableRowObj;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

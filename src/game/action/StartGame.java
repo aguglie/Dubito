@@ -26,6 +26,7 @@ public class StartGame extends Action {
             GameLogic.getInstance().startMatch((server.model.Match) match);
         } catch (Exception e) {
             GameLogic.getInstance().sendDangerMessageTo((server.model.User) user, e.getMessage());//Smth bad happened here...
+            return;
         }
     }
 }

@@ -154,6 +154,7 @@ public class GameLogic {
 
         match.setMatchState(MatchState.PLAYING);//Set match as started
         match.getUsers().forEach((user) -> ((User) user).setUserState(UserState.PLAYING));//set each user as playing
+        match.getUsers().forEach((user) -> changeView((User)user, ChangeView.GoTo.GAME));//set each user as playing
 
         Deck deck = new Deck();//Creates a new deck.
         deck.giveCards(match.getUsers());//divides cards
