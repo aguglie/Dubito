@@ -40,7 +40,7 @@ public class UserPlay extends Action {
     }
 
     /**
-     * Prepares move payload
+     * Called when user is playing cards
      *
      * @param playType must be PLAYCARD
      * @param cards    cards you want to play
@@ -62,13 +62,13 @@ public class UserPlay extends Action {
     public void doAction(User user) throws ActionException {
         GameLogic gameLogic = GameLogic.getInstance();
         if (user.getUserState() != UserState.PLAYING) {
-            gameLogic.sendDangerMessageTo((server.model.User) user, "You must be in lobby to perform this!");
+            gameLogic.sendDangerMessageTo((server.model.User) user, "You must be in game to perform this!");
             return;
         }
         server.model.Match userMatch = ((server.model.User) user).getMatch();
 
         if (!userMatch.getWhoseTurn().equals(user)) {//if it's not user's turn
-            gameLogic.sendDangerMessageTo((server.model.User) user, "It's not your turn!");
+            gameLogic.sendDangerMessageTo((server.model.User) user, "Non tocca a te!");
             return;
         }
         MyLogger.println("User " + user.getUsername() + " plays " + playType.toString());
@@ -79,11 +79,20 @@ public class UserPlay extends Action {
                 return;
             }
             gameLogic.executeDubitoPlay((server.model.User) user, userMatch.getLastMove());//'DUBITO' action logic is here
-
         }
 
         if (playType.equals(PlayType.PLAYCARD)) {// Handles 'playcard' moves.
             this.performer = (server.model.User) user;
+
+            //If cardsType is not recived, cardsType is the one of previous request we need to check if it exists
+            if (cardsType == null) {
+                try {
+                    cardsType = userMatch.getLastMove().getCardsType();
+                } catch (Exception e){
+                    gameLogic.sendDangerMessageTo((server.model.User) user, "Non hai specificato la tipologia di carte!");
+                    return;
+                }
+            }
             try {
                 gameLogic.moveCardsToTable(cards, this.performer);//Move selected cards from user deck to table
             } catch (Exception e) {

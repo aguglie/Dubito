@@ -44,7 +44,8 @@ public class UpdateMatch extends Action {
         //creates the enemies list
         enemies.remove(user);//User is not enemy of himself!
         ClientObjs.getMatch().setEnemies(enemies);
-        gameClient.ClientObjs.debug();
+
+        //gameClient.ClientObjs.debug();
         if (GameController.getGameController()!=null) {
             GameController.getGameController().onUpdateMatch();
         }
