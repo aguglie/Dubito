@@ -410,6 +410,12 @@ public class GameController implements Initializable {
             return;
         }
 
+        if (!ClientObjs.getMatch().isFirstTurn()){
+        //If this is not the first turn, we don't have to show TypeBox, CardType was already choosen
+            playActionAndAnimation(new ArrayList<Card>(selectedCards), null);
+            return;
+        }
+
         //Creates list of available CardTypes
         ListView<CardType> listView = new JFXListView<>();
         for (CardType cardType :

@@ -19,6 +19,7 @@ public class Match {
     private MatchState matchState = MatchState.WAITING_START;
     private transient List enemies;//this variable is used when match in sent to client
     protected User whoseTurn = null;
+    private boolean isFirstTurn = false;
 
 
     public Match(String name) {
@@ -84,6 +85,14 @@ public class Match {
         this.name = match.name;
         this.matchState = match.matchState;
         this.whoseTurn = match.whoseTurn;
+    }
+
+    public boolean isFirstTurn() {
+        return isFirstTurn;
+    }
+
+    public void setFirstTurn(boolean firstTurn) {
+        isFirstTurn = firstTurn;
     }
 
     /**

@@ -20,6 +20,7 @@ import java.util.List;
 public class UpdateMatch extends Action {
     private Match match;
     private List<User> enemies;
+    private boolean isFirstPlay;//True when this is the first play of a round
 
     /**
      * Prepares payload
@@ -29,6 +30,7 @@ public class UpdateMatch extends Action {
     public UpdateMatch(server.model.Match match) {
         this.match = match;
         this.enemies = new ArrayList<User>(match.getUsers());
+        this.isFirstPlay = (match.getLastMove() == null);
     }
 
     /**
@@ -40,7 +42,7 @@ public class UpdateMatch extends Action {
     @Override
     public void doAction(User user) throws ActionException {
         ClientObjs.getMatch().updateFrom(match);//This updates only superclass properties :(
-
+        ClientObjs.getMatch().setFirstTurn(isFirstPlay);
         //creates the enemies list
         enemies.remove(user);//User is not enemy of himself!
         ClientObjs.getMatch().setEnemies(enemies);
