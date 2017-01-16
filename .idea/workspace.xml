@@ -34,10 +34,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game/resources/avatars/avatar00026.png" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game/resources/avatars/avatar00027.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/Croupier.java" afterPath="$PROJECT_DIR$/src/game/action/Croupier.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/action/UpdateUser.java" afterPath="$PROJECT_DIR$/src/game/action/UpdateUser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gameClient/controller/GameController.java" afterPath="$PROJECT_DIR$/src/gameClient/controller/GameController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/controller/GameLogic.java" afterPath="$PROJECT_DIR$/src/server/controller/GameLogic.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -949,7 +945,8 @@
     <MESSAGE value="Moved resources dir to game package" />
     <MESSAGE value="updateDeck() ended, background in game.fxml" />
     <MESSAGE value="Fixed Game Logic bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Game Logic bug" />
+    <MESSAGE value="Improving GUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving GUI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
