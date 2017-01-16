@@ -1,10 +1,13 @@
 package game.action;
 
 import game.exception.ActionException;
+import game.model.Card;
 import game.model.CardType;
 import game.model.User;
 import gameClient.SceneDirector;
 import gameClient.controller.GameController;
+
+import java.util.List;
 
 /**
  * Used by server to move cards of other users on GUI
@@ -18,6 +21,7 @@ public class Croupier extends Action {
     private int number;
     private User serverUser;
     private CardType cardType;
+    private List<Card> cardsPicked;
 
 
     public Croupier(ActionType actionType, User user, int number, CardType cardType) {
@@ -27,9 +31,10 @@ public class Croupier extends Action {
         this.cardType = cardType;
     }
 
-    public Croupier(ActionType actionType, User user) {
+    public Croupier(ActionType actionType, User user, List<Card> cardsPicked) {
         this.actionType = actionType;
         this.serverUser = user;
+        this.cardsPicked = cardsPicked;
     }
 
     @Override
@@ -39,7 +44,7 @@ public class Croupier extends Action {
                 GameController.getGameController().userPutsCards(serverUser, number, cardType);
                 break;
             case PICK_CARDS:
-                GameController.getGameController().userPicksCards(serverUser);
+                GameController.getGameController().userPicksCards(serverUser, cardsPicked);
         }
     }
 }

@@ -30,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import utils.MyLogger;
 
 import java.net.URL;
 import java.util.*;
@@ -189,9 +190,9 @@ public class GameController implements Initializable {
         throwCardsTimeline.play();
     }
 
-    public void userPicksCards(User user) {
+    public void userPicksCards(User user, List<Card> cardsPicked) {
         if (!Platform.isFxApplicationThread()){
-            Platform.runLater(() -> userPicksCards(user));
+            Platform.runLater(() -> userPicksCards(user, cardsPicked));
             return;
         }
         Timeline throwCardsTimeline = new Timeline();
@@ -199,22 +200,32 @@ public class GameController implements Initializable {
         throwCardsTimeline.setAutoReverse(false);
 
         JFXSnackbar jfxSnackbar = new JFXSnackbar(root);
-        if (user.equals(ClientObjs.getUser())) {
-            jfxSnackbar.show("Accidenti " + user.getUsername() + ", hai perso la mano", 6000);
 
-            //If user lost cards are brought to botton of screen
+        if (user.equals(ClientObjs.getUser())) {//If playing user just lost move cards to him
+            jfxSnackbar.show("Accidenti " + user.getUsername() + ", hai perso la mano e devi prendere "+cardsPicked.size()+" carte.", 6000);
+
+            //We have to update the random covered cards on screen with covered cards that actually user just picked.
             guiCards.forEach(((card, guiCard) -> {
                 if (guiCard.getImage().getX() > 0 && guiCard.getImage().getY() > 0) {//if it's on stage
-                    if (guiCard.isCoveredCard()) {
-                        moveImageView(throwCardsTimeline, guiCards.get(card).getImage(), -200, root.getHeight()+200, 0, 1000);
+                    if (guiCard.isCoveredCard() && cardsPicked.size()>0) {//If it's covered
+                        //if this card was put there randomly, we have to switch it with a user's one.
+                        //Move correct card to displayed cards:
+                        guiCards.get(cardsPicked.get(0)).setCoveredCard(false);
+                        guiCards.get(cardsPicked.get(0)).getImage().setX(guiCard.getImage().getX());
+                        guiCards.get(cardsPicked.get(0)).getImage().setY(guiCard.getImage().getY());
+                        guiCards.get(cardsPicked.get(0)).getImage().setRotate(guiCard.getImage().getRotate());
+                        guiCard.getImage().setY(-200);//Move wrong card away
+                        cardsPicked.remove(0);//we corrected this card, remove it from list
+                        moveImageView(throwCardsTimeline, guiCards.get(card).getImage(), -200, root.getHeight() + 200, 0, 4000);
                     }
                 }
             }));
 
+
         } else {
             jfxSnackbar.show(user.getUsername() + " perde la mano", 6000);
 
-            //If user is not loosing cards are brought to top of screen
+            //If user is not loosing, cards are brought to top of screen
             guiCards.forEach(((card, guiCard) -> {
                 if (guiCard.getImage().getX() > 0 && guiCard.getImage().getY() > 0) {//if it's on stage
                     if (guiCard.isCoveredCard()) {
@@ -269,7 +280,6 @@ public class GameController implements Initializable {
             Platform.runLater(() -> displayUserHand(userCards));
             return;
         }
-
 
         List<Card> deck = new ArrayList<>(userCards);//We take a copy of it
 

@@ -104,14 +104,19 @@ public class GameLogic {
         userList.forEach(u -> sendUpdateUserTo(u));
     }
 
-    public void sendPickCardsTo(Match match, User cardsPicker) {
+    public void sendPickCardsTo(Match match, User cardsPicker, List<Card> cardsPicked) {
         List<User> userList = match.getUsers();
-        userList.forEach(u -> sendPickCardsTo(u, cardsPicker));
+        userList.forEach(u -> sendPickCardsTo(u, cardsPicker, cardsPicked));
     }
 
-    public void sendPickCardsTo(User user, User cardsPicker) {
-        Croupier croupier = new Croupier(Croupier.ActionType.PICK_CARDS, cardsPicker);
-        user.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
+    public void sendPickCardsTo(User user, User cardsPicker, List<Card> cardsPicked) {
+        if (user.equals(cardsPicker)) {//We only tell the loser which cards he has to take
+            Croupier croupier = new Croupier(Croupier.ActionType.PICK_CARDS, cardsPicker, cardsPicked);
+            user.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
+        }else{
+            Croupier croupier = new Croupier(Croupier.ActionType.PICK_CARDS, cardsPicker, null);
+            user.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
+        }
     }
 
     public void sendPutCards(User userWhoPuts, int howMany, CardType cardType) {
@@ -208,7 +213,7 @@ public class GameLogic {
         }
 
         MyLogger.println(loser.getUsername() + " lost");
-        sendPickCardsTo(actualPlayer.getMatch(), loser);//Syncs everyone GUI moving card to loser
+        sendPickCardsTo(actualPlayer.getMatch(), loser, actualPlayer.getMatch().getTableCardsList());//Syncs everyone GUI moving card to loser
 
         if (actualPlayer.getMatch().getTableCardsList().size() > 0) {
             Match userMatch = actualPlayer.getMatch();

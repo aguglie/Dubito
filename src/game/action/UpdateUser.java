@@ -31,8 +31,8 @@ public class UpdateUser extends Action {
         ClientObjs.getUser().setCards(cards);
         if (GameController.getGameController() != null){
             GameController.getGameController().clearSelectedCards();//Reset selected cards //TODO check this perhaps not best location
-            GameController.getGameController().uncoverCards((ArrayList<Card>)cards);//Make sure cards belonging to user are uncovered
             GameController.getGameController().displayUserHand(ClientObjs.getUser().getCards());//Display all cards in GUI
+            //GameController.getGameController().uncoverCards((ArrayList<Card>)cards);//Make sure cards belonging to user are uncovered
         }
     }
 }
