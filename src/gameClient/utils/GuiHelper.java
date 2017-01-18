@@ -1,0 +1,337 @@
+package gameClient.utils;
+
+import com.jfoenix.controls.JFXSnackbar;
+import game.model.Card;
+import game.model.CardType;
+import game.model.User;
+import gameClient.ClientObjs;
+import gameClient.controller.GameController;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+import utils.MyLogger;
+
+import java.util.*;
+
+/**
+ * Created by andrea on 17/01/17.
+ */
+public class GuiHelper {
+
+    /**
+     * Hides passed card and sets it to covered
+     * @param guiCard
+     */
+    public static void hideCard(GuiCard guiCard){
+        guiCard.getImage().setX(-100);
+        guiCard.getImage().setY(-100);
+    }
+
+    /**
+     * Highlights passed card
+     * @param guiCard
+     */
+    public static void highlightCard(GuiCard guiCard){
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setContrast(0.1);
+        colorAdjust.setHue(-0.05);
+        colorAdjust.setBrightness(0.2);
+        colorAdjust.setSaturation(0.3);
+        //apply new effect to card
+        guiCard.getImage().setEffect(colorAdjust);
+    }
+
+    /**
+     * Removes effects from cards (ex: removes highlight effect)
+     * @param guiCard
+     */
+    public static void removeEffects(GuiCard guiCard){
+        guiCard.getImage().setEffect(null);
+    }
+
+    /**
+     * Display user's selected cards on gui
+     */
+    public static void displaySelectedCards() {
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> displaySelectedCards());
+            return;
+        }
+        //Retrieve objects:
+        ObservableList<Card>selectedCards = GameController.getGameController().getSelectedCards();
+        StackPane root = GameController.getGameController().getRoot();
+        HashMap<Card, GuiCard> guiCards = GameController.getGameController().getGuiCards();
+
+        //Creates new timeline Object
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+
+        //Show every selected image above UserHand
+        for (int i = 0; i < selectedCards.size(); i++) {
+            moveImageView(timeline, guiCards.get(selectedCards.get(i)).getImage(), (root.getWidth() - selectedCards.size() * 45) / 2 + i * 45, root.getHeight() * 2 / 9, 0, 1000);
+            guiCards.get(selectedCards.get(i)).setCoveredCard(false);
+        }
+
+        //Corrects Z Position
+        for (int b = 0; b < selectedCards.size(); b++) {//foreach deck
+            Card card = selectedCards.get(b);
+            guiCards.get(card).getImage().toFront();
+        }
+
+        timeline.play();
+    }
+
+    /**
+     * Magic method which displays user cards (which are not selected or covered) in ellipse shape
+     */
+    public static void displayUserHand() {
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> displayUserHand());
+            return;
+        }
+
+        //Retrieve objects:
+        ObservableList<Card>selectedCards = GameController.getGameController().getSelectedCards();
+        StackPane root = GameController.getGameController().getRoot();
+        HashMap<Card, GuiCard> guiCards = GameController.getGameController().getGuiCards();
+        List<Card> userCards = ClientObjs.getUser().getCards();
+
+
+        List<Card> deck = new ArrayList<>(userCards);//We take a copy of it
+
+        //We have to remove from deck all selected cards, they'll be shown in selection box
+        deck.removeAll(selectedCards);
+
+        //We first need to hide cards which are not in our deck
+        guiCards.forEach((card, guiCard) -> {
+            if (!deck.contains(card)) {
+                if (!guiCard.isCoveredCard()) {//If it's covered on table it can stay there
+                    hideCard(guiCard);
+                }
+            }
+        });
+
+        //Orders cards first by type then by suit
+        Collections.sort(deck, (o1, o2) -> {
+            int hasho1 = o1.getCardType().getAsArrayKey() * 4 + o1.getCardSuit().getValue();
+            int hasho2 = o2.getCardType().getAsArrayKey() * 4 + o2.getCardSuit().getValue();
+            return hasho1 - hasho2;
+        });
+
+
+        //Creates new timeline Object
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+
+
+        //Counts how many types are in user's deck.
+        int cardinOfTypes = new Object() {
+            int count() {
+                List<CardType> cardTypes = new ArrayList<CardType>();
+                deck.forEach(c -> {
+                    if (!cardTypes.contains(c.getCardType())) cardTypes.add(c.getCardType());
+                });
+                return cardTypes.size();
+            }
+        }.count();
+
+
+        //Here layout magic starts...
+        List<CardType> placedTypes = new ArrayList(4);//Array containing already drew types
+        double depth = 0.5;//level 0 card depth
+        for (Card card :
+                deck) {
+
+            if (placedTypes.contains(card.getCardType())) {
+                //ITALIAN: Se il tipo è già stato piazzato significa che questa carta va messa dietro ad una già esistente
+                depth = depth + 0.35;
+            } else {
+                depth = 0.5;
+                placedTypes.add(card.getCardType());
+            }
+
+
+            if (!ClientObjs.getUser().equals(ClientObjs.getMatch().getWhoseTurn())) {
+                //depth = depth - 0.20;//If it's not my turn we can collpase cards a bit more
+            }
+
+            //Calculates x posit
+            int x = (int) (-35d * cardinOfTypes + (placedTypes.size() - 1) * cardinOfTypes * 70d / (cardinOfTypes - 1d));
+
+            //Correction of x pos
+            if (x < 0) {
+                x = (int) (x - depth * 20);
+            }
+
+            //calculates y and rotation
+            int y = (int) (Math.sqrt(1d - Math.pow(x, 2) / (250000d)) * (300d * Math.sqrt(depth)));
+            double angle = 25d * (x / 350d);
+
+            //moves image
+            guiCards.get(card).setCoveredCard(false);
+            moveImageView(timeline, guiCards.get(card).getImage(), x + root.getWidth() / 2.2, root.getHeight() - y, angle, 1000);
+        }
+
+        //Corrects Z positions
+        for (int b = 0; b < deck.size(); b++) {//foreach deck
+            Card card = deck.get(b);
+            guiCards.get(card).getImage().toBack();
+        }
+
+        timeline.play();
+    }
+
+    /**
+     * Displays user's avatars and info on gui
+     */
+    public static void displayEnemies(){
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> displayEnemies());
+            return;
+        }
+        //Retrieve objects:
+        List<User> enemies = ClientObjs.getMatch().getEnemies();
+
+        //Creates new timeline Object
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+
+        //Show every user on top of screen
+
+        for (int i = 0; i < enemies.size(); i++) {
+            VBox userAvatarVBox = enemies.get(i).getUserAvatarVBox();//retrieve user's avatar
+            if (!GameController.getGameController().getPane().getChildren().contains(userAvatarVBox)){//if not displayed on gui append it now
+                GameController.getGameController().getPane().getChildren().add(userAvatarVBox);
+            }
+            userAvatarVBox.setLayoutX(getUserXPosition(enemies.get(i)));
+            userAvatarVBox.setLayoutY(getUserYPosition(enemies.get(i)));
+        }
+        timeline.play();
+    }
+
+    /**
+     * Plays 'throw cards' animation.
+     * @param from cards thrower
+     * @param howMany how many cards to theow
+     */
+    public static void throwCards(User from, int howMany){
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> throwCards(from, howMany));
+            return;
+        }
+
+        StackPane root = GameController.getGameController().getRoot();
+        Timeline throwCardsTimeline = new Timeline();
+        throwCardsTimeline.setCycleCount(1);
+        throwCardsTimeline.setAutoReverse(false);
+        Random random = new Random();
+
+        for (int i=0; i<howMany; i++) {
+            GuiCard guiCard = findFreeGuiCard();//Finds a free card not owned by user
+            if (guiCard==null){
+                MyLogger.println("Covered cards are over");
+                return;
+            }
+            guiCard.setCoveredCard(true);//sets this cards to covered
+            guiCard.getImage().setX(getUserXPosition(from));//card starts his movement where thrower is
+            guiCard.getImage().setY(getUserYPosition(from));
+            guiCard.getImage().toFront();//it should be on top of all other cards
+            moveImageView(throwCardsTimeline, guiCard.getImage(), root.getWidth()/2, root.getHeight() / 9, random.nextInt(200), 500);
+        }
+        throwCardsTimeline.play();
+    }
+
+    /**
+     * Shows message to user
+     * @param message
+     */
+    public static void showToast(String message){
+        StackPane root = GameController.getGameController().getRoot();
+        JFXSnackbar jfxSnackbar = new JFXSnackbar(root);
+        jfxSnackbar.show(message, 6000);
+    }
+
+    /**
+     * Returns user X position on screen
+     * @param user
+     * @return
+     */
+    private static double getUserXPosition(User user){
+        StackPane root = GameController.getGameController().getRoot();
+        if (!ClientObjs.getUser().equals(user)) {
+            List<User> enemies = ClientObjs.getMatch().getEnemies();
+            return (root.getWidth() - enemies.size() * root.getWidth()/ (enemies.size()+1)) / 2 + enemies.indexOf(user) * root.getWidth()/ enemies.size();
+        }else{
+            return root.getWidth()/2;
+        }
+    }
+
+    /**
+     * Returns user Y position on screen
+     * @param user
+     * @return
+     */
+    private static double getUserYPosition(User user){
+        StackPane root = GameController.getGameController().getRoot();
+        if (!ClientObjs.getUser().equals(user)) {
+            return 20;
+        }else{
+            return root.getHeight()/2;
+        }
+    }
+
+    /**
+     * Moves ImageView using a Timeline animation
+     * @param timeline
+     * @param obj
+     * @param endX
+     * @param endY
+     * @param endRotate
+     * @param animationTime
+     */
+    public static void moveImageView(Timeline timeline, ImageView obj, double endX, double endY, double endRotate, double scale, int animationTime) {
+        KeyValue keyValueRotate = new KeyValue(obj.rotateProperty(), endRotate);
+        KeyValue keyValueX = new KeyValue(obj.xProperty(), endX);
+        KeyValue keyValueY = new KeyValue(obj.yProperty(), endY);
+        KeyValue keyValueScaleX = new KeyValue(obj.scaleXProperty(), scale);
+        KeyValue keyValueScaleY = new KeyValue(obj.scaleYProperty(), scale);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(animationTime), keyValueRotate, keyValueX, keyValueY, keyValueScaleX, keyValueScaleY);
+        timeline.getKeyFrames().add(keyFrame);
+    }
+    public static void moveImageView(Timeline timeline, ImageView obj, double endX, double endY, double endRotate, int animationTime) {
+        moveImageView(timeline, obj, endX, endY, endRotate, animationTime);
+    }
+
+    /**
+     * Finds a card which not belongs to user
+     * @return
+     */
+    private static GuiCard findFreeGuiCard(){
+        //Retrieve objects:
+        HashMap<Card, GuiCard> guiCards = GameController.getGameController().getGuiCards();
+        for (Map.Entry<Card, GuiCard> guiCardEntry : guiCards.entrySet()) {
+            if (guiCardEntry.getValue().getImage().getX() < 0 || guiCardEntry.getValue().getImage().getY() < 0) {//if it's on stage
+                if (!ClientObjs.getUser().getCards().contains(guiCardEntry.getValue())) {//if it's not in user deck (it shouldn't....)
+                    return guiCardEntry.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
+    private static void moveImageView(ImageView obj, double endX, double endY, double endRotate){
+        obj.setX(endX);
+        obj.setY(endY);
+        obj.setRotate(endRotate);
+    }
+}
