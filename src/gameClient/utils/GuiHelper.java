@@ -39,13 +39,22 @@ public class GuiHelper {
      * @param guiCard
      */
     public static void highlightCard(GuiCard guiCard){
+        highlightImageView(guiCard.getImage());
+    }
+
+
+    /**
+     * Highlights passed imageView
+     * @param imageView
+     */
+    public static void highlightImageView(ImageView imageView){
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setContrast(0.1);
         colorAdjust.setHue(-0.05);
         colorAdjust.setBrightness(0.2);
         colorAdjust.setSaturation(0.3);
         //apply new effect to card
-        guiCard.getImage().setEffect(colorAdjust);
+        imageView.setEffect(colorAdjust);
     }
 
     /**
@@ -53,8 +62,13 @@ public class GuiHelper {
      * @param guiCard
      */
     public static void removeEffects(GuiCard guiCard){
-        guiCard.getImage().setEffect(null);
+        removeEffects(guiCard.getImage());
     }
+
+    public static void removeEffects(ImageView imageView){
+        imageView.setEffect(null);
+    }
+
 
     /**
      * Display user's selected cards on gui

@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+
 /**
  * Created by andrea on 08/12/16.
  */
@@ -61,6 +62,11 @@ public class SceneDirector {
      */
     public void showChooseAvatar() {
         changeScene("Scegli un Avatar", "view/chooseAvatar.fxml", 900, 500);
+        primaryStage.setResizable(false);
+    }
+
+    public void showChooseCards() {
+        changeScene("Scegli le carte", "view/chooseCards.fxml", 900, 500);
         primaryStage.setResizable(false);
     }
 
