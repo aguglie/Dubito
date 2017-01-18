@@ -56,12 +56,21 @@ public class SceneDirector {
         changeScene("Seleziona Stanza", "view/selectRoom.fxml", 500, 500);
     }
 
+    /**
+     * Shows select avatar page
+     */
+    public void showChooseAvatar() {
+        changeScene("Scegli un Avatar", "view/chooseAvatar.fxml", 900, 500);
+        primaryStage.setResizable(false);
+    }
+
 
     /**
      * Shows game page
      */
     public void showGame() {
         changeScene("Dubito", "view/game.fxml", 900, 760);
+        primaryStage.setResizable(true);
     }
 
     /**
