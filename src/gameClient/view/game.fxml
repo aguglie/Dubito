@@ -14,7 +14,15 @@
          <children>
             <HBox fx:id="buttonsHBox" alignment="BOTTOM_CENTER">
                <children>
-                  <JFXButton fx:id="playButton" style="-fx-background-color: limegreen;" text="Gioca Carte">
+                  <JFXButton fx:id="discardButton" style="-fx-background-color: orange;" text="Scarta">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="playButton" style="-fx-background-color: limegreen;" text="Gioca">
                      <HBox.margin>
                         <Insets right="30.0" />
                      </HBox.margin>

@@ -30,9 +30,8 @@ public class UpdateUser extends Action {
         ClientObjs.getUser().updateFrom(serverUser);//Updates client's user properties with server's
         ClientObjs.getUser().setCards(cards);
         if (GameController.getGameController() != null){
-            GameController.getGameController().clearSelectedCards();//Reset selected cards //TODO check this perhaps not best location
+            GameController.getGameController().clearSelectedCards();//Reset selected cards
             GameController.getGameController().displayUserHand(ClientObjs.getUser().getCards());//Display all cards in GUI
-            //GameController.getGameController().uncoverCards((ArrayList<Card>)cards);//Make sure cards belonging to user are uncovered
         }
     }
 }

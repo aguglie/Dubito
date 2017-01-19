@@ -7,6 +7,7 @@ import game.model.User;
 import gameClient.SceneDirector;
 import gameClient.controller.GameController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,36 +16,38 @@ import java.util.List;
 public class Croupier extends Action {
     public enum ActionType {
         PUT_CARDS,
-        PICK_CARDS
+        PICK_CARDS,
+        DISCARD_CARDS
     }
     private ActionType actionType;
-    private int number;
     private User serverUser;
+    private List<Card> cards;
     private CardType cardType;
-    private List<Card> cardsPicked;
 
-
-    public Croupier(ActionType actionType, User user, int number, CardType cardType) {
+    /**
+     * Message sent to all clients to move cards.
+     * @param actionType
+     * @param user
+     * @param cards
+     */
+    public Croupier(ActionType actionType, User user, List<Card> cards, CardType cardType) {
         this.actionType = actionType;
-        this.number = number;
         this.serverUser = user;
+        this.cards = cards;
         this.cardType = cardType;
-    }
-
-    public Croupier(ActionType actionType, User user, List<Card> cardsPicked) {
-        this.actionType = actionType;
-        this.serverUser = user;
-        this.cardsPicked = cardsPicked;
     }
 
     @Override
     public void doAction(User user) throws ActionException {
         switch (actionType){
             case PUT_CARDS:
-                GameController.getGameController().userPutsCards(serverUser, number, cardType);
+                GameController.getGameController().userPutsCards(serverUser, cards, cardType);
                 break;
             case PICK_CARDS:
-                GameController.getGameController().userPicksCards(serverUser, cardsPicked);
+                GameController.getGameController().userPicksCards(serverUser, cards);
+                break;
+            case DISCARD_CARDS:
+                GameController.getGameController().discardCards(serverUser, cards);
         }
     }
 }

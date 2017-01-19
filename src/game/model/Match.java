@@ -1,10 +1,5 @@
 package game.model;
 
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import com.sun.org.apache.xpath.internal.SourceTree;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 import java.util.List;
 
 /**
@@ -20,7 +15,6 @@ public class Match {
     private transient List enemies;//this variable is used when match in sent to client
     protected User whoseTurn = null;
     private boolean isFirstTurn = false;
-
 
     public Match(String name) {
         this.name = name;
@@ -38,6 +32,10 @@ public class Match {
      */
     public void setEnemies(List enemies) {
         this.enemies = enemies;
+    }
+
+    public List getEnemies() {
+        return enemies;
     }
 
     /**

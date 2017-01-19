@@ -104,7 +104,7 @@ public class UserPlay extends Action {
                 return;
             }
             userMatch.setLastMove(this);//If everything is ok save this move as last happened
-            GameLogic.getInstance().sendPutCards((server.model.User)user, cards.size(), cardsType);
+            GameLogic.getInstance().sendPutCards((server.model.User)user, cards, cardsType);
             userMatch.nextTurn();
         }
 

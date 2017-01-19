@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gameClient.controller.ChooseAvatarController">
+    <children>
+      <Pane fx:id="pane" />
+          <Label alignment="CENTER" contentDisplay="CENTER" text="Scegli un avatar" StackPane.alignment="TOP_CENTER">
+              <font>
+                  <Font size="51.0" />
+              </font>
+          </Label>
+      <ImageView fx:id="rightButton" fitHeight="75.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0" StackPane.alignment="CENTER_RIGHT">
+         <image>
+            <Image url="@../../game/resources/down.png" />
+         </image>
+         <StackPane.margin>
+            <Insets right="10.0" />
+         </StackPane.margin>
+      </ImageView>
+      <ImageView fx:id="leftButton" fitHeight="75.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" StackPane.alignment="CENTER_LEFT">
+         <image>
+            <Image url="@../../game/resources/down.png" />
+         </image>
+         <StackPane.margin>
+            <Insets left="10.0" />
+         </StackPane.margin>
+      </ImageView>
+    </children>
+</StackPane>

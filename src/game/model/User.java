@@ -1,6 +1,12 @@
 package game.model;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +17,10 @@ import java.util.List;
 public class User {
     private String username = "undefined";
     private UserState userState = UserState.LOGIN;
+    private String avatarURL = "avatar00000.png";//Default avatar
     private transient List<Card> cards = new ArrayList<>();// user's cards
+    private transient ImageView userAvatarImageView;
+    private transient VBox userAvatarVBox;
 
     public User(String username) {
         this.username = username;
@@ -45,6 +54,30 @@ public class User {
         this.userState = userState;
     }
 
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
+    }
+
+    /**
+     * Returns a VBox with user's avatar and username
+     * @return
+     */
+    public VBox getUserAvatarVBox(){
+        if (userAvatarImageView==null){
+            this.userAvatarImageView = new ImageView();
+            this.userAvatarImageView.setImage(new Image("/game/resources/avatars/"+ avatarURL, 100, 100, true, true));
+        }
+        if (userAvatarVBox==null){
+            userAvatarVBox = new VBox();
+            Label usernameLabel = new Label(getUsername());
+            usernameLabel.setTextFill(Color.WHITE);
+            usernameLabel.setFont(new Font("Arial", 20));
+            userAvatarVBox.getChildren().addAll(userAvatarImageView, usernameLabel);
+            userAvatarVBox.setAlignment(Pos.CENTER);
+        }
+        return userAvatarVBox;
+    }
+
     /**
      * Updates the object's properties with donor's ones
      *
@@ -53,6 +86,7 @@ public class User {
     public void updateFrom(User user) {
         this.username = user.username;
         this.userState = user.userState;
+        this.avatarURL = user.avatarURL;
         if (!user.cards.isEmpty()) {
             this.cards = new ArrayList<Card>(user.cards);
         }

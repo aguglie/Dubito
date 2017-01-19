@@ -104,26 +104,31 @@ public class GameLogic {
         userList.forEach(u -> sendUpdateUserTo(u));
     }
 
+    public void sendDiscardCardsTo(Match match, User performer, List<Card> cards) {
+        List<User> userList = match.getUsers();
+        userList.forEach(u -> sendDiscardCardsTo(u, performer, cards));
+    }
+
+    public void sendDiscardCardsTo(User user, User performer, List<Card> cards) {
+        Croupier croupier = new Croupier(Croupier.ActionType.DISCARD_CARDS, performer, cards, null);
+        user.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
+    }
+
     public void sendPickCardsTo(Match match, User cardsPicker, List<Card> cardsPicked) {
         List<User> userList = match.getUsers();
         userList.forEach(u -> sendPickCardsTo(u, cardsPicker, cardsPicked));
     }
 
     public void sendPickCardsTo(User user, User cardsPicker, List<Card> cardsPicked) {
-        if (user.equals(cardsPicker)) {//We only tell the loser which cards he has to take
-            Croupier croupier = new Croupier(Croupier.ActionType.PICK_CARDS, cardsPicker, cardsPicked);
-            user.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
-        }else{
-            Croupier croupier = new Croupier(Croupier.ActionType.PICK_CARDS, cardsPicker, null);
-            user.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
-        }
+        Croupier croupier = new Croupier(Croupier.ActionType.PICK_CARDS, cardsPicker, cardsPicked, null);
+        user.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
     }
 
-    public void sendPutCards(User userWhoPuts, int howMany, CardType cardType) {
+    public void sendPutCards(User userWhoPuts, List<Card> cards, CardType cardType) {
         ArrayList<User> users = new ArrayList<>(userWhoPuts.getMatch().getUsers());
         users.remove(userWhoPuts);
         users.forEach((u) -> {
-            Croupier croupier = new Croupier(Croupier.ActionType.PUT_CARDS, userWhoPuts, howMany, cardType);
+            Croupier croupier = new Croupier(Croupier.ActionType.PUT_CARDS, userWhoPuts, cards, cardType);
             u.getSocketHandler().sendAction(croupier);//Sync client's user data with server's
         });
     }

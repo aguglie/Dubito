@@ -30,7 +30,7 @@ public class SocketListener implements Runnable{
     public void run() {
         while(true){
             String socketLine = in.nextLine();
-            MyLogger.println("Ricevuto " + socketLine);
+            //MyLogger.println("Ricevuto " + socketLine);
             Action obj = gson.fromJson(socketLine, Action.class);
             obj.doAction(ClientObjs.getUser());
         }
