@@ -1,7 +1,10 @@
 package gameClient.utils;
 
 import com.jfoenix.controls.JFXSnackbar;
+import game.action.Action;
+import game.action.DiscardCards;
 import game.model.Card;
+import game.model.CardSuit;
 import game.model.CardType;
 import game.model.User;
 import gameClient.ClientObjs;
@@ -25,13 +28,16 @@ import java.util.*;
  */
 public class GuiHelper {
 
+    private static volatile boolean isDiscarding = false;
+    private static volatile boolean isAnimatingCards = false;
+
     /**
      * Hides passed card and sets it to covered
      * @param guiCard
      */
     public static void hideCard(GuiCard guiCard){
-        guiCard.getImage().setX(-100);
-        guiCard.getImage().setY(-100);
+        guiCard.getImage().setX(-200);
+        guiCard.getImage().setY(-200);
     }
 
     /**
@@ -78,6 +84,7 @@ public class GuiHelper {
             Platform.runLater(() -> displaySelectedCards());
             return;
         }
+
         //Retrieve objects:
         ObservableList<Card>selectedCards = GameController.getGameController().getSelectedCards();
         StackPane root = GameController.getGameController().getRoot();
@@ -104,11 +111,66 @@ public class GuiHelper {
     }
 
     /**
+     * Asks server to discard cardType becase we have 4 of it
+     * @param cardsToThrow
+     */
+    public static void askServerDiscard(ArrayList<Card> cardsToThrow) {
+        try{
+            Action action = new DiscardCards(cardsToThrow);
+            ClientObjs.getSocketWriter().sendAction(action);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Discard user's cards
+     * @param cards
+     */
+    public static void discardCards(User user, ArrayList<Card> cards){
+        if (isDiscarding) return;
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> discardCards(user, cards));
+            return;
+        }
+
+        if (isAnimatingCards){//if cards are moving try later
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.millis(1500),
+                    ae -> discardCards(user, cards)));
+            timeline.play();
+            return;
+        }
+
+        HashMap<Card, GuiCard> guiCards = GameController.getGameController().getGuiCards();
+        StackPane root = GameController.getGameController().getRoot();
+
+        //Creates new timeline Object
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+        cards.forEach(card -> {
+
+            GuiCard guiCard = guiCards.get(card);
+            guiCard.setCoveredCard(true);
+
+            if (!user.equals(ClientObjs.getUser())) {
+                guiCard.getImage().setX(getUserXPosition(user));
+                guiCard.getImage().setY(getUserYPosition(user));
+            }
+            moveImageView(timeline, guiCard.getImage(), 20, root.getWidth()/2-130, 0, 0.8d, 1000);
+        });
+        isDiscarding = true;
+        timeline.play();
+        timeline.setOnFinished((e)->{ isDiscarding = false; });
+    }
+
+    /**
      * Magic method which displays user cards (which are not selected or covered) in ellipse shape
      */
-    public static void displayUserHand() {
+    public static void displayUserHand(List<Card> userCards) {
         if (!Platform.isFxApplicationThread()) {
-            Platform.runLater(() -> displayUserHand());
+            Platform.runLater(() -> displayUserHand(userCards));
             return;
         }
 
@@ -116,9 +178,6 @@ public class GuiHelper {
         ObservableList<Card>selectedCards = GameController.getGameController().getSelectedCards();
         StackPane root = GameController.getGameController().getRoot();
         HashMap<Card, GuiCard> guiCards = GameController.getGameController().getGuiCards();
-        List<Card> userCards = ClientObjs.getUser().getCards();
-
-
         List<Card> deck = new ArrayList<>(userCards);//We take a copy of it
 
         //We have to remove from deck all selected cards, they'll be shown in selection box
@@ -200,8 +259,9 @@ public class GuiHelper {
             Card card = deck.get(b);
             guiCards.get(card).getImage().toBack();
         }
-
+        isAnimatingCards = true;
         timeline.play();
+        timeline.setOnFinished(e -> isAnimatingCards=false);
     }
 
     /**
@@ -212,6 +272,8 @@ public class GuiHelper {
             Platform.runLater(() -> displayEnemies());
             return;
         }
+
+
         //Retrieve objects:
         List<User> enemies = ClientObjs.getMatch().getEnemies();
 
@@ -224,11 +286,10 @@ public class GuiHelper {
 
         for (int i = 0; i < enemies.size(); i++) {
             VBox userAvatarVBox = enemies.get(i).getUserAvatarVBox();//retrieve user's avatar
-            if (!GameController.getGameController().getPane().getChildren().contains(userAvatarVBox)){//if not displayed on gui append it now
-                GameController.getGameController().getPane().getChildren().add(userAvatarVBox);
+            if (GameController.getGameController().getPane().getChildren().contains(userAvatarVBox)) {//if displayed on gui update pos.
+                userAvatarVBox.setLayoutX(getUserXPosition(enemies.get(i)));
+                userAvatarVBox.setLayoutY(getUserYPosition(enemies.get(i)));
             }
-            userAvatarVBox.setLayoutX(getUserXPosition(enemies.get(i)));
-            userAvatarVBox.setLayoutY(getUserYPosition(enemies.get(i)));
         }
         timeline.play();
     }
@@ -247,7 +308,7 @@ public class GuiHelper {
 
         //Generates a list of throwable cards
         for (int i=0; i<howMany; i++) {
-            GuiCard guiCard = findFreeGuiCard();//Finds a free card not owned by user
+            GuiCard guiCard = findFreeGuiCard(cards);//Finds a free card not owned by user
             cards.add(guiCard);
             if (guiCard == null) {
                 MyLogger.println("Covered cards are over");
@@ -295,6 +356,7 @@ public class GuiHelper {
             Platform.runLater(() -> pickCards(user, cards));
             return;
         }
+
         StackPane root = GameController.getGameController().getRoot();
         Timeline pickCardsTimeline = new Timeline();
         pickCardsTimeline.setCycleCount(1);
@@ -303,10 +365,14 @@ public class GuiHelper {
         for (GuiCard guiCard: cards) {
             moveImageView(pickCardsTimeline, guiCard.getImage(), getUserXPosition(user), getUserYPosition(user), 0, 500);
         }
+
         pickCardsTimeline.play();
-        pickCardsTimeline.setOnFinished(event -> {
-            cards.forEach((card)->hideCard(card));
-        });
+        pickCardsTimeline.setOnFinished((event -> {
+            if (!user.equals(ClientObjs.getUser())){
+                cards.forEach((card) -> hideCard(card));
+            }
+        }));
+
     }
 
     /**
@@ -328,7 +394,7 @@ public class GuiHelper {
      * @param user
      * @return
      */
-    private static double getUserXPosition(User user){
+    public static double getUserXPosition(User user){
         StackPane root = GameController.getGameController().getRoot();
         if (!ClientObjs.getUser().equals(user)) {
             List<User> enemies = ClientObjs.getMatch().getEnemies();
@@ -343,7 +409,7 @@ public class GuiHelper {
      * @param user
      * @return
      */
-    private static double getUserYPosition(User user){
+    public static double getUserYPosition(User user){
         StackPane root = GameController.getGameController().getRoot();
         if (!ClientObjs.getUser().equals(user)) {
             return 20;
@@ -389,20 +455,47 @@ public class GuiHelper {
     }
 
     /**
-     * Finds a card which not belongs to user
+     * Finds a card which not belongs to user and is not shown on table not in notIn List
+     * @param notIn
      * @return
      */
-    private static GuiCard findFreeGuiCard(){
+    private static GuiCard findFreeGuiCard(List<GuiCard> notIn){
+        final List<GuiCard> notInFinal;
+        if (notIn==null){
+            notInFinal = new ArrayList<>(0);
+        }else {
+            notInFinal = new ArrayList<>(notIn);
+        }
+
         //Retrieve objects:
         HashMap<Card, GuiCard> guiCards = GameController.getGameController().getGuiCards();
-        for (Map.Entry<Card, GuiCard> guiCardEntry : guiCards.entrySet()) {
-            if (guiCardEntry.getValue().getImage().getX() < 0 || guiCardEntry.getValue().getImage().getY() < 0) {//if it's on stage
-                if (!ClientObjs.getUser().getCards().contains(guiCardEntry.getValue())) {//if it's not in user deck (it shouldn't....)
-                    return guiCardEntry.getValue();
-                }
-            }
+        Optional<GuiCard> freeGuiCard = guiCards.values().stream()
+                .filter(guiCard -> (!GuiHelper.isOnTable(guiCard) && !ClientObjs.getUser().getCards().contains(guiCard.getCardObject()) && !notInFinal.contains(guiCard))).findFirst();
+        if(freeGuiCard.isPresent()){
+            return freeGuiCard.get();
         }
         return null;
+    }
+
+    /**
+     * Returns true when passed card is showed on table
+     * @param card
+     * @return
+     */
+    public static boolean isOnTable(GuiCard card){
+        return isOnTable(card.getImage());
+    }
+
+    /**
+     * Returns true when passed card is showed on table
+     * @param card
+     * @return
+     */
+    public static boolean isOnTable(ImageView card){
+        if (card.getX()<0 && card.getY()<0){
+            return false;
+        }
+        return true;
     }
 
     private static void moveImageView(ImageView obj, double endX, double endY, double endRotate){

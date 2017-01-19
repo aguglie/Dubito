@@ -38,6 +38,10 @@ public class GuiCard {
         return imageView.getImage() == coveredCardImage;
     }
 
+    public Card getCardObject() {
+        return cardObject;
+    }
+
     public void setCoveredCard(boolean coveredCard) {
         if (coveredCard) {
             if (coveredCardImage == null) {
@@ -48,5 +52,13 @@ public class GuiCard {
         } else {
             imageView.setImage(realCardImage);
         }
+    }
+
+    @Override
+    public String toString() {
+        if (cardObject!=null){
+            return cardObject.toString();
+        }
+        return super.toString();
     }
 }

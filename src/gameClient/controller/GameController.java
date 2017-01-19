@@ -1,6 +1,7 @@
 package gameClient.controller;
 
 import com.jfoenix.controls.*;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import game.action.Action;
 import game.action.UserPlay;
 import game.model.*;
@@ -19,19 +20,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import utils.MyLogger;
-
-
 import java.net.URL;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by andrea on 10/12/16.
@@ -51,11 +49,13 @@ public class GameController implements Initializable {
     private HBox buttonsHBox;
 
     @FXML
+    private JFXButton discardButton;
+
+    @FXML
     private JFXButton playButton;
 
     @FXML
     private JFXButton dubitoButton;
-
 
     private HashMap<Card, GuiCard> guiCards = new HashMap<>(40);//Map between Cards and their gui representation
 
@@ -65,15 +65,6 @@ public class GameController implements Initializable {
         this.gameController = this;
 
         pane.setStyle("-fx-background-image: url('/game/resources/table.png');");//Sets page background
-
-        /*
-        //loads fake data
-        List<User> enemies = new ArrayList<>();
-        enemies.add(new User("Luciano"));
-        enemies.add(new User("Computer"));
-        ClientObjs.getMatch().setEnemies(enemies);
-        */
-
 
         //Appends card to gui
         for (int b = CardSuit.values().length - 1; b >= 0; b--) {//Reversed foreach CardSuit
@@ -85,15 +76,6 @@ public class GameController implements Initializable {
                 pane.getChildren().add(guiCard.getImage());//Adds physical card to stager
                 guiCards.put(card, guiCard);//Bind logical and physical card
 
-                /*
-                //loads fake data
-                Random rn = new Random();
-                int answer = rn.nextInt(3);
-                if (answer == 2) {
-                    ClientObjs.getUser().getCards().add(card);
-                }
-                */
-
                 //appends every card to stage
                 GuiHelper.hideCard(guiCard);
 
@@ -102,8 +84,20 @@ public class GameController implements Initializable {
                    GuiHelper.highlightCard(guiCards.get(card));
                 });
 
-                //selects/deselects a card when clicked
+                //Cheats ;)
+                guiCard.getImage().addEventHandler(MouseEvent.ANY, event -> {
+                    if (guiCard.isCoveredCard() && event.isSecondaryButtonDown()){
+                        guiCard.setCoveredCard(false);
+                        Timeline timeline = new Timeline(new KeyFrame(
+                                Duration.millis(200),
+                                ae -> guiCard.setCoveredCard(true)));
+                        timeline.play();
+                    }
+                });
+
+                    //selects/deselects a card when clicked
                 guiCard.getImage().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
                     if (guiCard.isCoveredCard()) return;//User cannot click on covered cards
                     if (selectedCards.contains(card)) {
                         selectedCards.remove(card);//if already selected, deselect it.
@@ -127,9 +121,20 @@ public class GameController implements Initializable {
             }
         }
 
+        //Append enemies to gui
+        List<User> enemies = ClientObjs.getMatch().getEnemies();
+        for (int i = 0; i < enemies.size(); i++) {
+            VBox userAvatarVBox = enemies.get(i).getUserAvatarVBox();//retrieve user's avatar
+            if (!GameController.getGameController().getPane().getChildren().contains(userAvatarVBox)){//if not displayed on gui append it now
+                GameController.getGameController().getPane().getChildren().add(userAvatarVBox);
+            }
+        }
+
+
         playButton.setDisable(true);//it starts disabled
         dubitoButton.setOnAction((e) -> dubitoButtonPressed());
         playButton.setOnAction((e) -> showTypeBox());
+        discardButton.setOnAction((e) -> GuiHelper.askServerDiscard(new ArrayList<Card>(selectedCards)));
 
 
         //bind sizes to width property
@@ -158,7 +163,7 @@ public class GameController implements Initializable {
     }
 
     private void updatePositions() {
-        buttonsHBox.setLayoutX((root.getWidth() - buttonsHBox.getWidth()));
+        buttonsHBox.setLayoutX((root.getWidth() - buttonsHBox.getWidth() - 30));
         buttonsHBox.setLayoutY(root.getHeight() * 2 / 5);
 
         GuiHelper.displaySelectedCards();
@@ -169,12 +174,12 @@ public class GameController implements Initializable {
     /**
      * Called by server when another user (NOT ME!) puts cards on table
      * @param user
-     * @param howMany
+     * @param cards
      * @param cardType
      */
-    public void userPutsCards(User user, int howMany, CardType cardType) {
-        GuiHelper.showToast(user.getUsername() + " ha appena giocato " + howMany + " " + cardType.toStringPlurals(howMany));
-        GuiHelper.throwCards(user, howMany);
+    public void userPutsCards(User user, List<Card> cards, CardType cardType) {
+        GuiHelper.showToast(user.getUsername() + " ha appena giocato " + cards.size() + " " + cardType.toStringPlurals(cards.size()));
+        GuiHelper.throwCards(user, GuiHelper.cardListToGuiCardList(cards));
     }
 
     /**
@@ -184,22 +189,7 @@ public class GameController implements Initializable {
      */
     public void userPicksCards(User user, List<Card> cardsPicked) {
 
-        if (cardsPicked!=null){
-            if (cardsPicked.size()>0){
-                //GuiHelper.pickCards(user, GuiHelper.cardListToGuiCardList(cardsPicked));//Who lost has to take cards
-                //displayUserHand should take care of this
-            }
-        }
-
-        //Clear orphan cards
-        List<GuiCard> orphanCardsOnTable = new ArrayList<>();
-        guiCards.forEach(((card, guiCard) -> {
-            if (guiCard.getImage().getX()>0 && guiCard.getImage().getY()>0 && guiCard.isCoveredCard()) {
-                orphanCardsOnTable.add(guiCard);
-            }
-        }));
-        GuiHelper.pickCards(user, orphanCardsOnTable);//Who lost has to take cards
-
+        GuiHelper.pickCards(user, GuiHelper.cardListToGuiCardList(cardsPicked));//Who lost has to take cards
 
         if (user.equals(ClientObjs.getUser())) {//If playing user lost
             GuiHelper.showToast("Accidenti " + user.getUsername() + ", hai perso la mano e devi prendere "+cardsPicked.size()+" carte.");
@@ -230,9 +220,8 @@ public class GameController implements Initializable {
      * @param userCards userCards
      */
     public void displayUserHand(List<Card> userCards) {
-        GuiHelper.displayUserHand();
+        GuiHelper.displayUserHand(userCards);
     }
-
 
     /**
      * Disposes cards in ordered way on GUI
@@ -314,6 +303,9 @@ public class GameController implements Initializable {
         return ClientObjs.getUser().equals(ClientObjs.getMatch().getWhoseTurn());
     }
 
+    public void discardCards(User user, List<Card> cards){
+        GuiHelper.discardCards(user, new ArrayList<Card>(cards));
+    }
 
     public static GameController getGameController() {
         return gameController;
