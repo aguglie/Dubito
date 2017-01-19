@@ -175,7 +175,7 @@ public class GuiHelper {
 
 
             if (!ClientObjs.getUser().equals(ClientObjs.getMatch().getWhoseTurn())) {
-                //depth = depth - 0.20;//If it's not my turn we can collpase cards a bit more
+                depth = depth - 0.20;//If it's not my turn we can collpase cards a bit more
             }
 
             //Calculates x posit
@@ -236,11 +236,36 @@ public class GuiHelper {
     /**
      * Plays 'throw cards' animation.
      * @param from cards thrower
-     * @param howMany how many cards to theow
+     * @param howMany how many cards to throw
      */
     public static void throwCards(User from, int howMany){
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> throwCards(from, howMany));
+            return;
+        }
+        List<GuiCard> cards = new ArrayList<>();
+
+        //Generates a list of throwable cards
+        for (int i=0; i<howMany; i++) {
+            GuiCard guiCard = findFreeGuiCard();//Finds a free card not owned by user
+            cards.add(guiCard);
+            if (guiCard == null) {
+                MyLogger.println("Covered cards are over");
+                return;
+            }
+        }
+        throwCards(from, cards);
+
+    }
+
+    /**
+     * Plays 'throw cards' animation
+     * @param from cards thrower
+     * @param cards cards to throw
+     */
+    public static void throwCards(User from, List<GuiCard> cards){
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> throwCards(from, cards));
             return;
         }
 
@@ -250,12 +275,7 @@ public class GuiHelper {
         throwCardsTimeline.setAutoReverse(false);
         Random random = new Random();
 
-        for (int i=0; i<howMany; i++) {
-            GuiCard guiCard = findFreeGuiCard();//Finds a free card not owned by user
-            if (guiCard==null){
-                MyLogger.println("Covered cards are over");
-                return;
-            }
+        for (GuiCard guiCard: cards) {
             guiCard.setCoveredCard(true);//sets this cards to covered
             guiCard.getImage().setX(getUserXPosition(from));//card starts his movement where thrower is
             guiCard.getImage().setY(getUserYPosition(from));
@@ -266,10 +286,38 @@ public class GuiHelper {
     }
 
     /**
+     * Moves table cards to selected users and then hides them
+     * @param user
+     * @param cards
+     */
+    public static void pickCards(User user, List<GuiCard> cards){
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> pickCards(user, cards));
+            return;
+        }
+        StackPane root = GameController.getGameController().getRoot();
+        Timeline pickCardsTimeline = new Timeline();
+        pickCardsTimeline.setCycleCount(1);
+        pickCardsTimeline.setAutoReverse(false);
+
+        for (GuiCard guiCard: cards) {
+            moveImageView(pickCardsTimeline, guiCard.getImage(), getUserXPosition(user), getUserYPosition(user), 0, 500);
+        }
+        pickCardsTimeline.play();
+        pickCardsTimeline.setOnFinished(event -> {
+            cards.forEach((card)->hideCard(card));
+        });
+    }
+
+    /**
      * Shows message to user
      * @param message
      */
     public static void showToast(String message){
+        if (!Platform.isFxApplicationThread()){
+            Platform.runLater(() -> showToast(message));
+            return;
+        }
         StackPane root = GameController.getGameController().getRoot();
         JFXSnackbar jfxSnackbar = new JFXSnackbar(root);
         jfxSnackbar.show(message, 6000);
@@ -323,7 +371,21 @@ public class GuiHelper {
         timeline.getKeyFrames().add(keyFrame);
     }
     public static void moveImageView(Timeline timeline, ImageView obj, double endX, double endY, double endRotate, int animationTime) {
-        moveImageView(timeline, obj, endX, endY, endRotate, animationTime);
+        moveImageView(timeline, obj, endX, endY, endRotate, 1d, animationTime);
+    }
+
+    /**
+     * Converts a List of Card to a List of GuiCard
+     * @param cardList
+     * @return
+     */
+    public static List<GuiCard> cardListToGuiCardList(List<Card> cardList){
+        HashMap<Card, GuiCard> guiCards = GameController.getGameController().getGuiCards();
+        List<GuiCard> guiCardList = new ArrayList<>();
+        cardList.forEach((card -> {
+            guiCardList.add(guiCards.get(card));
+        }));
+        return guiCardList;
     }
 
     /**

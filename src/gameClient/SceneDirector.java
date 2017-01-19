@@ -47,27 +47,25 @@ public class SceneDirector {
      * Shows login scene
      */
     public void showLogin() {
-        changeScene("Login", "view/login.fxml", 500, 500);
+        changeScene("Login", "view/login.fxml", 500, 500, true);
     }
 
     /**
      * Shows select room page
      */
     public void showSelectRoom() {
-        changeScene("Seleziona Stanza", "view/selectRoom.fxml", 500, 500);
+        changeScene("Seleziona Stanza", "view/selectRoom.fxml", 500, 500, true);
     }
 
     /**
      * Shows select avatar page
      */
     public void showChooseAvatar() {
-        changeScene("Scegli un Avatar", "view/chooseAvatar.fxml", 900, 500);
-        primaryStage.setResizable(false);
+        changeScene("Scegli un Avatar", "view/chooseAvatar.fxml", 900, 500, false);
     }
 
     public void showChooseCards() {
-        changeScene("Scegli le carte", "view/chooseCards.fxml", 900, 500);
-        primaryStage.setResizable(false);
+        changeScene("Scegli le carte", "view/chooseCards.fxml", 900, 500, false);
     }
 
 
@@ -75,7 +73,7 @@ public class SceneDirector {
      * Shows game page
      */
     public void showGame() {
-        changeScene("Dubito", "view/game.fxml", 900, 760);
+        changeScene("Dubito", "view/game.fxml", 900, 760, true);
         primaryStage.setResizable(true);
     }
 
@@ -87,15 +85,16 @@ public class SceneDirector {
      * @param w     New page width
      * @param h     New page height
      */
-    private void changeScene(String title, String fxml, int w, int h) {
+    private void changeScene(String title, String fxml, int w, int h, boolean resizable) {
         if (!Platform.isFxApplicationThread()){
-            Platform.runLater(()-> changeScene(title, fxml, w, h));
+            Platform.runLater(()-> changeScene(title, fxml, w, h, resizable));
             return;
         }
         try {
             primaryStage.setTitle(title);
             Parent root = FXMLLoader.load(getClass().getResource(fxml));
             primaryStage.setScene(new Scene(root, w, h));
+            primaryStage.setResizable(resizable);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

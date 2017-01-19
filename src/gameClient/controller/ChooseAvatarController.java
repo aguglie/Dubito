@@ -1,5 +1,8 @@
 package gameClient.controller;
 
+import game.action.Action;
+import game.action.AvatarChosen;
+import gameClient.ClientObjs;
 import gameClient.SceneDirector;
 import gameClient.utils.GuiHelper;
 import javafx.animation.KeyFrame;
@@ -49,7 +52,13 @@ public class ChooseAvatarController implements Initializable {
             avatars[i].setY(root.getHeight());
 
             final int key = i;
-            avatars[i].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> placeAvatars(key));
+            avatars[i].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getClickCount() > 1 && key == selectedAvatarKey){
+                    sendToServer(key);//Double click on selected card means user is choosing it
+                }else {
+                    placeAvatars(key);
+                }
+            });
         }
 
         rightButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -96,6 +105,13 @@ public class ChooseAvatarController implements Initializable {
         timeline.play();
         timeline.setOnFinished((event)-> isTimelinePlaying = false);
 
+    }
+
+    private void sendToServer(int key){
+        int calculatedKey = calculateKey(key);
+        final String url =  "avatar"+String.format("%05d", calculatedKey)+".png";
+        Action action = new AvatarChosen(url);
+        ClientObjs.getSocketWriter().sendAction(action);
     }
 
     private int calculateKey(int i){

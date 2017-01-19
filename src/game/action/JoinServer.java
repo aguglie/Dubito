@@ -34,12 +34,16 @@ public class JoinServer extends Action {
      */
     @Override
     public void doAction(User user) throws ActionException {//Called on server when we login to it.
+        if (this.username==""){
+            GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "Devi prima scegliere un username");//Username null
+            return;
+        }
         if (GameLogic.getInstance().usernameExists(this.username)){
-            GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "This username is already taken");//Username already taken
+            GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "Qualcuno sta gia utilizzando questo nome");//Username already taken
         }else {
             user.setUsername(this.username);//Set username
-            user.setUserState(UserState.LOBBY);//Set user state to (in)LOBBY, this will also update client GUI view
-            GameLogic.getInstance().changeView((server.model.User)user, ChangeView.GoTo.SELECT_ROOM);//Changes user's view to SELECT_ROOM
+            user.setUserState(UserState.LOGIN);//Keep user state to LOGIN, we have to wait his configurations
+            GameLogic.getInstance().changeView((server.model.User)user, ChangeView.GoTo.CHOOSE_AVATAR);//Changes user's view to CHOOSE_AVATAR
             GameLogic.getInstance().sendUpdateUserTo((server.model.User) user);//Sends user an updated snapshot of himself, including new username
             GameLogic.getInstance().sendMatchesListTo((server.model.User) user);//Sends user a list of all active matches
         }

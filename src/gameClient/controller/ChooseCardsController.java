@@ -75,6 +75,11 @@ public class ChooseCardsController implements Initializable{
                 });
                 cardsImageView[index].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (isTimelinePlaying) return;
+                    if (selectedLocale == index/4){
+                        //If user clicks on selected card locale he wants this type
+                        Card.setLocale(CardLocale.values()[selectedLocale].getResource());
+                        SceneDirector.getInstance().showSelectRoom();
+                    }
                     selectedLocale = index/4;
                     displayCards();
                 });

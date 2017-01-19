@@ -24,14 +24,27 @@ public class Croupier extends Action {
     private List<Card> cardsPicked;
 
 
-    public Croupier(ActionType actionType, User user, int number, CardType cardType) {
+    /**
+     * Message sent to all users except the one who puts cards
+     * @param actionType
+     * @param user
+     * @param number
+     * @param cardType
+     */
+    public Croupier(ActionType actionType, User user, int number, CardType cardType) {   //Used when ActionType = PUT_CARDS
         this.actionType = actionType;
         this.number = number;
         this.serverUser = user;
         this.cardType = cardType;
     }
 
-    public Croupier(ActionType actionType, User user, List<Card> cardsPicked) {
+    /**
+     * Message sent to all users, only user who has to pick cards receives cardsPicked
+     * @param actionType
+     * @param user
+     * @param cardsPicked
+     */
+    public Croupier(ActionType actionType, User user, List<Card> cardsPicked) {//Used when ActionType = PICK_CARDS
         this.actionType = actionType;
         this.serverUser = user;
         this.cardsPicked = cardsPicked;

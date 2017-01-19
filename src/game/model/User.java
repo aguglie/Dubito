@@ -17,9 +17,9 @@ import java.util.List;
 public class User {
     private String username = "undefined";
     private UserState userState = UserState.LOGIN;
+    private String avatarURL = "avatar00000.png";//Default avatar
     private transient List<Card> cards = new ArrayList<>();// user's cards
     private transient ImageView userAvatarImageView;
-    private transient String userAvatarURL = "avatar00000.png";//Default avatar
     private transient VBox userAvatarVBox;
 
     public User(String username) {
@@ -54,6 +54,9 @@ public class User {
         this.userState = userState;
     }
 
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
+    }
 
     /**
      * Returns a VBox with user's avatar and username
@@ -62,7 +65,7 @@ public class User {
     public VBox getUserAvatarVBox(){
         if (userAvatarImageView==null){
             this.userAvatarImageView = new ImageView();
-            this.userAvatarImageView.setImage(new Image("/game/resources/avatars/"+userAvatarURL, 100, 100, true, true));
+            this.userAvatarImageView.setImage(new Image("/game/resources/avatars/"+ avatarURL, 100, 100, true, true));
         }
         if (userAvatarVBox==null){
             userAvatarVBox = new VBox();
@@ -83,6 +86,7 @@ public class User {
     public void updateFrom(User user) {
         this.username = user.username;
         this.userState = user.userState;
+        this.avatarURL = user.avatarURL;
         if (!user.cards.isEmpty()) {
             this.cards = new ArrayList<Card>(user.cards);
         }

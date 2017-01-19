@@ -8,6 +8,7 @@ import gameClient.ClientObjs;
 import gameClient.SceneDirector;
 import gameClient.utils.GuiCard;
 import gameClient.utils.GuiHelper;
+import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -23,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import utils.MyLogger;
 
 
@@ -64,13 +66,14 @@ public class GameController implements Initializable {
 
         pane.setStyle("-fx-background-image: url('/game/resources/table.png');");//Sets page background
 
+        /*
         //loads fake data
         List<User> enemies = new ArrayList<>();
         enemies.add(new User("Luciano"));
         enemies.add(new User("Computer"));
-
-
         ClientObjs.getMatch().setEnemies(enemies);
+        */
+
 
         //Appends card to gui
         for (int b = CardSuit.values().length - 1; b >= 0; b--) {//Reversed foreach CardSuit
@@ -82,12 +85,14 @@ public class GameController implements Initializable {
                 pane.getChildren().add(guiCard.getImage());//Adds physical card to stager
                 guiCards.put(card, guiCard);//Bind logical and physical card
 
+                /*
                 //loads fake data
                 Random rn = new Random();
                 int answer = rn.nextInt(3);
                 if (answer == 2) {
                     ClientObjs.getUser().getCards().add(card);
                 }
+                */
 
                 //appends every card to stage
                 GuiHelper.hideCard(guiCard);
@@ -122,7 +127,6 @@ public class GameController implements Initializable {
             }
         }
 
-        buttonsHBox.setDisable(!isMyTurn());//Enables/Disables play and dubito buttons
         playButton.setDisable(true);//it starts disabled
         dubitoButton.setOnAction((e) -> dubitoButtonPressed());
         playButton.setOnAction((e) -> showTypeBox());
@@ -145,119 +149,80 @@ public class GameController implements Initializable {
             GuiHelper.displaySelectedCards();//moves card from user deck to selected list
             displayUserHand(ClientObjs.getUser().getCards());//Updates user deck
         });
+
+        /////BUG?! root width/heigh are not ready here... we have to wait some time, is it JavaFX bug?
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(500),
+                ae -> updatePositions()));
+        timeline.play();
     }
 
     private void updatePositions() {
         buttonsHBox.setLayoutX((root.getWidth() - buttonsHBox.getWidth()));
         buttonsHBox.setLayoutY(root.getHeight() * 2 / 5);
+
         GuiHelper.displaySelectedCards();
         displayUserHand(ClientObjs.getUser().getCards());
         GuiHelper.displayEnemies();
     }
 
+    /**
+     * Called by server when another user (NOT ME!) puts cards on table
+     * @param user
+     * @param howMany
+     * @param cardType
+     */
     public void userPutsCards(User user, int howMany, CardType cardType) {
-        if (!Platform.isFxApplicationThread()){
-            Platform.runLater(() -> userPutsCards(user, howMany, cardType));
-            return;
-        }
         GuiHelper.showToast(user.getUsername() + " ha appena giocato " + howMany + " " + cardType.toStringPlurals(howMany));
-
-
-        Timeline throwCardsTimeline = new Timeline();
-        throwCardsTimeline.setCycleCount(1);
-        throwCardsTimeline.setAutoReverse(false);
-        Random random = new Random();
-
-
-        final AtomicInteger atomicInteger = new AtomicInteger(1);
-        guiCards.forEach(((card, guiCard) -> {
-            if (!ClientObjs.getUser().getCards().contains(card)) {//If it's not in user deck
-                if (guiCard.getImage().getX() < 0 || guiCard.getImage().getY() < 0) {//if it's not on stage
-                    if (atomicInteger.get() <= howMany) {
-                        guiCards.get(card).setCoveredCard(true);
-                        guiCards.get(card).getImage().setX(-200);
-                        guiCards.get(card).getImage().setY(-200);
-                        //////// ---------------------------------------------------------------------------------------------------->>><<<<<
-                        //moveImageView(throwCardsTimeline, guiCards.get(card).getImage(), (root.getWidth() - selectedCards.size() * 45) / 2, root.getHeight() / 9, random.nextInt(200), 1000);
-                        atomicInteger.incrementAndGet();
-                    }
-                }
-            }
-        }));
-
-        throwCardsTimeline.play();
-    }
-
-    public void userPicksCards(User user, List<Card> cardsPicked) {
-        if (!Platform.isFxApplicationThread()){
-            Platform.runLater(() -> userPicksCards(user, cardsPicked));
-            return;
-        }
-        Timeline throwCardsTimeline = new Timeline();
-        throwCardsTimeline.setCycleCount(1);
-        throwCardsTimeline.setAutoReverse(false);
-
-        JFXSnackbar jfxSnackbar = new JFXSnackbar(root);
-
-        if (user.equals(ClientObjs.getUser())) {//If playing user just lost move cards to him
-            jfxSnackbar.show("Accidenti " + user.getUsername() + ", hai perso la mano e devi prendere "+cardsPicked.size()+" carte.", 6000);
-
-            //We have to update the random covered cards on screen with covered cards that actually user just picked.
-            guiCards.forEach(((card, guiCard) -> {
-                if (guiCard.getImage().getX() > 0 && guiCard.getImage().getY() > 0) {//if it's on stage
-                    if (guiCard.isCoveredCard() && cardsPicked.size()>0) {//If it's covered
-                        //if this card was put there randomly, we have to switch it with a user's one.
-                        //Move correct card to displayed cards:
-                        guiCards.get(cardsPicked.get(0)).setCoveredCard(false);
-                        guiCards.get(cardsPicked.get(0)).getImage().setX(guiCard.getImage().getX());
-                        guiCards.get(cardsPicked.get(0)).getImage().setY(guiCard.getImage().getY());
-                        guiCards.get(cardsPicked.get(0)).getImage().setRotate(guiCard.getImage().getRotate());
-                        guiCard.getImage().setY(-200);//Move wrong card away
-                        cardsPicked.remove(0);//we corrected this card, remove it from list
-                        //////// ---------------------------------------------------------------------------------------------------->>><<<<<
-                        //moveImageView(throwCardsTimeline, guiCards.get(card).getImage(), -200, root.getHeight() + 200, 0, 4000);
-                    }
-                }
-            }));
-
-
-        } else {
-            jfxSnackbar.show(user.getUsername() + " perde la mano", 6000);
-
-            //If user is not loosing, cards are brought to top of screen
-            guiCards.forEach(((card, guiCard) -> {
-                if (guiCard.getImage().getX() > 0 && guiCard.getImage().getY() > 0) {//if it's on stage
-                    if (guiCard.isCoveredCard()) {
-                        //////// ---------------------------------------------------------------------------------------------------->>><<<<<
-                        //moveImageView(throwCardsTimeline, guiCards.get(card).getImage(), root.getWidth()/2, -200, 0, 1000);
-                    }
-                }
-            }));
-
-        }
-
-        throwCardsTimeline.play();
+        GuiHelper.throwCards(user, howMany);
     }
 
     /**
+     * Called by server when someone has to take cards
+     * @param user
+     * @param cardsPicked
+     */
+    public void userPicksCards(User user, List<Card> cardsPicked) {
+
+        if (cardsPicked!=null){
+            if (cardsPicked.size()>0){
+                //GuiHelper.pickCards(user, GuiHelper.cardListToGuiCardList(cardsPicked));//Who lost has to take cards
+                //displayUserHand should take care of this
+            }
+        }
+
+        //Clear orphan cards
+        List<GuiCard> orphanCardsOnTable = new ArrayList<>();
+        guiCards.forEach(((card, guiCard) -> {
+            if (guiCard.getImage().getX()>0 && guiCard.getImage().getY()>0 && guiCard.isCoveredCard()) {
+                orphanCardsOnTable.add(guiCard);
+            }
+        }));
+        GuiHelper.pickCards(user, orphanCardsOnTable);//Who lost has to take cards
+
+
+        if (user.equals(ClientObjs.getUser())) {//If playing user lost
+            GuiHelper.showToast("Accidenti " + user.getUsername() + ", hai perso la mano e devi prendere "+cardsPicked.size()+" carte.");
+        } else {
+            GuiHelper.showToast(user.getUsername() + " perde la mano");
+        }
+    }
+
+    /**
+     * Called when UpdateMatch is received
+     */
+    public void onUpdateMatch() {
+        buttonsHBox.setDisable(!isMyTurn());
+    }
+
+    /**
+     * Called when UpdateUser is received
      * Clear user selected cards (called when my turns starts/ends)
      */
     public void clearSelectedCards() {
         selectedCards.clear();
     }
 
-    /**
-     * Uncover passed cards
-     *
-     * @param cards cards to uncover
-     */
-    public void uncoverCards(ArrayList<Card> cards) {
-        try {
-            cards.forEach(card -> guiCards.get(card).setCoveredCard(false));
-        } catch (Exception e) {
-
-        }
-    }
 
     /**
      * Disposes cards in ordered way on GUI
@@ -337,43 +302,8 @@ public class GameController implements Initializable {
     }
 
     public void playActionAndAnimation(ArrayList<Card> selectedCards, CardType cardType) {
-        if (!Platform.isFxApplicationThread()) {
-            Platform.runLater(() -> playActionAndAnimation(selectedCards, cardType));
-            return;
-        }
-        //Animation:
-
-        //Creates new timeline Object
-
-        //move closer timeline
-        Timeline moveCloseTimeline = new Timeline();
-        moveCloseTimeline.setCycleCount(1);
-        moveCloseTimeline.setAutoReverse(false);
-
-        selectedCards.forEach((card) -> {
-            guiCards.get(card).setCoveredCard(true);//Set cards to covered
-            //////// ---------------------------------------------------------------------------------------------------->>><<<<<
-            //moveImageView(moveCloseTimeline, guiCards.get(card).getImage(), (root.getWidth() - selectedCards.size() * 45) / 2, root.getHeight() * 2 / 9, 0, 1000);
-        });
-
-
-        //throw timeline
-        Timeline throwCardsTimeline = new Timeline();
-        throwCardsTimeline.setCycleCount(1);
-        throwCardsTimeline.setAutoReverse(false);
-
-        Random random = new Random();
-        selectedCards.forEach((card) -> {
-            guiCards.get(card).setCoveredCard(true);//Set cards to covered
-            //////// ---------------------------------------------------------------------------------------------------->>><<<<<
-            //moveImageView(throwCardsTimeline, guiCards.get(card).getImage(), (root.getWidth() - selectedCards.size() * 45) / 2, root.getHeight() / 9, random.nextInt(200), 1000);
-        });
-
-        SequentialTransition sequentialTransition = new SequentialTransition();
-        sequentialTransition.getChildren().addAll(moveCloseTimeline, throwCardsTimeline);
-        sequentialTransition.setCycleCount(1);
-        sequentialTransition.setAutoReverse(false);
-        sequentialTransition.play();
+        //Throw Cards
+        GuiHelper.throwCards(ClientObjs.getUser(), GuiHelper.cardListToGuiCardList(selectedCards));
 
         //Performs Action
         Action action = new UserPlay(UserPlay.PlayType.PLAYCARD, selectedCards, cardType);
@@ -381,13 +311,7 @@ public class GameController implements Initializable {
     }
 
     private boolean isMyTurn() {
-        return true;
-        //////// ---------------------------------------------------------------------------------------------------->>><<<<<
-        //return ClientObjs.getUser().equals(ClientObjs.getMatch().getWhoseTurn());
-    }
-
-    public void onUpdateMatch() {
-        buttonsHBox.setDisable(!isMyTurn());
+        return ClientObjs.getUser().equals(ClientObjs.getMatch().getWhoseTurn());
     }
 
 

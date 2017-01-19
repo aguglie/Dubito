@@ -11,6 +11,7 @@ package game.model;
 public class Card {
     private CardSuit cardSuit;
     private CardType cardType;
+    private static transient String locale = null;
 
     private Card() {
     }
@@ -48,8 +49,20 @@ public class Card {
         } else {
             n = "" + this.getCardType().getNameAsInt();
         }
-        return "/game/resources/napoli/" + n + "_" + this.getCardSuit().getResource() + ".png";
+        if (Card.locale==null) {
+            return "/game/resources/napoli/" + n + "_" + this.getCardSuit().getResource() + ".png";
+        }else{
+            return "/game/resources/"+Card.locale+"/" + n + "_" + this.getCardSuit().getResource() + ".png";
+        }
 
+    }
+
+    /**
+     * Used by client to set cards locale
+     * @param locale
+     */
+    public static void setLocale(String locale) {
+        Card.locale = locale;
     }
 
     /**
