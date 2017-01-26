@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 
 import game.action.Action;
 import gameClient.ClientObjs;
+import gameClient.SceneDirector;
+import javafx.scene.Scene;
 import utils.MyLogger;
 
 import java.io.IOException;
@@ -28,11 +30,15 @@ public class SocketListener implements Runnable{
 
     @Override
     public void run() {
-        while(true){
+        while(true) try {
             String socketLine = in.nextLine();
-            //MyLogger.println("Ricevuto " + socketLine);
+            MyLogger.println("Ricevuto " + socketLine);
             Action obj = gson.fromJson(socketLine, Action.class);
             obj.doAction(ClientObjs.getUser());
+        } catch (Exception e) {
+            SceneDirector.getInstance().showLogin();
+            SceneDirector.showModal("Houston, we have a problem", "Abbiamo perso la connessione col server.");
+            break;
         }
     }
 }

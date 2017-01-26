@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import game.action.Action;
 import gameClient.ClientObjs;
+import gameClient.SceneDirector;
 import utils.MySerializer;
 
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class Connection {
             //Creates a new object which takes care of writing on socket
             ClientObjs.setSocketWriter(new SocketWriter(gson, socket));
         } catch (Exception e) {
+            SceneDirector.getInstance().showModal("Accidenti", "Non riesco a connettermi al server");
             e.printStackTrace();
         }
 

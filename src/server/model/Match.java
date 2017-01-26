@@ -3,6 +3,7 @@ package server.model;
 import game.action.UserPlay;
 import game.exception.UserException;
 import game.model.Card;
+import server.controller.GameLogic;
 import utils.MyLogger;
 
 import javax.swing.text.html.HTMLDocument;
@@ -60,6 +61,7 @@ public class Match extends game.model.Match {
             if (users.isEmpty()) {//if match is empty, remove match too!
                 matches.remove(this);
                 MyLogger.println(this.getName() + " deleted");
+                GameLogic.getInstance().getConnectedUsers().forEach(u -> GameLogic.getInstance().sendMatchesListTo(u));
             }
         } else {
             throw new UserException("User is not in this match");
@@ -92,6 +94,9 @@ public class Match extends game.model.Match {
         MyLogger.println("it's " + whoseTurn.getUsername() + " turn.");
         if (whoseTurn.getCards().size() == 0) {
             MyLogger.println(whoseTurn.getUsername() + "just won");
+            GameLogic.getInstance().userWon(((server.model.User)whoseTurn));
+            whoseTurn = null;
+            return;
         }
     }
 

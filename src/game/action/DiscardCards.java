@@ -64,5 +64,9 @@ public class DiscardCards extends Action {
         game.model.Match match = ((server.model.User) user).getMatch();
         gameLogic.sendDiscardCardsTo((server.model.Match)match, (server.model.User)user, cards);
         gameLogic.sendUpdateUserTo((server.model.User)user);
+
+        if (user.getCards().size()==0){//User Just won!
+            GameLogic.getInstance().userWon((server.model.User)user);
+        }
     }
 }

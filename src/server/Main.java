@@ -8,7 +8,7 @@ import server.network.SocketsListener;
  */
 public class Main {
     public static void main(String[] args) {
-        int port = 1337;
+        int port = 8080;
         SocketsListener socketsListener = SocketsListener.getInstance(port);
         socketsListener.startServer();//blocking function
         /* no code below */
