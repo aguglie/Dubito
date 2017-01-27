@@ -3,7 +3,9 @@ package server.network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import game.action.Action;
+import game.action.SendStats;
 import server.controller.GameLogic;
+import server.model.Match;
 import server.model.User;
 import utils.MyLogger;
 import utils.MySerializer;
@@ -11,6 +13,8 @@ import utils.MySerializer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -68,13 +72,23 @@ public class SocketHandler implements Runnable {
                     Action oggetto = gson.fromJson(line, Action.class);
                     oggetto.doAction(this.user);
                 } catch (Exception e) {
-                    MyLogger.println("Invalid JSON: " + line);
-                    e.printStackTrace();
+                    if (line.equals("")){ // last line of request header is blank
+                        MyLogger.println("Http Request Found");
+
+                        out.println("HTTP/1.1 200 OK");
+                        out.println("Connection: close");
+                        out.println("");
+                        Action stats = new SendStats(Match.getMatches(), new ArrayList<game.model.User>(GameLogic.getInstance().getConnectedUsers()));
+                        out.println(gson.toJson(stats, Action.class));
+                        break;
+                    }
+                    //MyLogger.println("Deleting client, Invalid JSON: " + line);
                 }
             }
         } catch (Exception e) {
-            GameLogic.getInstance().onUserDisconnect(this.user);
+            //Usually we get here if user disconnects
         } finally {
+            GameLogic.getInstance().onUserDisconnect(this.user);
             //Close all open streams
             if (in != null) in.close();
             if (out != null) out.close();
