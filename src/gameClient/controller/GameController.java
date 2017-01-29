@@ -18,6 +18,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
@@ -297,6 +298,24 @@ public class GameController implements Initializable {
         //Performs Action
         Action action = new UserPlay(UserPlay.PlayType.PLAYCARD, selectedCards, cardType);
         ClientObjs.getSocketWriter().sendAction(action);
+    }
+
+    /**
+     * Called by server when someone wins
+     * @param winner
+     */
+    public void gameOver(User winner){
+        if (winner.equals(ClientObjs.getUser())){
+            SceneDirector.showModal("Hai vinto!", "Complimenti, hai vinto!");
+        }else {
+            SceneDirector.showModal("Accidenti", "Accidenti "+ClientObjs.getUser().getUsername()+", "+winner.getUsername()+" ha terminato le carte prima di te!");
+        }
+
+        //Go back to home screen
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(10000),
+                ae -> SceneDirector.getInstance().showSelectRoom()));
+        timeline.play();
     }
 
     private boolean isMyTurn() {

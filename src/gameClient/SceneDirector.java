@@ -3,11 +3,13 @@ package gameClient;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -113,7 +115,7 @@ public class SceneDirector {
             return;
         }
 
-        JFXButton button = new JFXButton("Bene per me");
+        JFXButton button = new JFXButton("Perfetto");
         button.setStyle("-fx-background-color: limegreen");
         JFXDialogLayout content = new JFXDialogLayout();
         content.setHeading(new Label(title));

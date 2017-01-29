@@ -37,6 +37,9 @@
                      </VBox.margin>
                   </JFXButton>
                   <Label text="Crea il tuo match">
+                      <font>
+                          <Font size="30.0" />
+                      </font>
                      <VBox.margin>
                         <Insets bottom="10.0" top="20.0" />
                      </VBox.margin>

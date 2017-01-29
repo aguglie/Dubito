@@ -9,6 +9,7 @@ import utils.MyLogger;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.StringJoiner;
 
 /**
  * Created by andrea on 25/10/16.
@@ -22,6 +23,15 @@ public class ClientObjs {
     private static User user;
     private static SocketWriter socketWriter;
     private static ObservableList<Match> matchList = FXCollections.observableArrayList();
+    private static String serverAddress;
+
+    public static String getServerAddress() {
+        return serverAddress;
+    }
+
+    public static void setServerAddress(String serverAddress) {
+        ClientObjs.serverAddress = serverAddress;
+    }
 
     /**
      * Get the match showed by client

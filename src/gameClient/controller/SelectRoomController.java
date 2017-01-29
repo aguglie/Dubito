@@ -79,7 +79,7 @@ public class SelectRoomController implements Initializable {
                 TreeItem<ObservableMatch> item = treeView.getSelectionModel().getSelectedItem();
                 Action action = new JoinMatch(item.getValue().getId());
                 ClientObjs.getSocketWriter().sendAction(action);
-                treeView.setDisable(true);
+                //treeView.setDisable(true);
                 startButton.setDisable(false);
 
                 startButton.setOnAction((e) -> {

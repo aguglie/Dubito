@@ -8,6 +8,7 @@ import server.model.Match;
 import server.model.User;
 import utils.MyLogger;
 
+import javax.jws.soap.SOAPBinding;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -178,7 +179,7 @@ public class GameLogic {
     public void startMatch(Match match) throws ActionException {
         if (match == null) throw new ActionException("Game dosn't exist");
         if (match.getUsers().size() < 2)
-            throw new ActionException("You need at least two users to start a match");//A user can't play alone... it's sad!
+            throw new ActionException("Bisogna almeno essere in due per giocare!");//A user can't play alone... it's sad!
         if (match.getMatchState() == MatchState.PLAYING)
             throw new ActionException("Match already started");//A user can't play alone... it's sad!
 
@@ -195,6 +196,26 @@ public class GameLogic {
         this.sendUpdateMatchTo(match);//Send every match user the updated objects
         match.getUsers().forEach((user) -> changeView((User)user, ChangeView.GoTo.GAME));//set each user as playing
         MyLogger.println("Match started");
+    }
+
+    /**
+     * Called when user won
+     * @param user
+     */
+    public void userWon(User user){
+        List<User> users = new ArrayList<>(user.getMatch().getUsers());
+        Match match = user.getMatch();
+
+        users.forEach(u -> {
+            u.setUserState(UserState.LOBBY);
+            match.removeUser(u);
+            u.setMatch(null);
+            Action action = new GameOver(user);
+            u.getSocketHandler().sendAction(action);
+        });
+
+        //Update all users' match list
+        getConnectedUsers().forEach(u -> sendMatchesListTo(u));
     }
 
     /**

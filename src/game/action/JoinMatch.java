@@ -34,15 +34,20 @@ public class JoinMatch extends Action {
      */
     @Override
     public void doAction(User user) throws ActionException {
+        /*
         if (user.getUserState() != UserState.LOBBY) {
             GameLogic.getInstance().sendDangerMessageTo((server.model.User) user, "You must be in lobby to perform this!");
             return;
         }
+        */
         try {
             Match match = (Match) Match.getMatches().get(match_index);//Search the match
             if (match.getMatchState() != MatchState.WAITING_START) {
-                GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "You can't join an already started match");//Match already started :(
+                GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "Accidenti, il match e' in corso!");//Match already started :(
                 return;
+            }
+            if (((server.model.User)user).getMatch()!=null){
+                ((server.model.User)user).getMatch().removeUser((server.model.User)user);
             }
             match.addUser((server.model.User) user);//Add user to that match
             ((server.model.User) user).setMatch(match);//Connect user to his match
@@ -51,7 +56,7 @@ public class JoinMatch extends Action {
             GameLogic.getInstance().sendUpdateUserTo((server.model.User)user);
             GameLogic.getInstance().sendUpdateMatchTo(match);//Send every user an updated snapshot of the match
             //GameLogic.getInstance().changeView((server.model.User)user, ChangeView.GoTo.SELECT_ROOM);//Send user to GAME_ROOM // TODO: 08/12/16 correct this!
-            GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "You joined " + match.getName());//Send him an alert
+            GameLogic.getInstance().sendInfoMessageTo((server.model.User) user, "Sei in " + match.getName()+" assieme ad altri "+(match.getUsers().size()-1)+" giocatori");//Send him an alert
 
         } catch (Exception e) {
             GameLogic.getInstance().sendDangerMessageTo((server.model.User) user, e.getMessage());//Smth bad happened here...

@@ -19,10 +19,12 @@ public class CreateMatch extends Action {
 
     @Override
     public void doAction(User user) throws ActionException {//Runs on client.
+        /*
         if (user.getUserState() != UserState.LOBBY) {
             GameLogic.getInstance().sendDangerMessageTo((server.model.User) user, "You must be in lobby to perform this!");
             return;
         }
+        */
         if (name != "") {
             new Match(name);
             MyLogger.println("New match "+ name + " created.");
