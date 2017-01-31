@@ -11,11 +11,11 @@ import java.util.List;
  * Used to generates JSON stat
  */
 public class SendStats extends Action {
-    private List<Math> mathList = new ArrayList<>();
+    private List<Math> matchList = new ArrayList<>();
     private List<User> userList = new ArrayList<>();
 
     public SendStats(List<Math> mathList, List<User> userList) {
-        this.mathList = mathList;
+        this.matchList = mathList;
         this.userList = userList;
     }
 

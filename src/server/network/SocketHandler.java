@@ -76,6 +76,7 @@ public class SocketHandler implements Runnable {
                         MyLogger.println("Http Request Found");
 
                         out.println("HTTP/1.1 200 OK");
+                        out.println("Access-Control-Allow-Origin: *");
                         out.println("Connection: close");
                         out.println("");
                         Action stats = new SendStats(Match.getMatches(), new ArrayList<game.model.User>(GameLogic.getInstance().getConnectedUsers()));

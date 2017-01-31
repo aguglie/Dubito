@@ -47,7 +47,7 @@ public class SelectRoomController implements Initializable {
         SceneDirector.getInstance().setRoot(root);//update root element.
 
         JFXTreeTableColumn<ObservableMatch, String> firstColumn = new JFXTreeTableColumn<>("Nome Stanza");
-        firstColumn.setPrefWidth(350);
+        firstColumn.setPrefWidth(270);
         firstColumn.setCellValueFactory(param -> {
             //getValue() is a tree item, getValue() is Row OBJ,
             return param.getValue().getValue().nameProperty();

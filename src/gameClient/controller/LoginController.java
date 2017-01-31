@@ -40,7 +40,7 @@ public class LoginController implements Initializable{
         if (usernameField.textProperty().getValue()==""){
             return;
         }
-        JFXButton button = new JFXButton("Bene per me");
+        JFXButton button = new JFXButton("Connetti");
         button.setStyle("-fx-background-color: limegreen");
         JFXDialogLayout content = new JFXDialogLayout();
         content.setHeading(new Label("Con chi vuoi giocare?"));

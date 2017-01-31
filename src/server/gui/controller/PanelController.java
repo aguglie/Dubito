@@ -33,65 +33,27 @@ public class PanelController implements Initializable {
     @FXML
     private ListView<server.model.Match> roomsList;
 
-    @FXML
-    private ListView<server.model.User> roomUsersList;
-
-    @FXML
-    private Label selectedUserState;
-
-    @FXML
-    private Label selectedUsername;
-
-    @FXML
-    private Label selectedCardsNumber;
-
     private ObservableList<server.model.Match> matches;
-    private ObservableList<server.model.User> users;
-    private server.model.Match selectedMatch = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Main.setPanelController(this);//give reference
 
         ////Room Tree:
-        matches = FXCollections.observableArrayList (server.model.Match.getMatches());
+        matches = FXCollections.observableArrayList(server.model.Match.getMatches());
         roomsList.setItems(matches);
-        roomsList.setCellFactory(new Callback<ListView<server.model.Match>, ListCell<server.model.Match>>(){
+        roomsList.setCellFactory(new Callback<ListView<server.model.Match>, ListCell<server.model.Match>>() {
 
             @Override
             public ListCell<server.model.Match> call(ListView<server.model.Match> p) {
 
-                ListCell<server.model.Match> cell = new ListCell<server.model.Match>(){
+                ListCell<server.model.Match> cell = new ListCell<server.model.Match>() {
 
                     @Override
                     protected void updateItem(server.model.Match t, boolean bln) {
                         super.updateItem(t, bln);
                         if (t != null) {
-                            setText(t.getName() + " ( "+t.getUsers().size()+" users)");
-                        }
-                    }
-
-                };
-
-                return cell;
-            }
-        });
-
-        /////Users Tree
-        users = FXCollections.observableArrayList();
-        roomUsersList.setItems(users);
-        roomUsersList.setCellFactory(new Callback<ListView<server.model.User>, ListCell<server.model.User>>(){
-
-            @Override
-            public ListCell<server.model.User> call(ListView<server.model.User> p) {
-
-                ListCell<server.model.User> cell = new ListCell<User>(){
-
-                    @Override
-                    protected void updateItem(server.model.User t, boolean bln) {
-                        super.updateItem(t, bln);
-                        if (t != null) {
-                            setText(t.getUsername());
+                            setText(t.getName() + " ( " + t.getUsers().size() + " users)");
                         }
                     }
 
@@ -107,17 +69,6 @@ public class PanelController implements Initializable {
                 ae -> {
                     matches.clear();
                     matches.addAll(server.model.Match.getMatches());
-                    if (selectedMatch!=null){
-                        try{
-                            users.clear();
-                            users.addAll(selectedMatch.getUsers());
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            users.clear();
-                            selectedMatch = null;
-                        }
-                    }
-
                 }));
 
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -125,31 +76,4 @@ public class PanelController implements Initializable {
 
 
     }
-
-    @FXML
-    void kickUser(ActionEvent event) {
-
-    }
-
-    @FXML
-    void showUserCards(ActionEvent event) {
-
-    }
-
-    public void showModal(String title, String text) {
-        if (!Platform.isFxApplicationThread()) {
-            Platform.runLater(() -> showModal(title, text));
-            return;
-        }
-        JFXButton button = new JFXButton("Ok");
-        button.setStyle("-fx-background-color: limegreen");
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Label(title));
-        content.setBody(new Label(text));
-        content.setActions(button);
-        JFXDialog dialog = new JFXDialog(root, content, JFXDialog.DialogTransition.CENTER, false);
-        dialog.show();
-        button.setOnAction(action -> dialog.close());
-    }
-
 }

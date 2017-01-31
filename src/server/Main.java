@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import server.network.SocketsListener;
 
-import static javafx.application.Application.launch;
 
 /**
  * This main file starts a SocketsListener
@@ -23,21 +22,13 @@ public class Main  extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Server Admin");
         Parent root = FXMLLoader.load(getClass().getResource("gui/view/panel.fxml"));
-        primaryStage.setScene(new Scene(root, 710, 400));
+        primaryStage.setScene(new Scene(root, 244, 400));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
 
     public static void main(String[] args) {
-        Thread thread = new Thread(){
-            public void run(){
-                int port = 8080;
-                SocketsListener socketsListener = SocketsListener.getInstance(port);
-                socketsListener.startServer();
-            }
-        };
-        thread.start();
-        launch(args);
+            launch(args);
     }
 
 
