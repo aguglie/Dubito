@@ -32,6 +32,7 @@ public class Connection {
 
             //Starts a new thread to listen and handle messages
             Thread reader_thread = new Thread(new SocketListener(gson, socket));
+            reader_thread.setDaemon(true);
             reader_thread.start();
 
             //Creates a new object which takes care of writing on socket
